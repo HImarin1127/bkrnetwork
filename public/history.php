@@ -39,7 +39,7 @@ include __DIR__ . '/include/header.php';
         <i class="fas fa-history"></i> 查詢紀錄
       </a>
       <a href="import.php" class="nav-item">
-        <i class="fas fa-upload"></i> CSV 匯入
+        <i class="fas fa-upload"></i> 郵資匯入
       </a>
       <a href="settings.php" class="nav-item">
         <i class="fas fa-cog"></i> 系統設定

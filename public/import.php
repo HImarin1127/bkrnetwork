@@ -60,10 +60,10 @@ include __DIR__ . '/include/header.php';
     <div class="sidebar-header"><h3>員工內部網頁</h3></div>
     <nav class="sidebar-nav">
       <a href="dashboard.php" class="nav-item">
-        <i class="fas fa-history"></i> 匯入紀錄
+        <i class="fas fa-mail-bulk"></i> 郵資紀錄
       </a>
       <a href="import.php" class="nav-item active">
-        <i class="fas fa-upload"></i> CSV 匯入
+        <i class="fas fa-upload"></i> 郵資匯入
       </a>
       <a href="settings.php" class="nav-item">
         <i class="fas fa-cog"></i> 系統設定

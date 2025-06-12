@@ -12,8 +12,8 @@ include __DIR__ . '/include/header.php';
   <div class="sidebar">
     <div class="sidebar-header"><h3>員工內部網頁</h3></div>
     <nav class="sidebar-nav">
-      <a href="dashboard.php" class="nav-item"><i class="fas fa-history"></i> 匯入紀錄</a>
-      <a href="import.php" class="nav-item"><i class="fas fa-upload"></i> CSV 匯入</a>
+      <a href="dashboard.php" class="nav-item"><i class="fas fa-mail-bulk"></i> 郵資紀錄</a>
+      <a href="import.php" class="nav-item"><i class="fas fa-upload"></i> 郵資匯入</a>
       <a href="settings.php" class="nav-item"><i class="fas fa-cog"></i> 系統設定</a>
       <a href="onboarding.php" class="nav-item active"><i class="fas fa-user-plus"></i> 新人到職</a>
       <a href="logout.php" class="nav-item">
@@ -21,7 +21,6 @@ include __DIR__ . '/include/header.php';
       </a>
     </nav>
   </div>
-</div>
   <div class="main-content">
     <div class="screen-header">
       <div class="screen-title">新人到職</div>
@@ -33,7 +32,7 @@ include __DIR__ . '/include/header.php';
         <button type="button" id="btnFinance" class="btn btn-outline-success">財務相關</button>
         <button type="button" id="btnIt"     class="btn btn-outline-info">資訊相關</button>
       </div>
-
+    </div>
       <!-- 人資相關 -->
       <div id="sectionHr" style="display:none;">
         <form>
