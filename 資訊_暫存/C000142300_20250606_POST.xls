@@ -1,0 +1,3784 @@
+     
+ <table width="100%" border="1"  > 
+           <tr>
+		     <td>NO.</td>
+ 			 <td>類別</td>
+             <td>物流編號</td>
+			 <td>原物流編號</td>
+              <td>批號</td><td>入件日</td>
+			 <td>超商訂單號</td>
+             <td>收件人</td>
+             <td>地址 / 門市地址 / 門市</td>
+             <td>行動電話 </td>
+              <td>代收金額</td>
+              <td>訂單編號</td>
+              <td>商品名稱</td>
+              <td>數量</td>
+              <td>備註</td>
+             <td>處理進度</td> <td>尺寸/重量</td>
+             <td>郵資</td>
+             <td>支付</td>
+             <td>代收入帳</td>
+			  
+			 
+           </tr> 
+           <tr>
+		     <td  rowspan="1">1</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55038522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:29:04</td>
+			 <td  rowspan="1"></td><td  rowspan="1">袁朝琳</td>
+             <td  rowspan="1">新北市中和區安樂路143巷26號4樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >總務</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 12:15:38</td>
+             <td  rowspan="1">20g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">2</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55038422027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:29:03</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡明宏</td>
+             <td  rowspan="1">桃園市蘆竹區南福街169號之2</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >總務</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:59:24</td>
+             <td  rowspan="1">20g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">3</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55037322027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:29:06</td>
+			 <td  rowspan="1"></td><td  rowspan="1">楊啟巽</td>
+             <td  rowspan="1">110台北市信義區和平東路三段225號16樓</td>
+             <td  rowspan="1">2733-0021</td>
+             <td  rowspan="1">0</td>
+			 <td   >左岸</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 14:24:28</td>
+             <td  rowspan="1">20g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">4</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55036822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:29:07</td>
+			 <td  rowspan="1"></td><td  rowspan="1">詹慶齡</td>
+             <td  rowspan="1">台北市文山區秀明路二段5號5樓之2</td>
+             <td  rowspan="1">0932004154</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1285</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:46:15</td>
+             <td  rowspan="1">20g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">5</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54805522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:28:50</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王淑真</td>
+             <td  rowspan="1">新北市板橋區三民路二段37號16樓之1</td>
+             <td  rowspan="1">02-29615808#241</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1383</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:21:18</td>
+             <td  rowspan="1">55g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">6</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54775922027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:29:02</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張振輝</td>
+             <td  rowspan="1">台北市文山區和興路20號4樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >堡壘A</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:53:47</td>
+             <td  rowspan="1">20g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">7</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13771322904178"</td>
+			 <td  rowspan="1">="55046922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:28:19</td>
+			 <td  rowspan="1"></td><td  rowspan="1">朱楚文</td>
+             <td  rowspan="1">新竹縣竹北市成功九街88號1樓</td>
+             <td  rowspan="1">0910-801562</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:06:45</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">8</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13771222904178"</td>
+			 <td  rowspan="1">="55044522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:28:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">伍芬婕</td>
+             <td  rowspan="1">台北市104南京東路二段139號11樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">9</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13771122904178"</td>
+			 <td  rowspan="1">="55044422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:27:57</td>
+			 <td  rowspan="1"></td><td  rowspan="1">周郁蘋</td>
+             <td  rowspan="1">104台北市中山區南京東路一段96號8樓</td>
+             <td  rowspan="1">2581-6196Ext.271</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:56</td>
+             <td  rowspan="1">499g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">10</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13771022904178"</td>
+			 <td  rowspan="1">="55045022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:27:45</td>
+			 <td  rowspan="1"></td><td  rowspan="1">高佩懃</td>
+             <td  rowspan="1">100台北市中正區寧波東街1號7樓709室</td>
+             <td  rowspan="1">02-77095375#2358</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 12:35:03</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">11</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770922904178"</td>
+			 <td  rowspan="1">="55047622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:27:33</td>
+			 <td  rowspan="1"></td><td  rowspan="1">吳孟諭收</td>
+             <td  rowspan="1">241新北市三重區忠孝路2段15號3樓</td>
+             <td  rowspan="1">0975-333-216</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">異常 投遞不成功</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1"></td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">12</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770822904178"</td>
+			 <td  rowspan="1">="55047822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:27:21</td>
+			 <td  rowspan="1"></td><td  rowspan="1">何晨瑋</td>
+             <td  rowspan="1">新北市汐止區忠孝東路424號9樓</td>
+             <td  rowspan="1">933453388</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:47:45</td>
+             <td  rowspan="1">499g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">13</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770722904178"</td>
+			 <td  rowspan="1">="55047422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:27:11</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡孟儒</td>
+             <td  rowspan="1">106台北市泰順街56號四樓</td>
+             <td  rowspan="1">975020615</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:04:39</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">14</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770622904178"</td>
+			 <td  rowspan="1">="55049722027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:26:57</td>
+			 <td  rowspan="1"></td><td  rowspan="1">工頭堅</td>
+             <td  rowspan="1">100台北市中正區同安街71號3樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:35:32</td>
+             <td  rowspan="1">640g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">15</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55054822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:26:06</td>
+			 <td  rowspan="1"></td><td  rowspan="1">紀小姐</td>
+             <td  rowspan="1">台中市西屯區廣福路226巷5-3號</td>
+             <td  rowspan="1">04-27077576#18</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1132</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 17:17:45</td>
+             <td  rowspan="1">31g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">16</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55054622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:25:57</td>
+			 <td  rowspan="1"></td><td  rowspan="1">洪絹小姐收</td>
+             <td  rowspan="1">408臺中市南屯區大墩七街101巷10號</td>
+             <td  rowspan="1">0912-279-812</td>
+             <td  rowspan="1">0</td>
+			 <td   >字畝</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:07:05</td>
+             <td  rowspan="1">395g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">17</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55054322027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:25:36</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蘇懿禎小姐收?</td>
+             <td  rowspan="1">22046新北市板橋區華江一路223號6樓</td>
+             <td  rowspan="1">(0918-946-769)</td>
+             <td  rowspan="1">0</td>
+			 <td   >字畝</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:01:26</td>
+             <td  rowspan="1">394g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">18</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55054222027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:25:29</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鄭秀玲小姐收?</td>
+             <td  rowspan="1">300新竹市中華路一段384巷2弄8號8樓</td>
+             <td  rowspan="1">(0931-369-542)</td>
+             <td  rowspan="1">0</td>
+			 <td   >字畝</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:28:02</td>
+             <td  rowspan="1">397g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">19</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55054122027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:25:52</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王昭棠先生收</td>
+             <td  rowspan="1">105台北市松山區健康路35巷15號8樓</td>
+             <td  rowspan="1">?(0919-563-603)</td>
+             <td  rowspan="1">0</td>
+			 <td   >字畝</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:11:16</td>
+             <td  rowspan="1">398g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">20</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55049622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:26:32</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔣亞妮</td>
+             <td  rowspan="1">114台北市內湖區成功路四段30巷19號10樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:16:45</td>
+             <td  rowspan="1">334g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">21</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55049522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:26:44</td>
+			 <td  rowspan="1"></td><td  rowspan="1">IssaChen</td>
+             <td  rowspan="1">100台北市中正區齊東街53巷18-2號2F</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:08:14</td>
+             <td  rowspan="1">333g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">22</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55049422027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:26:41</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳嵩嵐</td>
+             <td  rowspan="1">111台北市士林區天母東路105巷35號5樓之6</td>
+             <td  rowspan="1">0975-336369</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:49:54</td>
+             <td  rowspan="1">335g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">23</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55042922027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:26:28</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鍾小姐</td>
+             <td  rowspan="1">新竹市東區光復路一段459巷19號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1134</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 13:11:06</td>
+             <td  rowspan="1">30g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">24</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55042822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:26:25</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鍾小姐</td>
+             <td  rowspan="1">新北市深坑區北深路三段155巷3號5樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1132</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 10:17:28</td>
+             <td  rowspan="1">33g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">25</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55042722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:26:22</td>
+			 <td  rowspan="1"></td><td  rowspan="1">廖小姐</td>
+             <td  rowspan="1">台北市中山區新生北路三段7號10樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1310</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:53:32</td>
+             <td  rowspan="1">40g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">26</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770522904178"</td>
+			 <td  rowspan="1">="55054722027818"</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:26:16</td>
+			 <td  rowspan="1"></td><td  rowspan="1">Barry</td>
+             <td  rowspan="1">新北市新店區北新路三段213號15樓</td>
+             <td  rowspan="1">0928006592</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬1237</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:49:33</td>
+             <td  rowspan="1">454g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">27</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770422904178"</td>
+			 <td  rowspan="1">="55054522027818"</td><td  rowspan="1">遠足20250603120706</td> <td  rowspan="1">2025-06-03 19:25:48</td>
+			 <td  rowspan="1"></td><td  rowspan="1">高雄岡山國小?林晉如老師收</td>
+             <td  rowspan="1">820高雄市岡山區柳橋東路36號</td>
+             <td  rowspan="1">(0938-095-385)</td>
+             <td  rowspan="1">0</td>
+			 <td   >字畝</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:07:20</td>
+             <td  rowspan="1">401g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">28</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55052522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 18:42:53</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蘇小姐</td>
+             <td  rowspan="1">台中市東區東光園路610號1樓</td>
+             <td  rowspan="1">04-22126209#521</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1132</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:17:51</td>
+             <td  rowspan="1">26g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">29</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55052422027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 18:42:50</td>
+			 <td  rowspan="1"></td><td  rowspan="1">藍小姐</td>
+             <td  rowspan="1">桃園市桃園區春日路1492-8號4樓</td>
+             <td  rowspan="1">03-3589000#1010</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1132</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:30:40</td>
+             <td  rowspan="1">35g</td>
+             <td  rowspan="1">28</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">30</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55050722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:24:27</td>
+			 <td  rowspan="1"></td><td  rowspan="1">吳浩瑋</td>
+             <td  rowspan="1">110台北巿信義區基隆路二段91號5樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:19:18</td>
+             <td  rowspan="1">332g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">31</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55050222027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:18:07</td>
+			 <td  rowspan="1"></td><td  rowspan="1">連俞涵</td>
+             <td  rowspan="1">236新北市土城區明德路二段149號2樓</td>
+             <td  rowspan="1">02-22633878</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:20:33</td>
+             <td  rowspan="1">329g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">32</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55050122027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:17:58</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳芷儀</td>
+             <td  rowspan="1">114台北市內湖區新明路458號8樓之二</td>
+             <td  rowspan="1">0939-198082</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:12:22</td>
+             <td  rowspan="1">333g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">33</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55050022027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:18:02</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳姿樺</td>
+             <td  rowspan="1">110台北市中正區八德路一段28號3樓</td>
+             <td  rowspan="1">02-2322-2607</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:21:51</td>
+             <td  rowspan="1">328g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">34</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55049922027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:17:49</td>
+			 <td  rowspan="1"></td><td  rowspan="1">何曼瑄</td>
+             <td  rowspan="1">108台北市青年路68巷3弄9號2樓之一</td>
+             <td  rowspan="1">933587847</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 14:43:13</td>
+             <td  rowspan="1">333g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">35</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55049822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:17:53</td>
+			 <td  rowspan="1"></td><td  rowspan="1">米力</td>
+             <td  rowspan="1">104台北市中山區中山北路一段33巷6號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">異常 到達支局招領中</td>
+             <td  rowspan="1">332g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1"></td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">36</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55043022027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:45:02</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蕭小姐</td>
+             <td  rowspan="1">南投縣草屯鎮中正路856號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >業務1132</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:16:50</td>
+             <td  rowspan="1">267g</td>
+             <td  rowspan="1">43</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">37</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55042222027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:44:04</td>
+			 <td  rowspan="1"></td><td  rowspan="1">秦夢群</td>
+             <td  rowspan="1">116台北市文山區指南路二段64號教育行政與政策研究所</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:38:11</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">38</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55042122027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:15</td>
+			 <td  rowspan="1"></td><td  rowspan="1">大千電台/小倩</td>
+             <td  rowspan="1">403台中市西區台灣大道二段309號22樓之2</td>
+             <td  rowspan="1">04-22025000</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:59:06</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">39</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55042022027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:23</td>
+			 <td  rowspan="1"></td><td  rowspan="1">翁世航</td>
+             <td  rowspan="1">11072臺北市信義區菸廠路88號5樓之1</td>
+             <td  rowspan="1">0921-726790</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">40</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041922027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:32</td>
+			 <td  rowspan="1"></td><td  rowspan="1">周鴻仁</td>
+             <td  rowspan="1">408台中市南屯區大墩十一街301號21樓之3</td>
+             <td  rowspan="1">0958-321-111</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:12:42</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">41</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:35</td>
+			 <td  rowspan="1"></td><td  rowspan="1">洪琬婷</td>
+             <td  rowspan="1">807高雄市三民區南台路201巷13號</td>
+             <td  rowspan="1">938872610</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">異常 到達支局招領中</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1"></td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">42</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:37:55</td>
+			 <td  rowspan="1"></td><td  rowspan="1">許斐絮</td>
+             <td  rowspan="1">104台北市中山區民生西路16號9樓之一</td>
+             <td  rowspan="1">928520542</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:51:55</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">43</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:03</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鄭如惠</td>
+             <td  rowspan="1">408448台中市南屯區黎明路二段304號4樓之6</td>
+             <td  rowspan="1">936823157</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:48:11</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">44</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:42:33</td>
+			 <td  rowspan="1"></td><td  rowspan="1">莊鈞涵</td>
+             <td  rowspan="1">320桃園市中壢區普義里溪洲街267巷25號11樓</td>
+             <td  rowspan="1">989541534</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:21:21</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">45</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041422027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:44:16</td>
+			 <td  rowspan="1"></td><td  rowspan="1">宋怡慧</td>
+             <td  rowspan="1">242新北市新莊區龍安路72號</td>
+             <td  rowspan="1">987297759</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:46:41</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">46</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041322027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:48</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡宜芳</td>
+             <td  rowspan="1">242新北市新莊區天祥街28號7樓</td>
+             <td  rowspan="1">958611237</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:23:37</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">47</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041222027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:52</td>
+			 <td  rowspan="1"></td><td  rowspan="1">盧美妏</td>
+             <td  rowspan="1">104台北市中山區新生北路三段43號4樓之13</td>
+             <td  rowspan="1">952271796</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:49:00</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">48</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55041122027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:59</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王意中</td>
+             <td  rowspan="1">26048宜蘭縣宜蘭市民族路370號5樓之一</td>
+             <td  rowspan="1">958821351</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 18:06:04</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">49</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:44:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">徐菁穗</td>
+             <td  rowspan="1">10855臺北市萬華區艋舺大道303號5樓</td>
+             <td  rowspan="1">02-2308-7111#5616</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:25</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">50</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:11</td>
+			 <td  rowspan="1"></td><td  rowspan="1">劉奕酉</td>
+             <td  rowspan="1">300新竹市慈濟路169號16樓</td>
+             <td  rowspan="1">939873519</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:34:09</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">51</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:19</td>
+			 <td  rowspan="1"></td><td  rowspan="1">丁美倫</td>
+             <td  rowspan="1">106台北市敦化南路一段57號11樓之五</td>
+             <td  rowspan="1">02-25703329</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 12:24:19</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">52</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:27</td>
+			 <td  rowspan="1"></td><td  rowspan="1">謝賀潔</td>
+             <td  rowspan="1">11492台北市內湖區內湖科技園區瑞光路513巷37號4樓</td>
+             <td  rowspan="1">02-2658-1158#2334</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:00:07</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">53</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040322027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:47:59</td>
+			 <td  rowspan="1"></td><td  rowspan="1">盧梅君</td>
+             <td  rowspan="1">110台北市信義區永吉路236號4樓之1</td>
+             <td  rowspan="1">0912509727</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:59</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">54</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040222027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:00</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張念慈</td>
+             <td  rowspan="1">300新竹市北區光華一街7號3樓之一</td>
+             <td  rowspan="1">918403192</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:40:25</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">55</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040122027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:38:07</td>
+			 <td  rowspan="1"></td><td  rowspan="1">趙啟弦</td>
+             <td  rowspan="1">920屏東縣潮州鎮吉祥路14巷12號</td>
+             <td  rowspan="1">0912-135-312</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 14:42:57</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">56</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55040022027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:42:37</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王文仁</td>
+             <td  rowspan="1">717台南市仁德區文心路72號11樓之5</td>
+             <td  rowspan="1">953282318</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:45:37</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">57</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55039922027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:43</td>
+			 <td  rowspan="1"></td><td  rowspan="1">黃之盈</td>
+             <td  rowspan="1">337桃園市大園區致遠一路17號四樓</td>
+             <td  rowspan="1">973067413</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:22:57</td>
+             <td  rowspan="1">377g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">58</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55039722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:56</td>
+			 <td  rowspan="1"></td><td  rowspan="1">洪培芸</td>
+             <td  rowspan="1">234新北市永和區博愛街10號1樓</td>
+             <td  rowspan="1">02-8928-0123</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:00:05</td>
+             <td  rowspan="1">374g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">59</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55039622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:47:03</td>
+			 <td  rowspan="1"></td><td  rowspan="1">愛瑞克</td>
+             <td  rowspan="1">220新北市板橋區縣民大道一段299號23樓</td>
+             <td  rowspan="1">926014488</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 18:00:10</td>
+             <td  rowspan="1">375g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">60</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55039522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:47:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">洪仲清</td>
+             <td  rowspan="1">900019屏東廣東路郵局第46號信箱</td>
+             <td  rowspan="1">928515970</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:41:00</td>
+             <td  rowspan="1">376g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">61</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55038722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:41:00</td>
+			 <td  rowspan="1"></td><td  rowspan="1">顏麟驊</td>
+             <td  rowspan="1">新北市土城區福祥街21號8樓</td>
+             <td  rowspan="1">0919331960</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:07:58</td>
+             <td  rowspan="1">366g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">62</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="55038622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:40:57</td>
+			 <td  rowspan="1"></td><td  rowspan="1">葉馥儀</td>
+             <td  rowspan="1">新北市萬里區光宇大道15號</td>
+             <td  rowspan="1">0938608855</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:11:04</td>
+             <td  rowspan="1">366g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">63</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54805122027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:10:12</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王胤頡</td>
+             <td  rowspan="1">台北市大同區民生西路423巷9-1號4樓</td>
+             <td  rowspan="1">02-23670610#22</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:29:56</td>
+             <td  rowspan="1">306g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">64</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54775822027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:40:05</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張美蘭</td>
+             <td  rowspan="1">333桃園市龜山區長庚醫護新村214號4樓</td>
+             <td  rowspan="1">0918-982-318</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 18:31:40</td>
+             <td  rowspan="1">306g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">65</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54775722027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:40:11</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳木榮</td>
+             <td  rowspan="1">台北市中山區長春路97號12樓</td>
+             <td  rowspan="1">0920654395</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:31:42</td>
+             <td  rowspan="1">314g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">66</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54775622027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:39:56</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳敬倫</td>
+             <td  rowspan="1">桃園市龜山區文興路215號3樓之一</td>
+             <td  rowspan="1">0921914570</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:00:37</td>
+             <td  rowspan="1">308g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">67</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54775522027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:40:15</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳彥任</td>
+             <td  rowspan="1">300新竹市北區西大路738號</td>
+             <td  rowspan="1">0911197598</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:21:24</td>
+             <td  rowspan="1">308g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">68</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="54775422027818"</td>
+			 <td  rowspan="1">=""</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:40:33</td>
+			 <td  rowspan="1"></td><td  rowspan="1">詹文貞</td>
+             <td  rowspan="1">嘉義縣大林鎮大糖里中學路1號</td>
+             <td  rowspan="1">0912443369</td>
+             <td  rowspan="1">0</td>
+			 <td   >好人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:53:42</td>
+             <td  rowspan="1">322g</td>
+             <td  rowspan="1">55</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">69</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770322904178"</td>
+			 <td  rowspan="1">="55050622027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:24:48</td>
+			 <td  rowspan="1"></td><td  rowspan="1">翁世航</td>
+             <td  rowspan="1">110台北市信義區菸廠路88號5樓之1</td>
+             <td  rowspan="1">0921-726790</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">640g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">70</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770222904178"</td>
+			 <td  rowspan="1">="55050322027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:24:37</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王胤頡</td>
+             <td  rowspan="1">103台北市大同區民生西路423巷9-1號4樓</td>
+             <td  rowspan="1">02-2367-0610#22</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:29:56</td>
+             <td  rowspan="1">638g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">71</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770122904178"</td>
+			 <td  rowspan="1">="55050422027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:24:24</td>
+			 <td  rowspan="1"></td><td  rowspan="1">吳凱莉</td>
+             <td  rowspan="1">114台北市內湖區石潭路151號8樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:46:22</td>
+             <td  rowspan="1">639g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">72</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13770022904178"</td>
+			 <td  rowspan="1">="55046022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:24:03</td>
+			 <td  rowspan="1"></td><td  rowspan="1">辜樹仁</td>
+             <td  rowspan="1">10491台北市中山區南京東路二段139號11樓</td>
+             <td  rowspan="1">0225078627</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">499g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">73</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769922904178"</td>
+			 <td  rowspan="1">="55046222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:23:51</td>
+			 <td  rowspan="1"></td><td  rowspan="1">傅莞淇</td>
+             <td  rowspan="1">104台北市中山區松江路111號15樓</td>
+             <td  rowspan="1">937921156</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:38:50</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">74</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769822904178"</td>
+			 <td  rowspan="1">="55044022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:23:38</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳怡臻</td>
+             <td  rowspan="1">106台北市大安區光復南路102號9樓（巨思文化）</td>
+             <td  rowspan="1">02-8773-9808</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:23:01</td>
+             <td  rowspan="1">499g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">75</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769622904178"</td>
+			 <td  rowspan="1">="55044322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:23:01</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林立恆</td>
+             <td  rowspan="1">104台北市中山區松江路209號8樓</td>
+             <td  rowspan="1">02-25051180#803</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:38:51</td>
+             <td  rowspan="1">498g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">76</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769522904178"</td>
+			 <td  rowspan="1">="55045722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:22:44</td>
+			 <td  rowspan="1"></td><td  rowspan="1">劉芝吟</td>
+             <td  rowspan="1">231新店區中興路一段222號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:06:15</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">77</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769422904178"</td>
+			 <td  rowspan="1">="55045922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:22:30</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳祈安</td>
+             <td  rowspan="1">11051台北市信義區基隆路一段432號10樓之6</td>
+             <td  rowspan="1">886-2-27580889#211</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:19:06</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">78</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769322904178"</td>
+			 <td  rowspan="1">="55047322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:22:20</td>
+			 <td  rowspan="1"></td><td  rowspan="1">劉奕酉</td>
+             <td  rowspan="1">新竹市慈濟路169號16樓</td>
+             <td  rowspan="1">0939-873519</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 16:34:09</td>
+             <td  rowspan="1">502g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">79</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769222904178"</td>
+			 <td  rowspan="1">="55044222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:22:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">徐菁穗</td>
+             <td  rowspan="1">台北市萬華區艋舺大道303號五樓</td>
+             <td  rowspan="1">02-2308-7111ext.5616</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:25</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">80</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769122904178"</td>
+			 <td  rowspan="1">="55044122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:21:56</td>
+			 <td  rowspan="1"></td><td  rowspan="1">邱于瑄</td>
+             <td  rowspan="1">台北市大安區仁愛路四段107號9樓</td>
+             <td  rowspan="1">886227112720</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:22:04</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">81</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13769022904178"</td>
+			 <td  rowspan="1">="55039222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:21:23</td>
+			 <td  rowspan="1"></td><td  rowspan="1">吳宜蓉</td>
+             <td  rowspan="1">高雄市左營區813大中二路252號9樓</td>
+             <td  rowspan="1">0955563331</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:15:11</td>
+             <td  rowspan="1">551g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">82</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768922904178"</td>
+			 <td  rowspan="1">="55043322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:21:12</td>
+			 <td  rowspan="1"></td><td  rowspan="1">倪可</td>
+             <td  rowspan="1">台北市文山區木柵路一段111號(全媒體大樓二樓_世新廣播電臺)??????????</td>
+             <td  rowspan="1">0910-146189</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人二</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:13:54</td>
+             <td  rowspan="1">907g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">83</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768822904178"</td>
+			 <td  rowspan="1">="55039122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:21:01</td>
+			 <td  rowspan="1"></td><td  rowspan="1">謝哲青</td>
+             <td  rowspan="1">台北市松山區三民路18號10樓之二</td>
+             <td  rowspan="1">0227617922</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:12:31</td>
+             <td  rowspan="1">550g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">84</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768722904178"</td>
+			 <td  rowspan="1">="55038922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:20:51</td>
+			 <td  rowspan="1"></td><td  rowspan="1">黃奕瀠</td>
+             <td  rowspan="1">彰化市泰瑞街51號三樓之九</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:09:36</td>
+             <td  rowspan="1">551g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">85</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768622904178"</td>
+			 <td  rowspan="1">="55045822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:20:34</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王宥筑</td>
+             <td  rowspan="1">106台北市大安區光復南路102號9樓</td>
+             <td  rowspan="1">02-8773-9808#303</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:23:01</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">86</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768522904178"</td>
+			 <td  rowspan="1">="55045622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:20:19</td>
+			 <td  rowspan="1"></td><td  rowspan="1">倪旻勤</td>
+             <td  rowspan="1">115台北市南港區昆陽街16號6樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:35:24</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">87</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768422904178"</td>
+			 <td  rowspan="1">="55046322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:20:09</td>
+			 <td  rowspan="1"></td><td  rowspan="1">廖雲章</td>
+             <td  rowspan="1">台北市104南京東路二段139號11樓</td>
+             <td  rowspan="1">(02)2507-8627分機391</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">88</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768322904178"</td>
+			 <td  rowspan="1">="55046122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:19:58</td>
+			 <td  rowspan="1"></td><td  rowspan="1">何家瑜</td>
+             <td  rowspan="1">104台北市中山區松江路111號15樓</td>
+             <td  rowspan="1">915019936</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:38:50</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">89</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768222904178"</td>
+			 <td  rowspan="1">="55046422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:19:46</td>
+			 <td  rowspan="1"></td><td  rowspan="1">朱家儀</td>
+             <td  rowspan="1">臺北市菸廠路88號5F-1</td>
+             <td  rowspan="1">0911-431-526</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">498g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">90</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768122904178"</td>
+			 <td  rowspan="1">="55045322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:19:35</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林妤柔</td>
+             <td  rowspan="1">臺北市中山區南京東路3段68號11樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:02:27</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">91</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13768022904178"</td>
+			 <td  rowspan="1">="55045522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:19:20</td>
+			 <td  rowspan="1"></td><td  rowspan="1">楊喻斐</td>
+             <td  rowspan="1">104台北市南京東路一段52號7樓財信雜誌社股份有限公司</td>
+             <td  rowspan="1">0928-528-663</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:52</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">92</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767922904178"</td>
+			 <td  rowspan="1">="54805822027818"</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:18:44</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林大利</td>
+             <td  rowspan="1">台中市北屯區瀋陽路三段18號14樓之2</td>
+             <td  rowspan="1">0911200033</td>
+             <td  rowspan="1">0</td>
+			 <td   >菓子</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:27:14</td>
+             <td  rowspan="1">845g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">93</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767822904178"</td>
+			 <td  rowspan="1">="54805722027818"</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:18:31</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林珊宇小姐收</td>
+             <td  rowspan="1">台北市10084羅斯福路二段102號25樓?</td>
+             <td  rowspan="1">02-2363-6600#357</td>
+             <td  rowspan="1">0</td>
+			 <td   >大景</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:19:01</td>
+             <td  rowspan="1">1057g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">94</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767722904178"</td>
+			 <td  rowspan="1">="55051822027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:18:19</td>
+			 <td  rowspan="1"></td><td  rowspan="1">關鍵評論網馮冠維收</td>
+             <td  rowspan="1">台北市信義區菸廠路88號5樓之1（台北文創大樓）</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">983g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">95</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767622904178"</td>
+			 <td  rowspan="1">="55046522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:17:40</td>
+			 <td  rowspan="1"></td><td  rowspan="1">翁世航</td>
+             <td  rowspan="1">臺北市菸廠路88號5F-2</td>
+             <td  rowspan="1">0921-726790</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">499g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">96</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767522904178"</td>
+			 <td  rowspan="1">="55044822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:17:10</td>
+			 <td  rowspan="1"></td><td  rowspan="1">劉光瑩</td>
+             <td  rowspan="1">10491台北市中山區南京東路二段139號11樓</td>
+             <td  rowspan="1">0225078627</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">97</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767422904178"</td>
+			 <td  rowspan="1">="55043922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:16:58</td>
+			 <td  rowspan="1"></td><td  rowspan="1">詹絜琋</td>
+             <td  rowspan="1">106台北市大安區光復南路102號9樓（巨思文化）</td>
+             <td  rowspan="1">0987-344-341</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:23:01</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">98</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767322904178"</td>
+			 <td  rowspan="1">="55046622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:16:47</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張家麒</td>
+             <td  rowspan="1">新北市汐止區大同路一段369號4樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:17:29</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">99</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767222904178"</td>
+			 <td  rowspan="1">="55043722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:16:28</td>
+			 <td  rowspan="1"></td><td  rowspan="1">珮瑤</td>
+             <td  rowspan="1">104089臺北市中山區南京東路二段17號5樓</td>
+             <td  rowspan="1">(02)2562-2880ext.3718</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:49:18</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">100</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767122904178"</td>
+			 <td  rowspan="1">="55043522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:16:18</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳鳳馨</td>
+             <td  rowspan="1">10084台北市羅斯福路二段102號26樓</td>
+             <td  rowspan="1">(02)8369-2698ext.396</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:19:01</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">101</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13767022904178"</td>
+			 <td  rowspan="1">="55044622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:16:03</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張玟榕</td>
+             <td  rowspan="1">台北市104南京東路二段139號11樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">102</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766922904178"</td>
+			 <td  rowspan="1">="55045122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:15:54</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳芳毓</td>
+             <td  rowspan="1">台北市104南京東路二段139號11樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">502g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">103</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766822904178"</td>
+			 <td  rowspan="1">="55047022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:15:44</td>
+			 <td  rowspan="1"></td><td  rowspan="1">梁維哲</td>
+             <td  rowspan="1">106台北市大安區羅斯福路二段111號8樓</td>
+             <td  rowspan="1">02-77416008</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:24:16</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">104</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766722904178"</td>
+			 <td  rowspan="1">="54805622027818"</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:15:33</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林美琪</td>
+             <td  rowspan="1">新北市淡水區中正路一段156巷12號15樓之1</td>
+             <td  rowspan="1">0917567831</td>
+             <td  rowspan="1">0</td>
+			 <td   >遠足</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:14:02</td>
+             <td  rowspan="1">935g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">105</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766622904178"</td>
+			 <td  rowspan="1">="55052022027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:15:02</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王胤頡收</td>
+             <td  rowspan="1">103台北市大同區民生西路423巷9-1號4樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:29:56</td>
+             <td  rowspan="1">905g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">106</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766522904178"</td>
+			 <td  rowspan="1">="55052122027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:14:46</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王胤頡收</td>
+             <td  rowspan="1">103台北市大同區民生西路423巷9-1號4樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:29:56</td>
+             <td  rowspan="1">735g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">107</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766422904178"</td>
+			 <td  rowspan="1">="55050922027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:14:36</td>
+			 <td  rowspan="1"></td><td  rowspan="1">顏擇雅</td>
+             <td  rowspan="1">臺北市中正區師大路159號6樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:48:41</td>
+             <td  rowspan="1">1089g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">108</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766322904178"</td>
+			 <td  rowspan="1">="55038822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:14:24</td>
+			 <td  rowspan="1"></td><td  rowspan="1">楊肅献</td>
+             <td  rowspan="1">台北市溫州街12巷4號3樓</td>
+             <td  rowspan="1">0939372599</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">投遞中 2025-06-03 20:52:32</td>
+             <td  rowspan="1">1093g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1"></td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">109</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766222904178"</td>
+			 <td  rowspan="1">="54776222027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:14:01</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王胤頡</td>
+             <td  rowspan="1">台北市大同區民生西路423巷9-1號4樓</td>
+             <td  rowspan="1">02-23670610#22</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:29:56</td>
+             <td  rowspan="1">929g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">110</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766122904178"</td>
+			 <td  rowspan="1">="54776722027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:13:48</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳樂融</td>
+             <td  rowspan="1">台北市內湖區新湖二路128號4樓</td>
+             <td  rowspan="1">0958980200</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:27:13</td>
+             <td  rowspan="1">927g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">111</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13766022904178"</td>
+			 <td  rowspan="1">="54776122027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:13:36</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張佑如</td>
+             <td  rowspan="1">台北市士林區天母東路14號5樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:16:36</td>
+             <td  rowspan="1">928g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">112</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765922904178"</td>
+			 <td  rowspan="1">="54776322027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:13:18</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳鳳馨</td>
+             <td  rowspan="1">台北市羅斯福路二段102號26樓</td>
+             <td  rowspan="1">8369-2699#396</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:19:01</td>
+             <td  rowspan="1">928g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">113</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765822904178"</td>
+			 <td  rowspan="1">="54776522027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:13:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">謝哲青</td>
+             <td  rowspan="1">台北市松山區三民路18號10樓之2</td>
+             <td  rowspan="1">0933321288</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:12:31</td>
+             <td  rowspan="1">933g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">114</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765722904178"</td>
+			 <td  rowspan="1">="54776022027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:12:56</td>
+			 <td  rowspan="1"></td><td  rowspan="1">齊萱</td>
+             <td  rowspan="1">台東市山西路二段472號</td>
+             <td  rowspan="1">0921907928</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:11:55</td>
+             <td  rowspan="1">926g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">115</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765622904178"</td>
+			 <td  rowspan="1">="54776622027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:12:45</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡其達</td>
+             <td  rowspan="1">台北市萬華區長沙街二段96號4樓</td>
+             <td  rowspan="1">0935042550</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:24</td>
+             <td  rowspan="1">927g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">116</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765522904178"</td>
+			 <td  rowspan="1">="54776422027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:12:30</td>
+			 <td  rowspan="1"></td><td  rowspan="1">翁世航</td>
+             <td  rowspan="1">台北市信義區菸廠路88號4樓</td>
+             <td  rowspan="1">0921726790</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">930g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">117</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765422904178"</td>
+			 <td  rowspan="1">="54774922027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:11:51</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鄭永銘老師收</td>
+             <td  rowspan="1">111台北市士林區中社路一段36巷2號1樓</td>
+             <td  rowspan="1">933236588</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:49:20</td>
+             <td  rowspan="1">824g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">118</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765322904178"</td>
+			 <td  rowspan="1">="54774722027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:11:39</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳國偉副教授收</td>
+             <td  rowspan="1">402台中市南區興大路145號(台灣文學與跨國文化研究所</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 08:44:02</td>
+             <td  rowspan="1">824g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">119</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765222904178"</td>
+			 <td  rowspan="1">="54774822027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:11:26</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張東君小姐收</td>
+             <td  rowspan="1">10081台北市中正區金門街48號2樓之2</td>
+             <td  rowspan="1">0983-025008</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:31:38</td>
+             <td  rowspan="1">821g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">120</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765122904178"</td>
+			 <td  rowspan="1">="54775222027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:11:16</td>
+			 <td  rowspan="1"></td><td  rowspan="1">汪蓓小姐收</td>
+             <td  rowspan="1">114台北市內湖區民權東路6段296巷66-5號3樓之1</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:34:16</td>
+             <td  rowspan="1">823g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">121</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13765022904178"</td>
+			 <td  rowspan="1">="54774422027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:11:03</td>
+			 <td  rowspan="1"></td><td  rowspan="1">連偉舜</td>
+             <td  rowspan="1">32664桃園市楊梅區環南路91號</td>
+             <td  rowspan="1">928212285</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">投遞中 2025-06-03 20:52:32</td>
+             <td  rowspan="1">822g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1"></td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">122</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764922904178"</td>
+			 <td  rowspan="1">="54805422027818"</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:10:36</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張鈞凱</td>
+             <td  rowspan="1">新北市中和區安平路83號12樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >黑體</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:58:37</td>
+             <td  rowspan="1">873g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">123</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764822904178"</td>
+			 <td  rowspan="1">="54805322027818"</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 19:10:26</td>
+			 <td  rowspan="1"></td><td  rowspan="1">夏珍</td>
+             <td  rowspan="1">台北市內湖區瑞光路513巷37號4樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >黑體</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:48:49</td>
+             <td  rowspan="1">880g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">124</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764722904178"</td>
+			 <td  rowspan="1">="55051622027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:10:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林宇謙</td>
+             <td  rowspan="1">10617台北市大安區羅斯福路四段1號生命科學大樓11樓1103台灣大學生命科學館</td>
+             <td  rowspan="1">02-33663724</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:14:00</td>
+             <td  rowspan="1">1272g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">125</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764622904178"</td>
+			 <td  rowspan="1">="55052322027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:09:57</td>
+			 <td  rowspan="1"></td><td  rowspan="1">葉耀元</td>
+             <td  rowspan="1">843高雄市美濃區中山路一段353號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:25:17</td>
+             <td  rowspan="1">451g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">126</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764522904178"</td>
+			 <td  rowspan="1">="54774522027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:09:35</td>
+			 <td  rowspan="1"></td><td  rowspan="1">楊詩韻小姐/先生收</td>
+             <td  rowspan="1">100台北市中正區羅斯福路三段100號12樓之２</td>
+             <td  rowspan="1">921618414</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:17:41</td>
+             <td  rowspan="1">824g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">127</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764422904178"</td>
+			 <td  rowspan="1">="54774622027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:09:21</td>
+			 <td  rowspan="1"></td><td  rowspan="1">吳帥風先生/小姐收</td>
+             <td  rowspan="1">114台北市內湖區成功路四段30巷40號三樓</td>
+             <td  rowspan="1">927384777</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:26:51</td>
+             <td  rowspan="1">824g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">128</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764322904178"</td>
+			 <td  rowspan="1">="54777122027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:09:09</td>
+			 <td  rowspan="1"></td><td  rowspan="1">周玉蔻</td>
+             <td  rowspan="1">台北市中正區新生南路一段56號7樓</td>
+             <td  rowspan="1">0910360057</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:16:50</td>
+             <td  rowspan="1">925g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">129</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764222904178"</td>
+			 <td  rowspan="1">="54774122027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:08:58</td>
+			 <td  rowspan="1"></td><td  rowspan="1">楊書哲收</td>
+             <td  rowspan="1">408018台中市南屯區精科南路99號4樓之5(凱納公司)</td>
+             <td  rowspan="1">0980-901-413</td>
+             <td  rowspan="1">0</td>
+			 <td   >奇光</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 13:39:23</td>
+             <td  rowspan="1">1695g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">130</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764122904178"</td>
+			 <td  rowspan="1">="55051922027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 19:08:39</td>
+			 <td  rowspan="1"></td><td  rowspan="1">關鍵評論網馮冠維收</td>
+             <td  rowspan="1">台北市信義區菸廠路88號5樓之1（台北文創大樓）</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:45</td>
+             <td  rowspan="1">738g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">131</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13764022904178"</td>
+			 <td  rowspan="1">="54774322027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:08:19</td>
+			 <td  rowspan="1"></td><td  rowspan="1">冬陽</td>
+             <td  rowspan="1">235新北市中和區圓通路9號3F</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:55:49</td>
+             <td  rowspan="1">820g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">132</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13763922904178"</td>
+			 <td  rowspan="1">="54775122027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 19:08:09</td>
+			 <td  rowspan="1"></td><td  rowspan="1">譚端先生/小姐收</td>
+             <td  rowspan="1">260宜蘭縣宜蘭市津梅路180巷9號9樓</td>
+             <td  rowspan="1">910221180</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:54:26</td>
+             <td  rowspan="1">822g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">133</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13763822904178"</td>
+			 <td  rowspan="1">="55047522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 19:07:57</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鄭俊德</td>
+             <td  rowspan="1">220新北市板橋區信義路122號1樓</td>
+             <td  rowspan="1">921617805</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:30:50</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">134</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13763722904178"</td>
+			 <td  rowspan="1">="55041022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:53:21</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鄭俊德</td>
+             <td  rowspan="1">220新北市板橋區信義路122號1樓</td>
+             <td  rowspan="1">921617805</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:30:50</td>
+             <td  rowspan="1">1216g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">135</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13763622904178"</td>
+			 <td  rowspan="1">="55038322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:53:11</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔣奇燁</td>
+             <td  rowspan="1">台北市大安區安和路二段213號5樓之1</td>
+             <td  rowspan="1">0910624905</td>
+             <td  rowspan="1">0</td>
+			 <td   >奇光</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:08:03</td>
+             <td  rowspan="1">2218g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">136</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13761022904178"</td>
+			 <td  rowspan="1">="55042622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:36:05</td>
+			 <td  rowspan="1"></td><td  rowspan="1">梁育誠</td>
+             <td  rowspan="1">台南市北區東豐路491號7樓之8</td>
+             <td  rowspan="1">0921262431</td>
+             <td  rowspan="1">0</td>
+			 <td   >堡壘A</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:14:31</td>
+             <td  rowspan="1">2948g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">137</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760822904178"</td>
+			 <td  rowspan="1">="55050822027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 18:45:12</td>
+			 <td  rowspan="1"></td><td  rowspan="1">Boven雜誌圖書館</td>
+             <td  rowspan="1">106台北市大安區復興南路一段107巷5弄18號</td>
+             <td  rowspan="1">02-2778-7526</td>
+             <td  rowspan="1">0</td>
+			 <td   >木馬C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:10:04</td>
+             <td  rowspan="1">9993g</td>
+             <td  rowspan="1">90</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">138</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760722904178"</td>
+			 <td  rowspan="1">="54773922027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:47:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">康學慧</td>
+             <td  rowspan="1">260宜蘭縣宜蘭市農權路244-1號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:53:34</td>
+             <td  rowspan="1">1425g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">139</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760522904178"</td>
+			 <td  rowspan="1">="55039822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:52:20</td>
+			 <td  rowspan="1"></td><td  rowspan="1">吳曉嵐</td>
+             <td  rowspan="1">111台北市士林區士商路125號9樓</td>
+             <td  rowspan="1">922555599</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:53:49</td>
+             <td  rowspan="1">1249g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">140</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760422904178"</td>
+			 <td  rowspan="1">="55042522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:52:04</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳柏瑋</td>
+             <td  rowspan="1">台南市北區北安路一段94巷9弄25號</td>
+             <td  rowspan="1">912989261</td>
+             <td  rowspan="1">0</td>
+			 <td   >堡壘A</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:18:06</td>
+             <td  rowspan="1">3024g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">141</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760322904178"</td>
+			 <td  rowspan="1">="55042322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:51:46</td>
+			 <td  rowspan="1"></td><td  rowspan="1">古鳳玉</td>
+             <td  rowspan="1">221新北市汐止區東勢街216巷22弄6-6號12樓</td>
+             <td  rowspan="1">933712280</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福I</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:19:09</td>
+             <td  rowspan="1">804g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">142</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760222904178"</td>
+			 <td  rowspan="1">="54777422027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:51:37</td>
+			 <td  rowspan="1"></td><td  rowspan="1">汪浩</td>
+             <td  rowspan="1">台北市大安區臥龍街31巷7號4樓</td>
+             <td  rowspan="1">0984225499</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:21:53</td>
+             <td  rowspan="1">928g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">143</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760122904178"</td>
+			 <td  rowspan="1">="54777522027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:51:26</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡依橙</td>
+             <td  rowspan="1">台中市西屯區上安北街23號11樓之2</td>
+             <td  rowspan="1">0939762731</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:06:59</td>
+             <td  rowspan="1">930g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">144</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13760022904178"</td>
+			 <td  rowspan="1">="55037822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:49:47</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡淇華</td>
+             <td  rowspan="1">台中市大墩一街241-13號8樓</td>
+             <td  rowspan="1">0939302410</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 15:42:18</td>
+             <td  rowspan="1">732g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">145</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759922904178"</td>
+			 <td  rowspan="1">="55037722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:49:36</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳馨茹</td>
+             <td  rowspan="1">台北市南昌路二段142-1號6樓之1</td>
+             <td  rowspan="1">02-25091399#133</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:17:53</td>
+             <td  rowspan="1">728g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">146</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759822904178"</td>
+			 <td  rowspan="1">="55037622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:49:25</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳家盈</td>
+             <td  rowspan="1">台南市東區崇明路187巷7號</td>
+             <td  rowspan="1">0910138370</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:46:43</td>
+             <td  rowspan="1">731g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">147</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759722904178"</td>
+			 <td  rowspan="1">="55037522027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:49:11</td>
+			 <td  rowspan="1"></td><td  rowspan="1">邱常婷</td>
+             <td  rowspan="1">台東縣太麻里鄉泰和村10鄰太麻里街488號</td>
+             <td  rowspan="1">0932467113</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:19:08</td>
+             <td  rowspan="1">731g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">148</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759622904178"</td>
+			 <td  rowspan="1">="55037922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:48:58</td>
+			 <td  rowspan="1"></td><td  rowspan="1">翁秋燕</td>
+             <td  rowspan="1">新北市淡水區英專路212號8樓</td>
+             <td  rowspan="1">0919826612</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:03:39</td>
+             <td  rowspan="1">732g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">149</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759522904178"</td>
+			 <td  rowspan="1">="55036922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:48:39</td>
+			 <td  rowspan="1"></td><td  rowspan="1">黃上軒</td>
+             <td  rowspan="1">106026台北市大安區和平東路二段265巷25弄8號9樓</td>
+             <td  rowspan="1">0934081852</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">投遞中 2025-06-03 20:52:32</td>
+             <td  rowspan="1">422g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1"></td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">150</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759422904178"</td>
+			 <td  rowspan="1">="55037022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:48:28</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳可喬</td>
+             <td  rowspan="1">248009新北市五股區成泰路一段171巷1號4樓</td>
+             <td  rowspan="1">0930000545</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 13:10:28</td>
+             <td  rowspan="1">403g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">151</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759322904178"</td>
+			 <td  rowspan="1">="55037422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:48:10</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡宜珍</td>
+             <td  rowspan="1">彰化縣溪州鄉瓦厝村中山路三段227號</td>
+             <td  rowspan="1">0975602166</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:59:36</td>
+             <td  rowspan="1">731g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">152</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759222904178"</td>
+			 <td  rowspan="1">="55036722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:47:56</td>
+			 <td  rowspan="1"></td><td  rowspan="1">MsWhitheyHsu</td>
+             <td  rowspan="1">台北市松山區八德路四段678號4樓之7</td>
+             <td  rowspan="1">25629008#12</td>
+             <td  rowspan="1">0</td>
+			 <td   >?子</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:14:52</td>
+             <td  rowspan="1">426g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">153</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759122904178"</td>
+			 <td  rowspan="1">="55037222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:47:47</td>
+			 <td  rowspan="1"></td><td  rowspan="1">劉潔謙</td>
+             <td  rowspan="1">新北市汐止區大同路一段369號</td>
+             <td  rowspan="1">86925588#3207</td>
+             <td  rowspan="1">0</td>
+			 <td   >方舟</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:17:29</td>
+             <td  rowspan="1">456g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">154</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13759022904178"</td>
+			 <td  rowspan="1">="55040422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:35:41</td>
+			 <td  rowspan="1"></td><td  rowspan="1">郝旭烈</td>
+             <td  rowspan="1">110台北市基河路17號6樓</td>
+             <td  rowspan="1">913529182</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 12:35:38</td>
+             <td  rowspan="1">2087g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">155</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13758922904178"</td>
+			 <td  rowspan="1">="55039322027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:35:19</td>
+			 <td  rowspan="1"></td><td  rowspan="1">閻紀宇</td>
+             <td  rowspan="1">251007新北市淡水區中正東路一段3巷14弄11號8樓之3</td>
+             <td  rowspan="1">0935017265</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:24:41</td>
+             <td  rowspan="1">3224g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">156</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13758822904178"</td>
+			 <td  rowspan="1">="55043122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:34:52</td>
+			 <td  rowspan="1"></td><td  rowspan="1">簡龍祥</td>
+             <td  rowspan="1">新北市三重區福民里2鄰成功路73巷42號6樓</td>
+             <td  rowspan="1">0952-759-237</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人二</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:17:26</td>
+             <td  rowspan="1">4678g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">157</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13753022904178"</td>
+			 <td  rowspan="1">="55037122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:47:36</td>
+			 <td  rowspan="1"></td><td  rowspan="1">黃雅莙</td>
+             <td  rowspan="1">台中市大肚區沙田路二段132巷3弄100-1號</td>
+             <td  rowspan="1">0963588799</td>
+             <td  rowspan="1">0</td>
+			 <td   >方舟</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:22:23</td>
+             <td  rowspan="1">502g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">158</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752922904178"</td>
+			 <td  rowspan="1">="55043422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:33</td>
+			 <td  rowspan="1"></td><td  rowspan="1">雷浩斯</td>
+             <td  rowspan="1">桃園市蘆竹區南崁路一段83號七樓之四</td>
+             <td  rowspan="1">909223395</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:16:29</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">159</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752822904178"</td>
+			 <td  rowspan="1">="55044722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:24</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳一姍</td>
+             <td  rowspan="1">台北市104南京東路二段139號11樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">160</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752722904178"</td>
+			 <td  rowspan="1">="55044922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:14</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡?嫣</td>
+             <td  rowspan="1">台北市104南京東路二段139號11樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">498g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">161</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752622904178"</td>
+			 <td  rowspan="1">="55043622027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:46:04</td>
+			 <td  rowspan="1"></td><td  rowspan="1">胡凱淳</td>
+             <td  rowspan="1">台北市光復北路11巷33號3樓</td>
+             <td  rowspan="1">922353033</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 08:36:07</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">162</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752522904178"</td>
+			 <td  rowspan="1">="55038122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:45:46</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林俐</td>
+             <td  rowspan="1">嘉義市西區友竹街7號</td>
+             <td  rowspan="1">0930552285</td>
+             <td  rowspan="1">0</td>
+			 <td   >方舟</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:47:57</td>
+             <td  rowspan="1">685g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">163</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752422904178"</td>
+			 <td  rowspan="1">="55038022027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:45:29</td>
+			 <td  rowspan="1"></td><td  rowspan="1">許聖恩</td>
+             <td  rowspan="1">台南市南區三和街9號</td>
+             <td  rowspan="1">0933322398</td>
+             <td  rowspan="1">0</td>
+			 <td   >方舟</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:16:00</td>
+             <td  rowspan="1">687g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">164</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752322904178"</td>
+			 <td  rowspan="1">="55039422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:45:12</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳怡如</td>
+             <td  rowspan="1">324桃園市平鎮區新興路179巷21弄1號</td>
+             <td  rowspan="1">911893872</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人C</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:02:28</td>
+             <td  rowspan="1">635g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">165</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752222904178"</td>
+			 <td  rowspan="1">="55038222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:44:42</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳昀之</td>
+             <td  rowspan="1">台北市大安區仁愛路三段136號6樓607室</td>
+             <td  rowspan="1">02-27066345</td>
+             <td  rowspan="1">0</td>
+			 <td   >方舟</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:23:26</td>
+             <td  rowspan="1">3440g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">166</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752122904178"</td>
+			 <td  rowspan="1">="55047222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:44:01</td>
+			 <td  rowspan="1"></td><td  rowspan="1">張琬渝收</td>
+             <td  rowspan="1">新北市汐止區水源路一段168巷8號10樓，</td>
+             <td  rowspan="1">916506817</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:52:59</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">167</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13752022904178"</td>
+			 <td  rowspan="1">="55046822027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:43:44</td>
+			 <td  rowspan="1"></td><td  rowspan="1">李雅婷</td>
+             <td  rowspan="1">台北市中山區松江路375號10樓</td>
+             <td  rowspan="1">02-2501-9688</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:55:13</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">168</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751922904178"</td>
+			 <td  rowspan="1">="55047122027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:43:31</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳逸群</td>
+             <td  rowspan="1">台南市永康區南工街87巷2號</td>
+             <td  rowspan="1">935751867</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:13:00</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">169</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751822904178"</td>
+			 <td  rowspan="1">="55045222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:43:21</td>
+			 <td  rowspan="1"></td><td  rowspan="1">鄧天心</td>
+             <td  rowspan="1">台北市松山區南京東路五段89號13樓</td>
+             <td  rowspan="1">02-8787-1111#8910</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:16:34</td>
+             <td  rowspan="1">501g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">170</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751722904178"</td>
+			 <td  rowspan="1">="55051722027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 18:42:47</td>
+			 <td  rowspan="1"></td><td  rowspan="1">換日線羅思涵</td>
+             <td  rowspan="1">104台北市中山區南京東路二段139號11樓</td>
+             <td  rowspan="1">（02）2507-8627</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:34:07</td>
+             <td  rowspan="1">443g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">171</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751622904178"</td>
+			 <td  rowspan="1">="55040922027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:42:30</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蒲孟涵</td>
+             <td  rowspan="1">110台北市信義區基隆路一段141號3樓之3</td>
+             <td  rowspan="1">922683958</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福H</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:57</td>
+             <td  rowspan="1">468g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">172</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751522904178"</td>
+			 <td  rowspan="1">="55042422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:42:17</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳蓉芬</td>
+             <td  rowspan="1">251新北市淡水區中正路一段100號</td>
+             <td  rowspan="1">02-2397-2998</td>
+             <td  rowspan="1">0</td>
+			 <td   >幸福I</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 19:40:46</td>
+             <td  rowspan="1">464g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">173</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751422904178"</td>
+			 <td  rowspan="1">="54774022027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:42:08</td>
+			 <td  rowspan="1"></td><td  rowspan="1">魏秋綢</td>
+             <td  rowspan="1">110台北市基隆路一段186號4樓之8</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:20:52</td>
+             <td  rowspan="1">448g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">174</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751322904178"</td>
+			 <td  rowspan="1">="55047722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:41:41</td>
+			 <td  rowspan="1"></td><td  rowspan="1">李易鴻</td>
+             <td  rowspan="1">新北市板橋區莊敬路225號12樓</td>
+             <td  rowspan="1">937769763</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 09:59:25</td>
+             <td  rowspan="1">499g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">175</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751222904178"</td>
+			 <td  rowspan="1">="55046722027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:41:27</td>
+			 <td  rowspan="1"></td><td  rowspan="1">Jenny小姐收</td>
+             <td  rowspan="1">231003新北市新店區北新路一段148號5樓</td>
+             <td  rowspan="1">922855266</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:21:53</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">176</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751122904178"</td>
+			 <td  rowspan="1">="55045422027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:41:11</td>
+			 <td  rowspan="1"></td><td  rowspan="1">呂紹煒</td>
+             <td  rowspan="1">台北市內湖區瑞光路513巷37號4樓(內湖科技園區)</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >感電</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:48:49</td>
+             <td  rowspan="1">500g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">177</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13751022904178"</td>
+			 <td  rowspan="1">="54805222027818"</td><td  rowspan="1">遠足20250602170542</td> <td  rowspan="1">2025-06-03 18:40:25</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林立恒</td>
+             <td  rowspan="1">台北市松江路209號8樓</td>
+             <td  rowspan="1">02-25051180#803</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:38:51</td>
+             <td  rowspan="1">469g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">178</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750922904178"</td>
+			 <td  rowspan="1">="55052222027818"</td><td  rowspan="1">遠足20250603113137</td> <td  rowspan="1">2025-06-03 18:39:50</td>
+			 <td  rowspan="1"></td><td  rowspan="1">徐菁穗收</td>
+             <td  rowspan="1">台北市萬華區艋舺大道303號五樓</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >衛城</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:25</td>
+             <td  rowspan="1">444g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">179</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750822904178"</td>
+			 <td  rowspan="1">="54775022027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:39:38</td>
+			 <td  rowspan="1"></td><td  rowspan="1">盧俊良老師收</td>
+             <td  rowspan="1">270宜蘭縣蘇澳鎮嶺腳路140號</td>
+             <td  rowspan="1">919216387</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:46:30</td>
+             <td  rowspan="1">1634g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">180</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750722904178"</td>
+			 <td  rowspan="1">="54774222027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:39:23</td>
+			 <td  rowspan="1"></td><td  rowspan="1">黃薇嬪</td>
+             <td  rowspan="1">14台北市內湖區麗山街393巷6號4樓</td>
+             <td  rowspan="1">0917-777-074</td>
+             <td  rowspan="1">0</td>
+			 <td   >小熊</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 13:43:52</td>
+             <td  rowspan="1">2433g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">181</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750622904178"</td>
+			 <td  rowspan="1">="54775322027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:38:46</td>
+			 <td  rowspan="1"></td><td  rowspan="1">王胤頡</td>
+             <td  rowspan="1">台北市大同區民生西路423巷9-1號4樓</td>
+             <td  rowspan="1">02-23670610#22</td>
+             <td  rowspan="1">0</td>
+			 <td   >好人</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:29:56</td>
+             <td  rowspan="1">647g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">182</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750522904178"</td>
+			 <td  rowspan="1">="54777222027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:37:26</td>
+			 <td  rowspan="1"></td><td  rowspan="1">夏珍</td>
+             <td  rowspan="1">台北市內湖區瑞光路513巷37號4樓</td>
+             <td  rowspan="1">02-26573886</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 10:48:49</td>
+             <td  rowspan="1">926g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">183</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750422904178"</td>
+			 <td  rowspan="1">="54777322027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:37:14</td>
+			 <td  rowspan="1"></td><td  rowspan="1">徐菁穗</td>
+             <td  rowspan="1">台北市萬華區艋舺大道303號5樓</td>
+             <td  rowspan="1">0926796726</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 14:50:25</td>
+             <td  rowspan="1">930g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">184</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750322904178"</td>
+			 <td  rowspan="1">="54773822027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:37:05</td>
+			 <td  rowspan="1"></td><td  rowspan="1">陳思安</td>
+             <td  rowspan="1">台北市中正區重慶南路一段66-1號7樓</td>
+             <td  rowspan="1">02-23617231#626</td>
+             <td  rowspan="1">0</td>
+			 <td   >方舟</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 15:15:34</td>
+             <td  rowspan="1">502g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">185</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750222904178"</td>
+			 <td  rowspan="1">="54776922027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:36:54</td>
+			 <td  rowspan="1"></td><td  rowspan="1">楊照</td>
+             <td  rowspan="1">台北市羅斯福路二段95號10樓之3</td>
+             <td  rowspan="1">02-23620296</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-05 12:05:06</td>
+             <td  rowspan="1">930g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">186</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750122904178"</td>
+			 <td  rowspan="1">="54776822027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:36:43</td>
+			 <td  rowspan="1"></td><td  rowspan="1">蔡詩萍</td>
+             <td  rowspan="1">台北市文山區政大一街320巷88號6樓</td>
+             <td  rowspan="1">0935002539</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 12:51:49</td>
+             <td  rowspan="1">927g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">187</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13750022904178"</td>
+			 <td  rowspan="1">="54777022027818"</td><td  rowspan="1">遠足20250602142253</td> <td  rowspan="1">2025-06-03 18:36:16</td>
+			 <td  rowspan="1"></td><td  rowspan="1">林齊皓</td>
+             <td  rowspan="1">新北市汐止區大同路一段369號</td>
+             <td  rowspan="1">00000000</td>
+             <td  rowspan="1">0</td>
+			 <td   >八旗</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 11:17:29</td>
+             <td  rowspan="1">927g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr>
+           <tr>
+		     <td  rowspan="1">188</td>
+             <td  rowspan="1">宅配</td>
+			 
+             <td  rowspan="1">="13749922904178"</td>
+			 <td  rowspan="1">="55043222027818"</td><td  rowspan="1">遠足20250603104930</td> <td  rowspan="1">2025-06-03 18:35:47</td>
+			 <td  rowspan="1"></td><td  rowspan="1">孫敬閔</td>
+             <td  rowspan="1">912屏東縣內埔鄉學府路1號國立屏東科技大學野生動物保育研究所</td>
+             <td  rowspan="1">?(08)7703202ext.6613</td>
+             <td  rowspan="1">0</td>
+			 <td   >野人二</td>
+			 <td   ></td>
+			 <td   >0</td>
+			 <td   ></td>
+              <td  rowspan="1">完成 2025-06-04 07:35:06</td>
+             <td  rowspan="1">904g</td>
+             <td  rowspan="1">65</td>
+			 <td  rowspan="1">未支付 </td>
+             <td  rowspan="1">未入帳</td>
+             </tr></table>

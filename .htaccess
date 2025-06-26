@@ -1,0 +1,12 @@
+# 基本設定
+RewriteEngine On
+
+# URL 重寫規則
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# 允許訪問 PHP 檔案
+<Files "*.php">
+    Require all granted
+</Files>
