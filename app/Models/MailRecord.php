@@ -193,15 +193,20 @@ class MailRecord extends Model {
     public function batchImport($csvFile, $registrarId) {
         $imported = 0;    // 成功匯入的記錄數
         $errors = [];     // 錯誤訊息列表
+        $lineNumber = 1;  // 當前處理的行號（從標題行開始計算）
         
         if (($handle = fopen($csvFile, 'r')) !== false) {
             // 跳過標題行
             fgetcsv($handle);
+            $lineNumber++;
             
             // 逐行處理 CSV 資料
             while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+                $lineNumber++;
+                
                 // 檢查資料完整性（至少 7 個欄位）
                 if (count($row) < 7) {
+                    $errors[] = "第 {$lineNumber} 行：欄位數量不足（需要至少 7 個欄位）";
                     continue;
                 }
                 
@@ -221,6 +226,17 @@ class MailRecord extends Model {
                 
                 // 必填欄位檢查
                 if (empty($mail_type) || empty($receiver_name)) {
+                    $missingFields = [];
+                    if (empty($mail_type)) $missingFields[] = '寄件方式';
+                    if (empty($receiver_name)) $missingFields[] = '收件者姓名';
+                    $errors[] = "第 {$lineNumber} 行：缺少必填欄位：" . implode('、', $missingFields);
+                    continue;
+                }
+                
+                // 驗證寄件方式
+                $validMailTypes = ['掛號', '黑貓', '新竹貨運'];
+                if (!in_array($mail_type, $validMailTypes)) {
+                    $errors[] = "第 {$lineNumber} 行：寄件方式「{$mail_type}」不正確，請使用：" . implode('、', $validMailTypes);
                     continue;
                 }
                 
@@ -240,11 +256,13 @@ class MailRecord extends Model {
                     
                     $imported++;
                 } catch (Exception $e) {
-                    $errors[] = "第 " . ($imported + 1) . " 行匯入失敗：" . $e->getMessage();
+                    $errors[] = "第 {$lineNumber} 行匯入失敗：" . $e->getMessage();
                 }
             }
             
             fclose($handle);
+        } else {
+            $errors[] = "無法讀取 CSV 檔案";
         }
         
         return [

@@ -189,27 +189,46 @@ class MailController extends Controller {
         $message = '';
         $messageType = '';
         
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['csv_file']['tmp_name'])) {
-            try {
-                // 執行批次匯入
-                $result = $this->mailModel->batchImport($_FILES['csv_file']['tmp_name'], $user['id']);
-                
-                if ($result['imported'] > 0) {
-                    $message = "批次匯入完成，共匯入 {$result['imported']} 筆寄件資料。";
-                    $messageType = 'success';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // 檢查檔案上傳
+            if (empty($_FILES['csv_file']['tmp_name'])) {
+                $message = "請選擇要匯入的 CSV 檔案。";
+                $messageType = 'error';
+            } elseif ($_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
+                $uploadErrors = [
+                    UPLOAD_ERR_INI_SIZE => '檔案大小超過系統限制',
+                    UPLOAD_ERR_FORM_SIZE => '檔案大小超過表單限制',
+                    UPLOAD_ERR_PARTIAL => '檔案只有部分被上傳',
+                    UPLOAD_ERR_NO_FILE => '沒有檔案被上傳',
+                    UPLOAD_ERR_NO_TMP_DIR => '找不到暫存目錄',
+                    UPLOAD_ERR_CANT_WRITE => '檔案寫入失敗',
+                    UPLOAD_ERR_EXTENSION => 'PHP 擴充功能停止了檔案上傳'
+                ];
+                $message = "檔案上傳失敗：" . ($uploadErrors[$_FILES['csv_file']['error']] ?? '未知錯誤');
+                $messageType = 'error';
+            } else {
+                try {
+                    // 執行批次匯入
+                    $result = $this->mailModel->batchImport($_FILES['csv_file']['tmp_name'], $user['id']);
                     
-                    // 如果有部分失敗，顯示警告訊息
-                    if (!empty($result['errors'])) {
-                        $message .= "<br>部分資料匯入失敗：<br>" . implode('<br>', $result['errors']);
-                        $messageType = 'warning';
+                    if ($result['imported'] > 0) {
+                        $message = "🎉 批次匯入完成！共成功匯入 {$result['imported']} 筆寄件資料。";
+                        $messageType = 'success';
+                        
+                        // 如果有部分失敗，顯示警告訊息
+                        if (!empty($result['errors'])) {
+                            $message .= "<br><br>⚠️ 以下資料匯入失敗：<br>" . implode('<br>', $result['errors']);
+                            $messageType = 'warning';
+                        }
+                    } else {
+                        $errorDetails = !empty($result['errors']) ? '<br><br>詳細錯誤：<br>' . implode('<br>', $result['errors']) : '';
+                        $message = "❌ 匯入失敗，沒有成功匯入任何資料。請檢查檔案格式是否正確。" . $errorDetails;
+                        $messageType = 'error';
                     }
-                } else {
-                    $message = "匯入失敗，請檢查檔案格式是否正確。";
+                } catch (Exception $e) {
+                    $message = "❌ 匯入失敗：" . $e->getMessage();
                     $messageType = 'error';
                 }
-            } catch (Exception $e) {
-                $message = "匯入失敗：" . $e->getMessage();
-                $messageType = 'error';
             }
         }
         

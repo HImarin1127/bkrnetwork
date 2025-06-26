@@ -143,7 +143,7 @@ if (!$routeFound) {
 <body>
     <div class="container">
         <div class="glass-card" style="text-align: center; max-width: 500px; margin: 100px auto;">
-            <h1 style="color: #6b46c1; margin-bottom: 20px;">404</h1>
+            <h1 style="color: #C8102E; margin-bottom: 20px;">404</h1>
             <h2 style="color: #4c1d95; margin-bottom: 20px;">頁面不存在</h2>
             <p style="color: #666; margin-bottom: 20px;">您要尋找的頁面：<strong>' . htmlspecialchars($uri) . '</strong></p>
             <p style="color: #666; margin-bottom: 30px;">可能已被移動或刪除。</p>

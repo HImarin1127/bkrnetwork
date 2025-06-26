@@ -33,6 +33,9 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="icon">📥</i> 開始匯入
                 </button>
+                <button type="button" onclick="downloadTemplate()" class="btn btn-secondary">
+                    <i class="icon">📄</i> 下載範本
+                </button>
                 <a href="<?php echo $baseUrl; ?>mail/records" class="btn btn-secondary">
                     <i class="icon">📋</i> 查看記錄
                 </a>
@@ -99,7 +102,7 @@
 }
 
 .file-upload-area {
-    border: 2px dashed #7b61ff;
+    border: 2px dashed #C8102E;
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
@@ -124,7 +127,7 @@
 
 .upload-icon {
     font-size: 3rem;
-    color: #7b61ff;
+    color: #C8102E;
 }
 
 .form-actions {
@@ -150,7 +153,7 @@
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #7b61ff, #4caaff);
+    background: #C8102E;
     color: white;
 }
 
@@ -177,7 +180,7 @@
 
 .instruction-item h4 {
     margin: 0 0 1rem 0;
-    color: #7b61ff;
+    color: #C8102E;
     font-size: 1.1rem;
     font-weight: 600;
 }
@@ -248,19 +251,19 @@ const uploadArea = document.querySelector('.file-upload-area');
 
 uploadArea.addEventListener('dragover', function(e) {
     e.preventDefault();
-    this.style.borderColor = '#4caaff';
-    this.style.backgroundColor = 'rgba(123, 97, 255, 0.1)';
+    this.style.borderColor = '#C8102E';
+    this.style.backgroundColor = 'rgba(200, 16, 46, 0.1)';
 });
 
 uploadArea.addEventListener('dragleave', function(e) {
     e.preventDefault();
-    this.style.borderColor = '#7b61ff';
+    this.style.borderColor = '#C8102E';
     this.style.backgroundColor = 'transparent';
 });
 
 uploadArea.addEventListener('drop', function(e) {
     e.preventDefault();
-    this.style.borderColor = '#7b61ff';
+    this.style.borderColor = '#C8102E';
     this.style.backgroundColor = 'transparent';
     
     const files = e.dataTransfer.files;

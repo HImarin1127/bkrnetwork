@@ -355,7 +355,7 @@
 
 .floor-tab:hover,
 .floor-tab.active {
-    background: #6b46c1;
+    background: #C8102E;
     color: white;
     transform: translateY(-2px);
 }
