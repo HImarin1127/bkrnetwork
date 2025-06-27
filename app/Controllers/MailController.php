@@ -189,6 +189,15 @@ class MailController extends Controller {
         $message = '';
         $messageType = '';
         
+        // 檢查是否有從 session 中的訊息（重新導向後顯示）
+        if (isset($_SESSION['import_message'])) {
+            $message = $_SESSION['import_message'];
+            $messageType = $_SESSION['import_message_type'];
+            // 清除 session 中的訊息
+            unset($_SESSION['import_message']);
+            unset($_SESSION['import_message_type']);
+        }
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 檢查檔案上傳
             if (empty($_FILES['csv_file']['tmp_name'])) {
@@ -220,6 +229,12 @@ class MailController extends Controller {
                             $message .= "<br><br>⚠️ 以下資料匯入失敗：<br>" . implode('<br>', $result['errors']);
                             $messageType = 'warning';
                         }
+                        
+                        // 成功後重新導向到匯入頁面顯示結果（避免重複提交）
+                        $_SESSION['import_message'] = $message;
+                        $_SESSION['import_message_type'] = $messageType;
+                        $this->redirect($this->getBaseUrl() . '/mail/import?success=1');
+                        return;
                     } else {
                         $errorDetails = !empty($result['errors']) ? '<br><br>詳細錯誤：<br>' . implode('<br>', $result['errors']) : '';
                         $message = "❌ 匯入失敗，沒有成功匯入任何資料。請檢查檔案格式是否正確。" . $errorDetails;
@@ -253,90 +268,130 @@ class MailController extends Controller {
      * - 提供常用郵資費率表
      */
     public function postage() {
+        // 定義郵資查詢頁面方法
         AuthMiddleware::requireLogin();
+        // 確保使用者已登入
         
         $this->setGlobalViewData();
+        // 設定全域視圖資料
         
         // 預設郵資費率表（可擴充為從資料庫或 API 取得）
         $postageRates = [
+            // 郵資費率設定，依寄件方式和目的地分類
             '掛號' => [
-                '本島' => 33,
-                '離島' => 38
+                '本島' => 33,      // 台灣本島掛號郵資
+                '離島' => 38       // 離島地區掛號郵資
             ],
             '黑貓' => [
-                '常溫' => 65,
-                '冷藏' => 90,
-                '冷凍' => 120
+                '常溫' => 65,      // 黑貓宅急便常溫配送
+                '冷藏' => 90,      // 黑貓宅急便冷藏配送
+                '冷凍' => 120      // 黑貓宅急便冷凍配送
             ],
             '新竹貨運' => [
-                '一般' => 80,
-                '快遞' => 120
+                '一般' => 80,      // 新竹貨運一般配送
+                '快遞' => 120      // 新竹貨運快遞服務
             ]
         ];
+        // 郵資費率表設定結束
         
         $result = null;
+        // 初始化查詢結果
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // 處理 POST 請求（郵資計算）
             // 取得查詢參數
             $mailType = $_POST['mail_type'] ?? '';
+            // 寄件方式
             $destination = $_POST['destination'] ?? '';
+            // 目的地類型
             $weight = floatval($_POST['weight'] ?? 0);
+            // 包裹重量（公斤）
             
             if ($mailType && $destination) {
+                // 檢查寄件方式和目的地是否都有輸入
                 $baseRate = $postageRates[$mailType][$destination] ?? 0;
+                // 取得基本費率
                 if ($baseRate > 0) {
+                    // 如果找到有效的費率
                     $result = [
+                        // 建立查詢結果陣列
                         'mail_type' => $mailType,
                         'destination' => $destination,
                         'weight' => $weight,
                         'base_rate' => $baseRate,
                         'total_rate' => $this->calculatePostage($baseRate, $weight, $mailType)
+                        // 呼叫郵資計算方法
                     ];
+                    // 查詢結果陣列結束
                 }
+                // 費率檢查結束
             }
+            // 參數檢查結束
         }
+        // POST 請求處理結束
         
         $this->view('mail/postage', [
+            // 載入郵資查詢頁面視圖
             'title' => '郵資查詢',
             'postageRates' => $postageRates,
             'result' => $result
         ]);
+        // 視圖載入結束
     }
     
     /**
      * 編輯寄件記錄
      */
     public function edit() {
+        // 定義編輯寄件記錄頁面方法
         AuthMiddleware::requireLogin();
+        // 確保使用者已登入
         
         $id = $_GET['id'] ?? 0;
+        // 取得要編輯的記錄 ID
         $user = AuthMiddleware::getCurrentUser();
+        // 取得當前登入使用者資訊
         $isAdmin = $user['role'] === 'admin';
+        // 檢查是否為管理員
         
         // 檢查權限
         if (!$this->mailModel->checkPermission($id, $user['id'], $isAdmin)) {
+            // 使用郵務模型檢查使用者是否有權限編輯此記錄
             $this->redirect(BASE_URL . 'mail/records?error=權限不足');
+            // 無權限時重新導向到記錄列表頁面
             return;
         }
+        // 權限檢查結束
         
         $record = $this->mailModel->find($id);
+        // 從資料庫取得要編輯的記錄
         if (!$record) {
+            // 檢查記錄是否存在
             $this->redirect(BASE_URL . 'mail/records?error=記錄不存在');
+            // 記錄不存在時重新導向
             return;
         }
+        // 記錄存在性檢查結束
         
         // 只有草稿狀態才能編輯
         if ($record['status'] !== '草稿' && !$isAdmin) {
+            // 非管理員只能編輯草稿狀態的記錄
             $this->redirect(BASE_URL . 'mail/records?error=只有草稿狀態的記錄才能編輯');
             return;
         }
+        // 狀態檢查結束
         
         $this->setGlobalViewData();
+        // 設定全域視圖資料
         
         $errors = [];
+        // 初始化錯誤訊息陣列
         $success = '';
+        // 初始化成功訊息
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // 處理 POST 請求（表單提交）
             $updateData = [
+                // 準備要更新的資料陣列
                 'mail_type' => trim($_POST['mail_type'] ?? ''),
                 'receiver_name' => trim($_POST['receiver_name'] ?? ''),
                 'receiver_address' => trim($_POST['receiver_address'] ?? ''),
@@ -346,61 +401,88 @@ class MailController extends Controller {
                 'sender_ext' => trim($_POST['sender_ext'] ?? ''),
                 'notes' => trim($_POST['notes'] ?? '')
             ];
+            // 更新資料陣列結束
             
             // 驗證資料
             if (empty($updateData['mail_type'])) $errors[] = '請選擇寄件方式';
             if (empty($updateData['receiver_name'])) $errors[] = '請填寫收件者姓名';
             if (empty($updateData['receiver_address'])) $errors[] = '請填寫收件地址';
+            // 基本必填欄位驗證
             
             if (empty($errors)) {
+                // 如果沒有驗證錯誤
                 try {
                     $this->mailModel->update($id, $updateData);
+                    // 呼叫郵務模型更新記錄
                     $success = '記錄更新成功！';
+                    // 設定成功訊息
                     
                     // 重新載入記錄
                     $record = $this->mailModel->find($id);
+                    // 取得更新後的記錄資料
                 } catch (Exception $e) {
+                    // 捕獲更新過程中的例外
                     $errors[] = '更新失敗：' . $e->getMessage();
+                    // 加入錯誤訊息
                 }
+                // 例外處理結束
             }
+            // 錯誤檢查結束
         }
+        // POST 請求處理結束
         
         $this->view('mail/edit', [
+            // 載入編輯頁面視圖
             'title' => '編輯寄件記錄',
             'record' => $record,
             'errors' => $errors,
             'success' => $success,
             'isAdmin' => $isAdmin
         ]);
+        // 視圖載入結束
     }
     
     /**
      * 刪除寄件記錄
      */
     public function delete() {
+        // 定義刪除寄件記錄方法
         AuthMiddleware::requireLogin();
+        // 確保使用者已登入
         
         $id = $_POST['id'] ?? 0;
+        // 取得要刪除的記錄 ID（來自 POST 請求）
         $user = AuthMiddleware::getCurrentUser();
+        // 取得當前登入使用者資訊
         $isAdmin = $user['role'] === 'admin';
+        // 檢查是否為管理員
         
         // 檢查權限
         if (!$this->mailModel->checkPermission($id, $user['id'], $isAdmin)) {
+            // 使用郵務模型檢查刪除權限
             $this->json(['success' => false, 'message' => '權限不足']);
+            // 回傳 JSON 錯誤回應
             return;
         }
+        // 權限檢查結束
         
         $record = $this->mailModel->find($id);
+        // 從資料庫取得要刪除的記錄
         if (!$record) {
+            // 檢查記錄是否存在
             $this->json(['success' => false, 'message' => '記錄不存在']);
+            // 回傳 JSON 錯誤回應
             return;
         }
+        // 記錄存在性檢查結束
         
         // 只有草稿狀態才能刪除
         if ($record['status'] !== '草稿' && !$isAdmin) {
+            // 非管理員只能刪除草稿狀態的記錄
             $this->json(['success' => false, 'message' => '只有草稿狀態的記錄才能刪除']);
             return;
         }
+        // 狀態檢查結束
         
         try {
             $this->mailModel->delete($id);

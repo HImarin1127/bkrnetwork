@@ -8,9 +8,31 @@ require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
 // 引入認證中介軟體，用於驗證使用者權限
 
+/**
+ * 管理員控制器
+ * 
+ * 處理所有管理員相關的頁面和功能，包括：
+ * - 管理員後台首頁
+ * - 使用者管理（新增、編輯、查看）
+ * - 公告管理（新增、編輯、查看）
+ * 
+ * 所有方法都需要管理員權限才能存取
+ * 
+ * @package BKRNetwork\Controllers
+ * @author BKR Network Team
+ * @since 1.0.0
+ */
 class AdminController extends Controller {
     // 定義 AdminController 類別，繼承自 Controller 父類別
     
+    /**
+     * 建構函數
+     * 
+     * 初始化管理員控制器，確保使用者已登入且具有管理員權限
+     * 如果使用者非管理員，會自動重新導向到首頁並顯示錯誤訊息
+     * 
+     * @throws Exception 當使用者未登入時
+     */
     public function __construct() {
         // 建構函數，當類別被實例化時自動執行
         // 確保使用者已登入且為管理員
@@ -24,6 +46,14 @@ class AdminController extends Controller {
     }
     // 建構函數結束
     
+    /**
+     * 管理員後台首頁
+     * 
+     * 顯示管理員控制台的主要儀表板，提供系統管理功能的入口
+     * 包含系統狀態總覽、快速操作連結等
+     * 
+     * @return void
+     */
     public function dashboard() {
         // 定義管理後台首頁方法
         $this->setGlobalViewData();
@@ -37,6 +67,14 @@ class AdminController extends Controller {
     }
     // dashboard 方法結束
     
+    /**
+     * 使用者管理頁面
+     * 
+     * 顯示系統中所有使用者的列表，提供使用者管理功能
+     * 包含新增、編輯、刪除使用者等操作入口
+     * 
+     * @return void
+     */
     public function users() {
         // 定義使用者管理頁面方法
         $this->setGlobalViewData();
@@ -50,6 +88,14 @@ class AdminController extends Controller {
     }
     // users 方法結束
     
+    /**
+     * 新增使用者頁面
+     * 
+     * 顯示新增使用者的表單頁面
+     * 管理員可以在此新增新的系統使用者
+     * 
+     * @return void
+     */
     public function createUser() {
         // 定義新增使用者頁面方法
         $this->setGlobalViewData();
@@ -63,6 +109,14 @@ class AdminController extends Controller {
     }
     // createUser 方法結束
     
+    /**
+     * 編輯使用者頁面
+     * 
+     * 顯示編輯現有使用者的表單頁面
+     * 管理員可以在此修改使用者的基本資料和權限
+     * 
+     * @return void
+     */
     public function editUser() {
         // 定義編輯使用者頁面方法
         $this->setGlobalViewData();
@@ -76,6 +130,14 @@ class AdminController extends Controller {
     }
     // editUser 方法結束
     
+    /**
+     * 公告管理頁面
+     * 
+     * 顯示系統中所有公告的列表，提供公告管理功能
+     * 包含新增、編輯、刪除公告等操作入口
+     * 
+     * @return void
+     */
     public function announcements() {
         // 定義公告管理頁面方法
         $this->setGlobalViewData();
@@ -89,6 +151,14 @@ class AdminController extends Controller {
     }
     // announcements 方法結束
     
+    /**
+     * 新增公告頁面
+     * 
+     * 顯示新增公告的表單頁面
+     * 管理員可以在此發布新的系統公告
+     * 
+     * @return void
+     */
     public function createAnnouncement() {
         // 定義新增公告頁面方法
         $this->setGlobalViewData();
@@ -102,6 +172,14 @@ class AdminController extends Controller {
     }
     // createAnnouncement 方法結束
     
+    /**
+     * 編輯公告頁面
+     * 
+     * 顯示編輯現有公告的表單頁面
+     * 管理員可以在此修改公告的內容和發布狀態
+     * 
+     * @return void
+     */
     public function editAnnouncement() {
         // 定義編輯公告頁面方法
         $this->setGlobalViewData();

@@ -198,13 +198,13 @@ class HomeController extends Controller {
      * 公司 NAS 介紹頁面
      * 
      * 顯示網路附加儲存設備（NAS）的使用說明
-     * 幫助員工了解檔案儲存和共享系統
+     * 包括存取方式、帳號申請、使用須知等資訊
      */
     public function companyNas() {
         // 定義公司 NAS 介紹頁面方法
         $this->view('company/nas', [
             // 呼叫視圖方法，載入 NAS 介紹頁面模板
-            'title' => 'NAS介紹',
+            'title' => 'NAS 網路存儲',
             // 設定頁面標題
             'pageType' => 'company'
             // 設定頁面類型為公司資訊區

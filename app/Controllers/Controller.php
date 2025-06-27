@@ -136,9 +136,15 @@ abstract class Controller {
         $script = $_SERVER['SCRIPT_NAME'];
         $path = dirname($script);
         
+        // 正規化路徑分隔符號（Windows 和 Unix 相容）
+        $path = str_replace('\\', '/', $path);
+        
         // 如果路徑是根目錄，不要包含路徑
-        if ($path === '/' || $path === '\\') {
+        if ($path === '/' || $path === '') {
             $path = '';
+        } else {
+            // 確保路徑以斜線結尾
+            $path = rtrim($path, '/');
         }
         
         return $protocol . '://' . $host . $path;
