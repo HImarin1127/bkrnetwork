@@ -148,20 +148,39 @@ class AuthMiddleware {
     /**
      * 靜態方法：取得目前登入的使用者資訊
      * 
-     * 從資料庫查詢並回傳完整的使用者資料
-     * 包含最新的使用者資訊（非 session 快取）
+     * 根據認證模式取得使用者資料：
+     * - LDAP模式：從session建構使用者資料
+     * - 本地模式：從資料庫查詢使用者資料
      * 
      * @return array|null 使用者資訊陣列，未登入時回傳 null
      */
     public static function getCurrentUser() {
         if (isset($_SESSION['user_id'])) {
-            // 載入必要的模型
-            require_once __DIR__ . '/../Models/Database.php';
-            require_once __DIR__ . '/../Models/User.php';
+            // 檢查認證模式
+            $authMode = $_SESSION['auth_mode'] ?? 'local';
             
-            // 從資料庫查詢最新的使用者資料
-            $userModel = new User();
-            return $userModel->find($_SESSION['user_id']);
+            if ($authMode === 'ldap') {
+                // LDAP 模式：從 session 建構使用者資料
+                return [
+                    'id' => $_SESSION['user_id'],
+                    'username' => $_SESSION['username'] ?? $_SESSION['user_id'],
+                    'name' => $_SESSION['name'] ?? $_SESSION['username'] ?? $_SESSION['user_id'],
+                    'email' => $_SESSION['email'] ?? '',
+                    'role' => $_SESSION['role'] ?? 'user',
+                    'status' => 'active',
+                    'auth_source' => 'ldap',
+                    'department' => $_SESSION['department'] ?? '',
+                    'phone' => $_SESSION['phone'] ?? '',
+                    'title' => $_SESSION['title'] ?? ''
+                ];
+            } else {
+                // 本地模式：從資料庫查詢最新的使用者資料
+                require_once __DIR__ . '/../Models/Database.php';
+                require_once __DIR__ . '/../Models/User.php';
+                
+                $userModel = new User();
+                return $userModel->find($_SESSION['user_id']);
+            }
         }
         return null;
     }

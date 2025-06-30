@@ -35,13 +35,29 @@
             <?php endif; ?>
             
             <form method="POST" action="<?php echo $baseUrl; ?>/login" class="auth-form">
+                <div class="login-options">
+                    <div class="login-methods">
+                        <div class="method-badge ldap-badge">
+                            <span class="badge-icon">🌐</span>
+                            <span class="badge-text">LDAP 企業帳號登入</span>
+                        </div>
+                        <div class="method-info">
+                            <p>可使用公司域帳號或本地帳號登入</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="username" class="form-label">👤 員工帳號</label>
                     <div class="input-wrapper">
                         <span class="input-icon">👤</span>
                         <input type="text" id="username" name="username" class="form-input" required 
                                value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>"
-                               placeholder="請輸入您的員工帳號">
+                               placeholder="請輸入您的LDAP帳號或本地帳號">
+                    </div>
+                    <div class="field-hint">
+                        <span class="hint-icon">💡</span>
+                        <span class="hint-text">支援公司域帳號(LDAP)和本地帳號登入</span>
                     </div>
                 </div>
                 
@@ -70,6 +86,9 @@
             <div class="auth-links">
                 <a href="<?php echo $baseUrl; ?>/register" class="auth-link">
                     <span>➕</span> 申請新帳號
+                </a>
+                <a href="<?php echo $baseUrl; ?>/ldap-test" class="auth-link">
+                    <span>🔍</span> LDAP 測試工具
                 </a>
                 <a href="<?php echo $baseUrl; ?>/" class="auth-link">
                     <span>🏠</span> 返回首頁
@@ -153,6 +172,66 @@
     max-width: 450px;
     position: relative;
     z-index: 1;
+}
+
+/* 登入選項區 */
+.login-options {
+    margin-bottom: 2rem;
+}
+
+.login-methods {
+    text-align: center;
+}
+
+.method-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(200,16,46,0.3);
+    margin-bottom: 1rem;
+}
+
+.method-badge .badge-icon {
+    font-size: 1.1rem;
+}
+
+.method-info {
+    margin-top: 0.5rem;
+}
+
+.method-info p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* 欄位提示 */
+.field-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(200,16,46,0.05);
+    border-radius: 8px;
+    border-left: 3px solid #C8102E;
+}
+
+.hint-icon {
+    font-size: 0.9rem;
+    color: #C8102E;
+}
+
+.hint-text {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
 }
 
 /* 認證標題區 */

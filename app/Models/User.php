@@ -22,29 +22,216 @@ class User extends Model {
     /**
      * 使用者身分驗證
      * 
-     * 根據使用者名稱和密碼驗證使用者身分
-     * 使用安全的密碼驗證機制
+     * 整合 LDAP 和本地認證機制：
+     * 1. 優先嘗試 LDAP 認證
+     * 2. LDAP 認證失敗時回歸本地認證（如果啟用）
+     * 3. 自動同步 LDAP 使用者資料到本地資料庫
      * 
      * @param string $username 使用者名稱
      * @param string $password 密碼（明文）
      * @return array|false 驗證成功回傳使用者資料陣列，失敗回傳 false
      */
     public function authenticate($username, $password) {
-        // 定義使用者身分驗證方法
+        // 1. 嘗試 LDAP 認證
+        $ldapUser = $this->authenticateWithLdap($username, $password);
+        if ($ldapUser) {
+            // LDAP 認證成功，同步使用者資料
+            return $this->syncLdapUser($ldapUser);
+        }
+        
+        // 2. LDAP 認證失敗，檢查是否回歸本地認證
+        if ($this->shouldFallbackToLocal()) {
+            return $this->authenticateLocalPrivate($username, $password);
+        }
+        
+        return false; // 認證失敗
+    }
+    
+    /**
+     * LDAP 認證
+     * 
+     * @param string $username 使用者名稱
+     * @param string $password 密碼
+     * @return array|false LDAP 使用者資料或 false
+     */
+    private function authenticateWithLdap($username, $password) {
+        try {
+            // 檢查 LDAP 服務是否可用
+            if (!class_exists('LdapService')) {
+                require_once __DIR__ . '/../Services/LdapService.php';
+            }
+            
+            $ldapService = new LdapService();
+            return $ldapService->authenticate($username, $password);
+            
+        } catch (Exception $e) {
+            // LDAP 認證過程發生錯誤，記錄日誌
+            error_log("LDAP 認證錯誤：" . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * 本地認證（傳統方式）
+     * 
+     * @param string $username 使用者名稱
+     * @param string $password 密碼
+     * @return array|false 使用者資料或 false
+     */
+    private function authenticateLocalPrivate($username, $password) {
         // 根據使用者名稱查詢使用者
         $user = $this->findBy('username', $username);
-        // 使用父類別的 findBy 方法，根據 username 欄位查詢使用者資料
         
         // 如果使用者存在且密碼驗證正確
         if ($user && password_verify($password, $user['password'])) {
-            // 檢查使用者是否存在，並使用 password_verify 函數驗證密碼
             return $user;
-            // 驗證成功，回傳使用者資料陣列
         }
-        // 條件判斷結束
         
         return false;
-        // 驗證失敗，回傳 false
+    }
+    
+    /**
+     * 公開的本地認證方法（供雙模式登入使用）
+     * 
+     * @param string $username 使用者名稱
+     * @param string $password 密碼
+     * @return array|false 使用者資料或 false
+     */
+    public function authenticateLocal($username, $password) {
+        return $this->authenticateLocalPrivate($username, $password);
+    }
+    
+    /**
+     * 測試資料庫連接
+     * 
+     * @return bool
+     */
+    public function testConnection() {
+        try {
+            $this->db->query("SELECT 1");
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    
+    /**
+     * 同步 LDAP 使用者到本地資料庫
+     * 
+     * @param array $ldapUser LDAP 使用者資料
+     * @return array 本地使用者資料
+     */
+    private function syncLdapUser($ldapUser) {
+        // 檢查本地是否已存在該使用者
+        $localUser = $this->findBy('username', $ldapUser['username']);
+        
+        if ($localUser) {
+            // 使用者已存在，檢查是否需要同步屬性
+            if ($this->shouldSyncAttributes()) {
+                $this->updateLdapUserData($localUser['id'], $ldapUser);
+                // 重新取得更新後的使用者資料
+                $localUser = $this->find($localUser['id']);
+            }
+            return $localUser;
+        } else {
+            // 使用者不存在，檢查是否自動建立
+            if ($this->shouldAutoCreateUsers()) {
+                $userId = $this->createLdapUser($ldapUser);
+                return $this->find($userId);
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 建立 LDAP 使用者到本地資料庫
+     * 
+     * @param array $ldapUser LDAP 使用者資料
+     * @return int 新建立的使用者 ID
+     */
+    private function createLdapUser($ldapUser) {
+        $userData = [
+            'username' => $ldapUser['username'],
+            'name' => $ldapUser['name'] ?: $ldapUser['username'],
+            'email' => $ldapUser['email'] ?: '',
+            'role' => $ldapUser['role'] ?: 'user',
+            'status' => 'active',
+            'auth_source' => 'ldap',
+            'department' => $ldapUser['department'] ?: '',
+            'phone' => $ldapUser['phone'] ?: '',
+            'title' => $ldapUser['title'] ?: '',
+            // LDAP 使用者不需要本地密碼
+            'password' => password_hash(uniqid(), PASSWORD_DEFAULT), // 隨機密碼
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+        
+        return $this->create($userData);
+    }
+    
+    /**
+     * 更新 LDAP 使用者資料
+     * 
+     * @param int $userId 使用者 ID
+     * @param array $ldapUser LDAP 使用者資料
+     */
+    private function updateLdapUserData($userId, $ldapUser) {
+        $updateData = [
+            'name' => $ldapUser['name'] ?: $ldapUser['username'],
+            'email' => $ldapUser['email'] ?: '',
+            'role' => $ldapUser['role'] ?: 'user',
+            'department' => $ldapUser['department'] ?: '',
+            'phone' => $ldapUser['phone'] ?: '',
+            'title' => $ldapUser['title'] ?: '',
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+        
+        $this->update($userId, $updateData);
+    }
+    
+    /**
+     * 檢查是否應該回歸本地認證
+     * 
+     * @return bool
+     */
+    private function shouldFallbackToLocal() {
+        $ldapConfig = $this->getLdapConfig();
+        return isset($ldapConfig['fallback_to_local']) && $ldapConfig['fallback_to_local'];
+    }
+    
+    /**
+     * 檢查是否應該自動建立使用者
+     * 
+     * @return bool
+     */
+    private function shouldAutoCreateUsers() {
+        $ldapConfig = $this->getLdapConfig();
+        return isset($ldapConfig['auto_create_users']) && $ldapConfig['auto_create_users'];
+    }
+    
+    /**
+     * 檢查是否應該同步使用者屬性
+     * 
+     * @return bool
+     */
+    private function shouldSyncAttributes() {
+        $ldapConfig = $this->getLdapConfig();
+        return isset($ldapConfig['sync_attributes']) && $ldapConfig['sync_attributes'];
+    }
+    
+    /**
+     * 取得 LDAP 配置
+     * 
+     * @return array
+     */
+    private function getLdapConfig() {
+        static $config = null;
+        if ($config === null) {
+            $configFile = __DIR__ . '/../../config/ldap.php';
+            $config = file_exists($configFile) ? require $configFile : [];
+        }
+        return $config;
     }
     // authenticate 方法結束
     

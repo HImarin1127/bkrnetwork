@@ -61,6 +61,7 @@ class AuthController extends Controller {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_role'] = $user['role'];
                 $_SESSION['user_name'] = $user['name'];
+                $_SESSION['auth_source'] = $user['auth_source'] ?? 'local';
                 
                 // 重新導向到原來要去的頁面或首頁
                 $redirectTo = $_SESSION['redirect_after_login'] ?? BASE_URL;
@@ -69,9 +70,11 @@ class AuthController extends Controller {
                 $this->redirect($redirectTo);
             } else {
                 // 登入失敗，顯示錯誤訊息
+                $errorMessage = $this->getAuthenticationErrorMessage($username);
+                
                 $this->view('auth/login', [
                     'title' => '登入',
-                    'error' => '帳號或密碼錯誤',
+                    'error' => $errorMessage,
                     'pageType' => 'auth'
                 ]);
             }
@@ -188,5 +191,176 @@ class AuthController extends Controller {
         
         // 重新導向到首頁
         $this->redirect(BASE_URL);
+    }
+    
+    /**
+     * 取得認證錯誤訊息
+     * 
+     * 根據 LDAP 設定提供更詳細的錯誤訊息
+     * 
+     * @param string $username 使用者名稱
+     * @return string 錯誤訊息
+     */
+    private function getAuthenticationErrorMessage($username) {
+        // 載入 LDAP 設定
+        $ldapConfig = require __DIR__ . '/../../config/ldap.php';
+        
+        if ($ldapConfig['enabled']) {
+            if ($ldapConfig['fallback_to_local']) {
+                return '帳號或密碼錯誤。請確認您的 LDAP 帳號密碼或本地帳號密碼是否正確。';
+            } else {
+                return '帳號或密碼錯誤。請確認您的 LDAP 帳號密碼是否正確，或聯繫資訊部門檢查帳號狀態。';
+            }
+        } else {
+            return '帳號或密碼錯誤。請確認您的帳號密碼是否正確。';
+        }
+    }
+    
+    /**
+     * LDAP 連接測試頁面
+     * 
+     * 提供LDAP診斷和測試功能
+     */
+    public function ldapTest() {
+        // 檢查是否有POST請求
+        $testUsername = $_POST['test_username'] ?? '';
+        $testPassword = $_POST['test_password'] ?? '';
+        $testResult = null;
+
+        if (!empty($testUsername) && !empty($testPassword)) {
+            // 執行認證測試
+            try {
+                $result = $this->userModel->authenticate($testUsername, $testPassword);
+                
+                if ($result) {
+                    $testResult = [
+                        'success' => true,
+                        'message' => '認證成功！',
+                        'data' => $result
+                    ];
+                } else {
+                    $testResult = [
+                        'success' => false,
+                        'message' => '認證失敗 - 帳號或密碼錯誤'
+                    ];
+                }
+            } catch (Exception $e) {
+                $testResult = [
+                    'success' => false,
+                    'message' => '認證過程發生錯誤: ' . $e->getMessage()
+                ];
+            }
+        }
+
+        // 載入LDAP配置進行顯示
+        $ldapConfig = require __DIR__ . '/../../config/ldap.php';
+
+        // 測試LDAP連接
+        $connectionTest = null;
+        $ldapUsers = [];
+        
+        if ($ldapConfig['enabled']) {
+            try {
+                require_once __DIR__ . '/../Services/LdapService.php';
+                $ldapService = new LdapService();
+                $connectionTest = $ldapService->testConnection();
+                
+                // 如果連接成功，獲取使用者清單
+                if ($connectionTest['success']) {
+                    $ldapUsers = $this->getLdapUsersList();
+                }
+            } catch (Exception $e) {
+                $connectionTest = [
+                    'success' => false,
+                    'message' => 'LDAP服務載入失敗: ' . $e->getMessage(),
+                    'details' => []
+                ];
+            }
+        }
+
+        $this->view('auth/ldap-test', [
+            'title' => 'LDAP 測試工具',
+            'ldapConfig' => $ldapConfig,
+            'connectionTest' => $connectionTest,
+            'testResult' => $testResult,
+            'testUsername' => $testUsername,
+            'ldapUsers' => $ldapUsers,
+            'pageType' => 'auth'
+        ]);
+    }
+    
+    /**
+     * 獲取LDAP使用者清單
+     * 
+     * @return array LDAP使用者清單
+     */
+    private function getLdapUsersList() {
+        try {
+            $ldapConfig = require __DIR__ . '/../../config/ldap.php';
+            
+            // 建立LDAP連接
+            $server = $ldapConfig['use_ssl'] 
+                ? "ldaps://{$ldapConfig['server']}:{$ldapConfig['port']}"
+                : "ldap://{$ldapConfig['server']}:{$ldapConfig['port']}";
+                
+            $connection = ldap_connect($server);
+            
+            if (!$connection) {
+                return [];
+            }
+            
+            // 設定LDAP選項
+            ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+            ldap_set_option($connection, LDAP_OPT_NETWORK_TIMEOUT, $ldapConfig['timeout']);
+            
+            // 啟用TLS（如果配置）
+            if ($ldapConfig['use_tls']) {
+                ldap_start_tls($connection);
+            }
+            
+            // 嘗試綁定
+            if (!ldap_bind($connection, $ldapConfig['admin_username'], $ldapConfig['admin_password'])) {
+                ldap_unbind($connection);
+                return [];
+            }
+            
+            // 搜尋使用者
+            $searchFilter = '(objectClass=inetOrgPerson)';
+            $attributes = ['uid', 'cn', 'mail', 'telephoneNumber', 'department', 'title'];
+            
+            $search = ldap_search(
+                $connection,
+                $ldapConfig['user_search_base'],
+                $searchFilter,
+                $attributes
+            );
+            
+            if (!$search) {
+                ldap_unbind($connection);
+                return [];
+            }
+            
+            $entries = ldap_get_entries($connection, $search);
+            $users = [];
+            
+            for ($i = 0; $i < $entries['count']; $i++) {
+                $entry = $entries[$i];
+                $users[] = [
+                    'uid' => isset($entry['uid'][0]) ? $entry['uid'][0] : '未設定',
+                    'cn' => isset($entry['cn'][0]) ? $entry['cn'][0] : '未設定',
+                    'mail' => isset($entry['mail'][0]) ? $entry['mail'][0] : '未設定',
+                    'department' => isset($entry['department'][0]) ? $entry['department'][0] : '未設定',
+                    'title' => isset($entry['title'][0]) ? $entry['title'][0] : '未設定',
+                    'phone' => isset($entry['telephonenumber'][0]) ? $entry['telephonenumber'][0] : '未設定'
+                ];
+            }
+            
+            ldap_unbind($connection);
+            return $users;
+            
+        } catch (Exception $e) {
+            return [];
+        }
     }
 } 

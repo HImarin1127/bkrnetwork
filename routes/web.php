@@ -39,6 +39,7 @@ return [
     '/login' => ['AuthController', 'login'],
     '/register' => ['AuthController', 'register'],
     '/logout' => ['AuthController', 'logout'],
+    '/ldap-test' => ['AuthController', 'ldapTest'],
     
     // ========================================
     // 需要登入的路由 - 核心業務功能

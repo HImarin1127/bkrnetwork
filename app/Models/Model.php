@@ -1,6 +1,9 @@
 <?php
 // app/Models/Model.php
 
+// 引入資料庫類別
+require_once __DIR__ . '/Database.php';
+
 /**
  * 模型基礎類別
  * 
