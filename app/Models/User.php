@@ -82,8 +82,18 @@ class User extends Model {
         // 根據使用者名稱查詢使用者
         $user = $this->findBy('username', $username);
         
+        // 檢查使用者是否存在
+        if (!$user) {
+            return false;
+        }
+        
+        // 如果是 LDAP 使用者，拒絕本地認證
+        if ($user['auth_source'] === 'ldap' || $user['password'] === 'LDAP_AUTH_ONLY') {
+            return false;
+        }
+        
         // 如果使用者存在且密碼驗證正確
-        if ($user && password_verify($password, $user['password'])) {
+        if (password_verify($password, $user['password'])) {
             return $user;
         }
         
@@ -161,8 +171,8 @@ class User extends Model {
             'department' => $ldapUser['department'] ?: '',
             'phone' => $ldapUser['phone'] ?: '',
             'title' => $ldapUser['title'] ?: '',
-            // LDAP 使用者不需要本地密碼
-            'password' => password_hash(uniqid(), PASSWORD_DEFAULT), // 隨機密碼
+            // LDAP 使用者不儲存本地密碼，使用特殊標識符
+            'password' => 'LDAP_AUTH_ONLY',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ];
