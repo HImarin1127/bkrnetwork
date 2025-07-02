@@ -8,7 +8,7 @@
         <div class="meeting-room-content">
             <div class="external-system glass-card">
                 <h2>🌐 線上預約系統</h2>
-                <p class="system-intro">讀書共和國採用專業的會議室預約管理系統，提供即時預約、衝突檢查、自動通知等完整功能。</p>
+                <p class="system-intro">讀書共和國採用專業的會議室預約管理系統，方便同仁進行會議室預約管理。</p>
                 
                 <div class="system-access">
                     <div class="access-button">
@@ -22,31 +22,7 @@
                     </p>
                 </div>
 
-                <div class="system-features">
-                    <h3>系統功能特色</h3>
-                    <div class="features-grid">
-                        <div class="feature-item">
-                            <div class="feature-icon">⏰</div>
-                            <h4>即時預約</h4>
-                            <p>即時查看可用時段，立即完成預約</p>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">🔍</div>
-                            <h4>智慧搜尋</h4>
-                            <p>依容納人數、設備需求快速篩選</p>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📧</div>
-                            <h4>自動通知</h4>
-                            <p>預約確認、提醒通知自動發送</p>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon">📊</div>
-                            <h4>使用統計</h4>
-                            <p>查看個人預約記錄和使用統計</p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="meeting-rooms glass-card">
@@ -217,9 +193,52 @@
 }
 
 .external-link {
-    font-size: 1.2rem;
-    padding: 16px 32px;
-    min-width: 280px;
+    font-size: 1.4rem;
+    padding: 20px 40px;
+    min-width: 320px;
+    background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(200, 16, 46, 0.3);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.external-link:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.external-link:hover:before {
+    left: 100%;
+}
+
+.external-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(200, 16, 46, 0.4);
+    background: linear-gradient(135deg, #8B0000 0%, #C8102E 100%);
+    text-decoration: none;
+    color: white;
+}
+
+.external-link:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(200, 16, 46, 0.3);
 }
 
 .access-note {
@@ -235,36 +254,7 @@
     font-size: 1.2rem;
 }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-top: 20px;
-}
 
-.feature-item {
-    text-align: center;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.feature-item h4 {
-    color: #1f2937;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-}
-
-.feature-item p {
-    color: #6b7280;
-    line-height: 1.6;
-}
 
 .rooms-grid {
     display: grid;
@@ -395,7 +385,6 @@
         font-size: 2rem;
     }
     
-    .features-grid,
     .rooms-grid {
         grid-template-columns: 1fr;
     }

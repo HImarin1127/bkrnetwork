@@ -1,1 +1,0 @@
-<?php include_once __DIR__ . '/../common/under-development.php'; ?> 

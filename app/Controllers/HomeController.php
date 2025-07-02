@@ -79,12 +79,22 @@ class HomeController extends Controller {
         $announcements = $this->announcementModel->getPublicAnnouncements();
         // 從公告模型取得所有公開公告（無數量限制）
         
+        // 檢查當前使用者是否有公告管理權限
+        $canManageAnnouncements = false;
+        if (isset($_SESSION['user_id'])) {
+            require_once __DIR__ . '/../Models/User.php';
+            $userModel = new User();
+            $canManageAnnouncements = $userModel->canManageAnnouncements($_SESSION['user_id']);
+        }
+        
         $this->view('announcements/index', [
             // 呼叫視圖方法，載入公告列表頁面模板
             'title' => '最新公告',
             // 設定頁面標題
             'announcements' => $announcements,
             // 將公告資料傳遞到視圖
+            'canManageAnnouncements' => $canManageAnnouncements,
+            // 傳遞公告管理權限檢查結果
             'pageType' => 'announcements'
             // 設定頁面類型為公告區
         ]);

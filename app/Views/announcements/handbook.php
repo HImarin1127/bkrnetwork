@@ -1,6 +1,6 @@
 <div class="handbook-container">
     <div class="page-header">
-        <h1>員工手冊</h1>
+        <h1>📚 員工手冊</h1>
         <p class="page-subtitle">讀書共和國員工工作指南與規章制度</p>
     </div>
 
@@ -113,7 +113,7 @@
 }
 
 .section-title {
-    color: #6b46c1;
+    color: #2d3748;
     margin-bottom: 20px;
     font-size: 1.5rem;
     border-bottom: 2px solid rgba(107, 70, 193, 0.2);

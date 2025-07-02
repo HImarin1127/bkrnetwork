@@ -1,6 +1,18 @@
 <div class="page-header">
-    <h1 class="page-title">📢 最新公告中心</h1>
-    <p class="page-subtitle">掌握讀書共和國第一手資訊與重要通知</p>
+    <div class="header-content">
+        <div class="header-info">
+            <h1 class="page-title">📢 最新公告中心</h1>
+            <p class="page-subtitle">掌握讀書共和國第一手資訊與重要通知</p>
+        </div>
+        <?php if ($canManageAnnouncements): ?>
+        <div class="header-actions">
+            <a href="<?php echo $baseUrl; ?>/admin/announcements/create" class="btn btn-primary">
+                <span class="btn-icon">➕</span>
+                <span class="btn-text">新增公告</span>
+            </a>
+        </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div class="announcement-stats content-card">
@@ -165,6 +177,79 @@
 </div>
 
 <style>
+/* 頁面標題區域 */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.header-info {
+    flex: 1;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200, 16, 46, 0.4);
+}
+
+.btn-icon {
+    font-size: 1rem;
+}
+
+.btn-text {
+    font-size: 0.9rem;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 /* 統計卡片 */
 .announcement-stats {
     margin-bottom: 2rem;

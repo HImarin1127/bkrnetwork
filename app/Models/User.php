@@ -353,5 +353,80 @@ class User extends Model {
         // 使用父類別的 findBy 方法查詢使用者名稱，如果找到資料則回傳 true，否則回傳 false
     }
     // userExists 方法結束
+    
+    /**
+     * 檢查使用者是否有公告管理權限
+     * 
+     * 檢查使用者姓名是否包含資訊、人資、總務、財務關鍵字或為管理員
+     * 
+     * @param int $userId 使用者ID
+     * @return bool 是否有公告管理權限
+     */
+    public function canManageAnnouncements($userId) {
+        $user = $this->find($userId);
+        if (!$user) {
+            return false;
+        }
+        
+        // 管理員一律有權限
+        if ($user['role'] === 'admin') {
+            return true;
+        }
+        
+        // 檢查姓名中是否包含部門關鍵字
+        $name = $user['name'];
+        $allowedDepartmentKeywords = [
+            '資訊',      // 資訊部門
+            '人資',      // 人資部門  
+            '總務',      // 總務部門
+            '財務'       // 財務部門
+        ];
+        
+        foreach ($allowedDepartmentKeywords as $keyword) {
+            if (strpos($name, $keyword) !== false) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 檢查使用者是否可以上傳PDF附件
+     * 
+     * 檢查使用者姓名是否包含總務人資、資訊、財務關鍵字或為管理員
+     * 
+     * @param int $userId 使用者ID
+     * @return bool 是否可以上傳PDF附件
+     */
+    public function canUploadPDF($userId) {
+        return $this->canManageAnnouncements($userId); // 與公告管理權限相同
+    }
+    
+    /**
+     * 根據部門關鍵字取得使用者列表
+     * 
+     * @param array $departmentKeywords 部門關鍵字陣列
+     * @return array 使用者資料陣列
+     */
+    public function getUsersByDepartments($departmentKeywords) {
+        if (empty($departmentKeywords)) {
+            return [];
+        }
+        
+        // 建立查詢條件，檢查name欄位是否包含任何一個關鍵字
+        $conditions = [];
+        $params = [];
+        
+        foreach ($departmentKeywords as $keyword) {
+            $conditions[] = "name LIKE ?";
+            $params[] = "%{$keyword}%";
+        }
+        
+        $whereClause = implode(' OR ', $conditions);
+        $sql = "SELECT * FROM {$this->table} WHERE ({$whereClause}) AND status = 'active'";
+        
+        return $this->db->fetchAll($sql, $params);
+    }
 } 
 // User 類別結束 

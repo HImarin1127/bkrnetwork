@@ -1,14 +1,5 @@
 <!-- 歡迎區塊 -->
 <div class="hero-banner">
-    <div class="hero-background">
-        <div class="hero-pattern"></div>
-        <div class="hero-circles">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="circle circle-3"></div>
-        </div>
-    </div>
-    
     <div class="hero-content">
         <div class="hero-logo">
             <div class="logo-main">
@@ -17,124 +8,16 @@
             </div>
             <div class="logo-subtitle">員工服務平台</div>
         </div>
-        
-        <h1 class="hero-title">
-            <span class="title-line">🌟 歡迎使用</span>
-            <span class="title-highlight">員工服務平台</span>
-        </h1>
-        
-        <p class="hero-description">
-            專為讀書共和國員工打造的便民服務平台<br>
-            提供完整的企業內部服務功能
-        </p>
-        
-        <?php if (!$isLoggedIn): ?>
-        <div class="hero-actions">
-            <a href="/bkrnetwork/login" class="btn btn-primary btn-hero">
-                <span class="btn-icon">🚀</span>
-                <span class="btn-text">員工登入</span>
-            </a>
-        </div>
-        
-        <div class="hero-features">
-            <div class="feature-item">
-                <span class="feature-icon">⚡</span>
-                <span class="feature-text">快速便民</span>
-            </div>
-            <div class="feature-item">
-                <span class="feature-icon">🔒</span>
-                <span class="feature-text">安全可靠</span>
-            </div>
-            <div class="feature-item">
-                <span class="feature-icon">📱</span>
-                <span class="feature-text">隨時隨地</span>
-            </div>
-        </div>
-        <?php endif; ?>
     </div>
 </div>
 
-<?php if ($isLoggedIn): ?>
-<!-- 個人儀表板 -->
-<div class="dashboard-section">
-    <div class="section-header">
-        <h2 class="section-title">🎯 個人工作台</h2>
-        <p class="section-subtitle">快速存取常用功能，提升工作效率</p>
-    </div>
-    
-    <div class="dashboard-grid">
-        <!-- 使用者資訊卡片 -->
-        <div class="user-card content-card">
-            <div class="user-header">
-                <div class="user-avatar">
-                    <span class="avatar-icon"><?php echo mb_substr($currentUser['name'] ?? $currentUser['username'], 0, 1); ?></span>
-                </div>
-                <div class="user-info">
-                    <h3 class="user-name"><?php echo htmlspecialchars($currentUser['name'] ?? $currentUser['username']); ?></h3>
-                    <span class="user-role">
-                        <?php if ($currentUser['role'] === 'admin'): ?>
-                            <span class="role-badge role-admin">👑 系統管理員</span>
-                        <?php else: ?>
-                            <span class="role-badge role-user">👤 一般使用者</span>
-                        <?php endif; ?>
-                    </span>
-                </div>
-            </div>
-            
-            <div class="user-details">
-                <div class="detail-item">
-                    <span class="detail-icon">🆔</span>
-                    <span class="detail-label">帳號</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($currentUser['username']); ?></span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-icon">⏰</span>
-                    <span class="detail-label">登入時間</span>
-                    <span class="detail-value"><?php echo date('Y-m-d H:i'); ?></span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-icon">📅</span>
-                    <span class="detail-label">今日日期</span>
-                    <span class="detail-value"><?php echo date('Y年m月d日'); ?></span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 快速操作卡片 -->
-        <div class="quick-actions content-card">
-            <div class="card-header">
-                <h3 class="card-title">⚡ 快速操作</h3>
-                <p class="card-subtitle">常用功能一鍵直達</p>
-            </div>
-            
-            <div class="actions-grid">
-                <a href="<?php echo $baseUrl; ?>/mail/request" class="action-item">
-                    <div class="action-icon">📮</div>
-                    <span class="action-text">寄件登記</span>
-                </a>
-                <a href="<?php echo $baseUrl; ?>/mail/records" class="action-item">
-                    <div class="action-icon">📋</div>
-                    <span class="action-text">郵務記錄</span>
-                </a>
-                <a href="<?php echo $baseUrl; ?>/booking/meeting-room" class="action-item">
-                    <div class="action-icon">🏢</div>
-                    <span class="action-text">會議室預約</span>
-                </a>
-                <a href="<?php echo $baseUrl; ?>/forms/leave-request" class="action-item">
-                    <div class="action-icon">📝</div>
-                    <span class="action-text">請假申請</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
+
 
 <!-- 最新公告區塊 -->
 <div class="announcements-showcase">
-    <div class="section-header">
-        <h2 class="section-title">📢 最新公告</h2>
-        <p class="section-subtitle">掌握第一手重要資訊</p>
+    <div class="section-header" style="margin-bottom: 1.5rem;">
+        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 0.3rem;">📢 最新公告</h2>
+        <p class="section-subtitle" style="font-size: 0.9rem;">掌握第一手重要資訊</p>
     </div>
     
     <?php if (!empty($announcements)): ?>
@@ -208,8 +91,8 @@
 <!-- 系統功能展示 -->
 <div class="features-showcase">
     <div class="section-header">
-        <h2 class="section-title">🚀 系統功能</h2>
-        <p class="section-subtitle">完整的企業服務解決方案</p>
+        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 0.3rem;">🚀 介面總覽</h2>
+        <p class="section-subtitle" style="font-size: 0.9rem;">完整的企業服務解決方案</p>
     </div>
     
     <div class="features-grid">
@@ -279,7 +162,6 @@
                 <div class="module-features">
                     <span class="feature-tag">🏢 會議室</span>
                     <span class="feature-tag">💻 設備借用</span>
-                    <span class="feature-tag">🚗 公務車輛</span>
                 </div>
             </div>
             <div class="module-footer">
@@ -350,12 +232,11 @@
 .hero-banner {
     position: relative;
     background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
-    min-height: 60vh;
+    padding: 2rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .hero-background {
@@ -431,47 +312,59 @@
 }
 
 .hero-content {
-    position: relative;
-    z-index: 2;
     text-align: center;
     color: white;
-    max-width: 800px;
     padding: 0 2rem;
 }
 
 .hero-logo {
-    margin-bottom: 2rem;
+    margin: 0;
 }
 
 .logo-main {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+    gap: 0.8rem;
+    margin-bottom: 0.3rem;
 }
 
 .logo-icon {
-    font-size: 3rem;
-    animation: bounce 2s infinite;
+    font-size: 2.2rem;
+    display: inline-block;
+    animation: bookFloating 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
+.logo-icon:hover {
+    animation-play-state: paused;
+    transform: scale(1.1) translateY(-5px);
+    filter: drop-shadow(0 5px 15px rgba(200,16,46,0.3));
+}
+
+@keyframes bookFloating {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .logo-text {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .logo-subtitle {
-    font-size: 1.2rem;
+    font-size: 1rem;
     opacity: 0.9;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .hero-title {
@@ -491,10 +384,7 @@
 .title-highlight {
     display: block;
     font-size: 3.5rem;
-    background: linear-gradient(45deg, #FFD700, #FFF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #FFD700;
     text-shadow: 0 0 30px rgba(255,215,0,0.5);
 }
 
@@ -577,195 +467,38 @@
 .section-title {
     font-size: 2.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #2d3748;
     margin: 0 0 1rem 0;
 }
 
 .section-subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    margin: 0;
-}
-
-/* 儀表板區塊 */
-.dashboard-section {
-    margin-bottom: 4rem;
-}
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.user-card {
-    padding: 2.5rem;
-}
-
-.user-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(200,16,46,0.1);
-}
-
-.user-avatar {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 25px rgba(200,16,46,0.3);
-}
-
-.avatar-icon {
-    color: white;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.user-name {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin: 0 0 0.5rem 0;
-}
-
-.role-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.role-admin {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    color: #8B4513;
-}
-
-.role-user {
-    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-    color: #1565c0;
-}
-
-.user-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background: rgba(200,16,46,0.02);
-    border-radius: 12px;
-    border: 1px solid rgba(200,16,46,0.05);
-}
-
-.detail-icon {
-    font-size: 1.2rem;
-}
-
-.detail-label {
-    font-weight: 600;
-    color: #4a5568;
-    min-width: 80px;
-}
-
-.detail-value {
-    color: #2d3748;
-    font-weight: 500;
-    margin-left: auto;
-}
-
-/* 快速操作 */
-.quick-actions {
-    padding: 2.5rem;
-}
-
-.card-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.card-title {
     font-size: 1.4rem;
-    font-weight: 700;
-    color: #C8102E;
-    margin: 0 0 0.5rem 0;
-}
-
-.card-subtitle {
     color: #666;
     margin: 0;
 }
 
-.actions-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
 
-.action-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1.5rem;
-    background: rgba(200,16,46,0.02);
-    border: 1px solid rgba(200,16,46,0.1);
-    border-radius: 16px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-}
 
-.action-item:hover {
-    background: rgba(200,16,46,0.05);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(200,16,46,0.1);
-}
 
-.action-icon {
-    font-size: 2rem;
-    opacity: 0.8;
-}
-
-.action-text {
-    font-weight: 600;
-    color: #2d3748;
-}
 
 /* 公告展示區 */
 .announcements-showcase {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 .announcements-carousel {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .announcement-spotlight {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     border: 1px solid rgba(200,16,46,0.1);
     transition: all 0.3s ease;
 }
@@ -796,25 +529,25 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .spotlight-meta {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
 .meta-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 16px;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
@@ -853,22 +586,23 @@
 }
 
 .spotlight-title {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #2d3748;
-    margin: 0 0 1rem 0;
+    margin: 0 0 0.8rem 0;
     line-height: 1.4;
 }
 
 .spotlight-preview {
     color: #4a5568;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
 }
 
 .spotlight-footer {
     border-top: 1px solid rgba(200,16,46,0.1);
-    padding-top: 1rem;
+    padding-top: 0.8rem;
 }
 
 .spotlight-link {
@@ -932,15 +666,17 @@
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .feature-module {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     border-radius: 20px;
-    padding: 2.5rem;
+    padding: 1.8rem;
     box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     border: 1px solid rgba(200,16,46,0.1);
     transition: all 0.3s ease;
@@ -954,12 +690,12 @@
 .module-header {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
 }
 
 .module-icon {
-    font-size: 3rem;
+    font-size: 2.2rem;
     opacity: 0.8;
 }
 
@@ -993,14 +729,14 @@
 .module-description {
     color: #4a5568;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .module-features {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
 }
 
 .feature-tag {
@@ -1016,7 +752,7 @@
 
 .module-footer {
     border-top: 1px solid rgba(200,16,46,0.1);
-    padding-top: 1.5rem;
+    padding-top: 1.2rem;
 }
 
 .module-link {
@@ -1039,13 +775,21 @@
 }
 
 /* 響應式設計 */
-@media (max-width: 1024px) {
-    .dashboard-grid {
-        grid-template-columns: 1fr;
+@media (max-width: 1200px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
     }
-    
+}
+
+@media (max-width: 768px) {
     .features-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .feature-module {
+        padding: 1.5rem;
     }
 }
 
@@ -1062,17 +806,19 @@
         gap: 1.5rem;
     }
     
-    .actions-grid {
-        grid-template-columns: 1fr;
-    }
-    
     .announcements-carousel {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .announcement-spotlight {
+        padding: 1rem;
     }
     
     .announcements-actions {
         flex-direction: column;
         align-items: center;
+        gap: 0.8rem;
     }
 }
 

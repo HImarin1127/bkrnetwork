@@ -272,10 +272,7 @@
 .auth-title {
     font-size: 1.8rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #2d3748;
     margin: 0 0 0.5rem 0;
 }
 

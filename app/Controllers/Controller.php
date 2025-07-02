@@ -159,12 +159,26 @@ abstract class Controller {
      * - 管理員權限
      * - 基礎 URL
      * - 應用程式名稱
+     * - 公告管理權限
      */
     protected function setGlobalViewData() {
         $this->viewData['currentUser'] = $this->getCurrentUser();
         $this->viewData['isLoggedIn'] = $this->isLoggedIn();
         $this->viewData['isAdmin'] = $this->isAdmin();
         $this->viewData['baseUrl'] = $this->getBaseUrl();
+        
+        // 檢查公告管理權限
+        $this->viewData['canManageAnnouncements'] = false;
+        if ($this->isLoggedIn() && isset($_SESSION['user_id'])) {
+            try {
+                require_once __DIR__ . '/../Models/User.php';
+                $userModel = new User();
+                $this->viewData['canManageAnnouncements'] = $userModel->canManageAnnouncements($_SESSION['user_id']);
+            } catch (Exception $e) {
+                // 如果出現錯誤，預設為無權限
+                $this->viewData['canManageAnnouncements'] = false;
+            }
+        }
         
         // 載入應用程式設定
         $config = require __DIR__ . '/../../config/app.php';

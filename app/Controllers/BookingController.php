@@ -14,7 +14,6 @@ require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
  * 處理各種資源預約功能，包括：
  * - 會議室預約
  * - 設備借用
- * - 車輛預約
  * 
  * 所有預約功能都需要使用者登入才能存取
  */
@@ -71,24 +70,6 @@ class BookingController extends Controller {
         // 視圖參數陣列結束
     }
     // equipment 方法結束
-    
-    /**
-     * 車輛預約頁面
-     * 
-     * 顯示公務車輛預約申請表單
-     * 供員工預約公司車輛進行公務出行
-     */
-    public function vehicle() {
-        // 定義車輛預約頁面方法
-        $this->setGlobalViewData();
-        // 設定全域視圖資料
-        $this->view('booking/vehicle', [
-            // 呼叫視圖方法，載入車輛預約頁面模板
-            'title' => '車輛預約'
-            // 設定頁面標題
-        ]);
-        // 視圖參數陣列結束
-    }
-    // vehicle 方法結束
+
 } 
 // BookingController 類別結束 

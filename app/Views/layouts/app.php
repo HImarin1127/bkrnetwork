@@ -21,6 +21,67 @@
             position: relative;
         }
 
+        /* 響應式設計 */
+        @media (max-width: 1024px) {
+            .logo-section {
+                left: 5%;
+            }
+            
+            .main-nav {
+                left: 20%;
+                right: 1rem;
+            }
+            
+            .nav-menu {
+                gap: 0.75rem;
+            }
+            
+            .nav-link {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                padding: 1rem;
+                justify-content: center;
+            }
+            
+            .logo-section {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                order: 1;
+            }
+            
+            .main-nav {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                right: auto;
+                justify-content: center;
+                width: 100%;
+                order: 2;
+            }
+            
+            .nav-menu {
+                justify-content: center;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
+            }
+        }
+
         /* 頂部導覽區域 */
         .top-bar {
             background: #ffffff;
@@ -91,7 +152,7 @@
         .main-header {
             background: #C8102E;
             color: white;
-            padding: 2rem 0 1rem;
+            padding: 1rem 0;
             position: relative;
             overflow: visible;
             border-bottom: 3px solid rgba(255,255,255,0.1);
@@ -113,24 +174,30 @@
         }
 
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            width: 100%;
+            padding: 0;
             position: relative;
             z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            min-height: 80px;
         }
 
         .logo-section {
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
+            justify-content: flex-start;
+            z-index: 1003;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
             text-decoration: none;
             color: white;
             transition: transform 0.3s ease;
@@ -143,21 +210,35 @@
         .logo-container:hover .logo-image {
             box-shadow: 0 8px 25px rgba(0,0,0,0.6);
             background: rgba(244, 244, 244, 1);
-            transform: scale(1.05);
+            animation-play-state: paused;
+            transform: scale(1.05) translateY(-5px);
         }
 
         .logo-image {
-            height: 80px;
+            height: 70px;
             width: auto;
             border-radius: 8px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.5);
             background: rgba(244, 244, 244, 0.95);
             padding: 8px;
             transition: all 0.3s ease;
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         .logo-text {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin: 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -166,18 +247,25 @@
 
         /* 主導覽選單 */
         .main-nav {
-            position: relative;
+            position: absolute;
+            left: 25%;
+            top: 50%;
+            transform: translateY(-50%);
             z-index: 1001;
+            display: flex;
+            justify-content: flex-start;
+            overflow: visible;
+            right: 2rem;
         }
 
         .nav-menu {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
             gap: 1rem;
             list-style: none;
             margin: 0;
             padding: 0;
+            align-items: center;
+            flex-wrap: nowrap;
         }
 
 
@@ -194,7 +282,7 @@
         .nav-link {
             display: flex;
             align-items: center;
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.25rem;
             background: rgba(244, 244, 244, 0.15);
             border-radius: 12px;
             color: white;
@@ -203,7 +291,8 @@
             transition: all 0.3s ease;
             border: 2px solid rgba(244, 244, 244, 0.2);
             backdrop-filter: blur(10px);
-            gap: 0.75rem;
+            gap: 0.5rem;
+            white-space: nowrap;
         }
 
         .nav-link:hover {
@@ -318,7 +407,20 @@
             margin: 0;
         }
 
+        /* 當子選單需要顯示在左邊時 */
+        .submenu.submenu-left {
+            left: auto;
+            right: 100%;
+            transform: translateX(10px);
+        }
+
         .dropdown-submenu:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .dropdown-submenu:hover .submenu.submenu-left {
             opacity: 1;
             visibility: visible;
             transform: translateX(0);
@@ -375,10 +477,7 @@
         .page-title {
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #C8102E 0%, #8B0000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #2d3748;
             margin: 0 0 0.5rem 0;
         }
 
@@ -631,9 +730,15 @@
         <div class="top-bar-container">
             <?php if ($isLoggedIn): ?>
                 <div class="user-info">
-                    <span>歡迎，<?php echo htmlspecialchars($currentUser['name'] ?? $currentUser['username']); ?></span>
+                    <span><?php echo htmlspecialchars($currentUser['username']); ?>，歡迎您！<?php echo htmlspecialchars($currentUser['name'] ?? $currentUser['username']); ?></span>
                     <?php if ($isAdmin): ?>
                         <a href="<?php echo $baseUrl; ?>/admin" class="admin-link">管理後台</a>
+                    <?php endif; ?>
+                    <?php 
+                    // 檢查是否有公告管理權限（使用已載入的變數）
+                    if ($isLoggedIn && isset($canManageAnnouncements) && $canManageAnnouncements): 
+                    ?>
+                        <a href="<?php echo $baseUrl; ?>/admin/announcements" class="admin-link" style="background: #10b981;">📢 公告管理</a>
                     <?php endif; ?>
                     <a href="<?php echo $baseUrl; ?>/logout" class="logout-btn">登出</a>
                 </div>
@@ -653,7 +758,6 @@
             <div class="logo-section">
                 <a href="<?php echo $baseUrl; ?>/" class="logo-container">
                     <img src="<?php echo $baseUrl; ?>/assets/images/logo-horizontal.png" alt="讀書共和國出版集團" class="logo-image">
-                    <h1 class="logo-text"><?php echo $appName; ?></h1>
                 </a>
             </div>
             
@@ -749,7 +853,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo $baseUrl; ?>/booking/meeting-room">會議室預約</a></li>
                             <li><a href="<?php echo $baseUrl; ?>/booking/equipment">設備預約</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/booking/vehicle">車輛預約</a></li>
                         </ul>
                     </li>
                     <?php endif; ?>
@@ -795,17 +898,29 @@
                                     <li><a href="<?php echo $baseUrl; ?>/guides/printer/troubleshoot">印表機疑難處理</a></li>
                                 </ul>
                             </li>
+                            <li><a href="<?php echo $baseUrl; ?>/guides/pos">POS收銀機操作手冊</a></li>
                             <li class="dropdown-submenu">
                                 <a href="#">
-                                    MAC影印
+                                    文化部免稅相關
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/mac/web-print">WEB列印網頁</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/mac/driver">MAC影印機驅動安裝</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/tax-exempt/process">免稅申請流程</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/tax-exempt/system">免稅系統操作說明</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<?php echo $baseUrl; ?>/guides/pos">POS收銀機操作手冊</a></li>
+                            <li class="dropdown-submenu">
+                                <a href="#">
+                                    MF2000相關
+                                    <span class="submenu-arrow">▶</span>
+                                </a>
+                                <ul class="submenu">
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/document">MF2000公文簽核</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/attendance">MF2000出缺勤管理</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/connection">MF2000連線說明</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/edoc">MF2000電子公文</a></li>
+                                </ul>
+                            </li>
                             <li class="dropdown-submenu">
                                 <a href="#">
                                     NAS公區相關
@@ -817,16 +932,6 @@
                                 </ul>
                             </li>
                             <li><a href="<?php echo $baseUrl; ?>/guides/email">電子郵件完整設定指引</a></li>
-                            <li class="dropdown-submenu">
-                                <a href="#">
-                                    文化部免稅相關
-                                    <span class="submenu-arrow">▶</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/tax-exempt/process">免稅申請流程</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/tax-exempt/system">免稅系統操作說明</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -844,14 +949,59 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p>&copy; 2024 <?php echo $appName; ?>. 版權所有.</p>
+            <p>&copy; <?php echo $appName; ?>. 版權所有.</p>
             <p>為讀書共和國出版集團員工提供便利的內部服務平台</p>
         </div>
     </footer>
 
     <script>
-        // 簡單的移動設備下拉選單處理
+        // 檢測子選單是否需要左側顯示
+        function checkSubmenuPosition() {
+            const submenus = document.querySelectorAll('.dropdown-submenu');
+            
+            submenus.forEach(submenuContainer => {
+                const submenu = submenuContainer.querySelector('.submenu');
+                if (!submenu) return;
+                
+                // 監聽hover事件，在顯示前檢查位置
+                submenuContainer.addEventListener('mouseenter', function() {
+                    // 先暫時顯示子選單來計算位置（但透明度為0）
+                    submenu.style.opacity = '0';
+                    submenu.style.visibility = 'visible';
+                    submenu.style.transform = 'translateX(0)';
+                    
+                    // 計算位置
+                    const rect = submenu.getBoundingClientRect();
+                    const viewportWidth = window.innerWidth;
+                    
+                    // 檢查右邊界是否超出螢幕
+                    if (rect.right > viewportWidth - 20) { // 留20px安全邊距
+                        submenu.classList.add('submenu-left');
+                    } else {
+                        submenu.classList.remove('submenu-left');
+                    }
+                    
+                    // 恢復正常狀態，讓CSS hover效果接管
+                    submenu.style.opacity = '';
+                    submenu.style.visibility = '';
+                    submenu.style.transform = '';
+                });
+            });
+        }
+        
+        // 頁面載入和視窗大小改變時檢查
         document.addEventListener('DOMContentLoaded', function() {
+            // 桌面版的智能子選單定位
+            if (window.innerWidth > 768) {
+                checkSubmenuPosition();
+                
+                // 監聽視窗大小改變（使用者縮放等）
+                window.addEventListener('resize', function() {
+                    setTimeout(checkSubmenuPosition, 100);
+                });
+            }
+            
+            // 移動設備下拉選單處理
             if (window.innerWidth <= 768) {
                 const dropdowns = document.querySelectorAll('.nav-item.dropdown');
                 

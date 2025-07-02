@@ -25,20 +25,20 @@ class Announcement extends Model {
     // 宣告受保護的成員變數，指定對應的資料庫資料表名稱
     
     /**
-     * 取得公開的一般公告
+     * 取得所有公開公告
      * 
-     * 查詢已發布的一般類型公告，按建立時間倒序排列
+     * 查詢所有已發布的公告（包含一般公告、假日資訊、員工手冊等），按建立時間倒序排列
      * 主要用於首頁和公告列表頁面顯示
      * 
      * @param int $limit 限制回傳的公告數量，預設為 10 筆
      * @return array 公告資料陣列集合
      */
     public function getPublicAnnouncements($limit = 10) {
-        // 定義取得公開一般公告方法
+        // 定義取得所有公開公告方法
         return $this->where(
             // 使用父類別的 where 方法進行條件查詢
-            ['status' => 'published', 'type' => 'general'], 
-            // 查詢條件：狀態為已發布且類型為一般公告
+            ['status' => 'published'], 
+            // 查詢條件：狀態為已發布（包含所有類型的公告）
             'created_at DESC', 
             // 排序條件：按建立時間降冪排序（最新的在前）
             $limit
@@ -170,5 +170,185 @@ class Announcement extends Model {
         // 公告不存在時回傳 false
     }
     // toggleStatus 方法結束
+    
+    /**
+     * 建立新公告（增強版）
+     * 
+     * 建立新的公告記錄，支援公告日期和附件功能
+     * 
+     * @param array $data 公告資料陣列
+     * @param int $authorId 作者ID
+     * @return int 新建立的公告 ID
+     */
+    public function createAnnouncementWithDetails($data, $authorId) {
+        $data['author_id'] = $authorId;
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        
+        // 如果設定為發布狀態，記錄發布時間和發布者
+        if (isset($data['status']) && $data['status'] === 'published') {
+            $data['published_at'] = date('Y-m-d H:i:s');
+            $data['published_by'] = $authorId;
+        }
+        
+        return $this->create($data);
+    }
+    
+    /**
+     * 發布公告
+     * 
+     * 將草稿狀態的公告正式發布
+     * 
+     * @param int $id 公告 ID
+     * @param int $publisherId 發布者ID
+     * @return int|false 成功時回傳受影響的記錄數量，失敗時回傳 false
+     */
+    public function publishAnnouncement($id, $publisherId) {
+        $updateData = [
+            'status' => 'published',
+            'published_at' => date('Y-m-d H:i:s'),
+            'published_by' => $publisherId
+        ];
+        
+        return $this->updateAnnouncement($id, $updateData);
+    }
+    
+    /**
+     * 取消發布公告
+     * 
+     * 將已發布的公告改為草稿狀態
+     * 
+     * @param int $id 公告 ID
+     * @return int|false 成功時回傳受影響的記錄數量，失敗時回傳 false
+     */
+    public function unpublishAnnouncement($id) {
+        $updateData = [
+            'status' => 'draft',
+            'published_at' => null,
+            'published_by' => null
+        ];
+        
+        return $this->updateAnnouncement($id, $updateData);
+    }
+    
+    /**
+     * 上傳公告附件
+     * 
+     * 處理PDF附件上傳
+     * 
+     * @param int $announcementId 公告ID
+     * @param array $fileInfo 檔案資訊
+     * @return bool 上傳成功回傳 true
+     */
+    public function uploadAttachment($announcementId, $fileInfo) {
+        $uploadDir = __DIR__ . '/../../uploads/announcements/';
+        
+        // 建立上傳目錄
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+        
+        // 產生唯一檔名
+        $fileName = $announcementId . '_' . date('YmdHis') . '_' . $fileInfo['name'];
+        $filePath = $uploadDir . $fileName;
+        
+        // 移動檔案
+        if (move_uploaded_file($fileInfo['tmp_name'], $filePath)) {
+            // 更新公告的附件資訊
+            $updateData = [
+                'attachment_url' => 'uploads/announcements/' . $fileName,
+                'attachment_name' => $fileInfo['name']
+            ];
+            
+            return $this->updateAnnouncement($announcementId, $updateData);
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 刪除公告附件
+     * 
+     * @param int $announcementId 公告ID
+     * @return bool 刪除成功回傳 true
+     */
+    public function removeAttachment($announcementId) {
+        $announcement = $this->find($announcementId);
+        
+        if ($announcement && $announcement['attachment_url']) {
+            $filePath = __DIR__ . '/../../' . $announcement['attachment_url'];
+            
+            // 刪除實體檔案
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            
+            // 清除資料庫記錄
+            $updateData = [
+                'attachment_url' => null,
+                'attachment_name' => null
+            ];
+            
+            return $this->updateAnnouncement($announcementId, $updateData);
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 記錄公告操作日誌
+     * 
+     * @param int $announcementId 公告ID
+     * @param string $action 操作類型
+     * @param int $actionBy 操作者ID
+     * @param array $details 操作詳情
+     */
+    public function logAction($announcementId, $action, $actionBy, $details = []) {
+        $sql = "INSERT INTO announcement_logs (announcement_id, action, action_by, action_details, created_at) 
+                VALUES (?, ?, ?, ?, ?)";
+        
+        $this->db->execute($sql, [
+            $announcementId,
+            $action,
+            $actionBy,
+            json_encode($details),
+            date('Y-m-d H:i:s')
+        ]);
+    }
+    
+    /**
+     * 取得公告操作日誌
+     * 
+     * @param int $announcementId 公告ID
+     * @return array 操作日誌陣列
+     */
+    public function getActionLogs($announcementId) {
+        $sql = "SELECT al.*, u.name as action_user_name 
+                FROM announcement_logs al 
+                LEFT JOIN users u ON al.action_by = u.id 
+                WHERE al.announcement_id = ? 
+                ORDER BY al.created_at DESC";
+        
+        return $this->db->fetchAll($sql, [$announcementId]);
+    }
+    
+    /**
+     * 取得所有公告（管理用）
+     * 
+     * 取得所有公告並包含作者資訊
+     * 
+     * @param string $orderBy 排序方式
+     * @return array 公告資料陣列
+     */
+    public function getAllAnnouncementsWithAuthor($orderBy = 'created_at DESC') {
+        $sql = "SELECT a.*, u.name as author_name, u.username as author_username,
+                       p.name as publisher_name
+                FROM {$this->table} a 
+                LEFT JOIN users u ON a.author_id = u.id
+                LEFT JOIN users p ON a.published_by = p.id
+                ORDER BY {$orderBy}";
+        
+        return $this->db->fetchAll($sql, []);
+    }
 } 
 // Announcement 類別結束 
