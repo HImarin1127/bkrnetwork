@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>版本更新報告 - 讀書共和國員工服務網</title>
+    <style>
+        :root {
+            --primary-color: #C8102E;
+            --primary-dark: #8B0000;
+            --success-bg: #d4edda;
+            --success-text: #155724;
+            --warning-bg: #fff3cd;
+            --warning-text: #856404;
+            --info-bg: #cce5ff;
+            --info-text: #004085;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .version-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .feature-status {
+            margin-left: auto;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .status-completed {
+            background: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        .status-in-progress {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+        }
+
+        .status-planned {
+            background: var(--info-bg);
+            color: var(--info-text);
+        }
+
+        .feature-details {
+            margin-top: 10px;
+        }
+
+        .feature-details ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .feature-details li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-details li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .progress-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📊 版本更新報告</h1>
+            <p class="version-tag">Version 3.1</p>
+        </header>
+
+        <main>
+            <!-- LDAP 認證整合 -->
+            <section class="card">
+                <h2>🔐 認證系統更新</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-header">
+                            <span class="feature-icon">👤</span>
+                            <span class="feature-title">LDAP 認證整合</span>
+                            <span class="feature-status status-in-progress">進行中 80%</span>
+                        </div>
+                        <div class="feature-details">
+                            <ul>
+                                <li>AD 帳號驗證整合 - <span class="status-completed">完成</span></li>
+                                <li>使用者資料同步 - <span class="status-completed">完成</span></li>
+                                <li>角色權限管理 - <span class="status-completed">完成</span></li>
+                                <li>單一登入（SSO）功能 - <span class="status-in-progress">進行中</span></li>
+                                <li>密碼重設流程 - <span class="status-in-progress">進行中</span></li>
+                            </ul>
+                            <div class="progress-section">
+                                <div class="progress-title">
+                                    <span>完成進度</span>
+                                    <span>80%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 資源預約系統 -->
+            <section class="card">
+                <h2>📅 資源預約系統</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-header">
+                            <span class="feature-icon">🏢</span>
+                            <span class="feature-title">會議室與設備預約</span>
+                            <span class="feature-status status-in-progress">進行中 40%</span>
+                        </div>
+                        <div class="feature-details">
+                            <ul>
+                                <li>會議室預約基本功能 - <span class="status-completed">完成</span></li>
+                                <li>設備借用登記 - <span class="status-completed">完成</span></li>
+                                <li>預約衝突檢查 - <span class="status-in-progress">進行中</span></li>
+                                <li>行事曆整合 - <span class="status-planned">規劃中</span></li>
+                                <li>通知提醒功能 - <span class="status-planned">規劃中</span></li>
+                            </ul>
+                            <div class="progress-section">
+                                <div class="progress-title">
+                                    <span>完成進度</span>
+                                    <span>40%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 40%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 公告系統 -->
+            <section class="card">
+                <h2>📢 公告系統</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-header">
+                            <span class="feature-icon">📰</span>
+                            <span class="feature-title">企業公告管理</span>
+                            <span class="feature-status status-in-progress">進行中 70%</span>
+                        </div>
+                        <div class="feature-details">
+                            <ul>
+                                <li>公告發布與管理 - <span class="status-completed">完成</span></li>
+                                <li>檔案上傳功能 - <span class="status-completed">完成</span></li>
+                                <li>假日行事曆整合 - <span class="status-completed">完成</span></li>
+                                <li>公告分類功能 - <span class="status-in-progress">進行中</span></li>
+                                <li>電子郵件通知 - <span class="status-planned">規劃中</span></li>
+                            </ul>
+                            <div class="progress-section">
+                                <div class="progress-title">
+                                    <span>完成進度</span>
+                                    <span>70%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 表單系統 -->
+            <section class="card">
+                <h2>📝 表單系統</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-header">
+                            <span class="feature-icon">📋</span>
+                            <span class="feature-title">電子表單管理</span>
+                            <span class="feature-status status-in-progress">進行中 25%</span>
+                        </div>
+                        <div class="feature-details">
+                            <ul>
+                                <li>基礎表單架構 - <span class="status-completed">完成</span></li>
+                                <li>請假申請表單 - <span class="status-in-progress">進行中</span></li>
+                                <li>出差申請 - <span class="status-planned">規劃中</span></li>
+                                <li>採購申請 - <span class="status-planned">規劃中</span></li>
+                                <li>簽核流程 - <span class="status-planned">規劃中</span></li>
+                            </ul>
+                            <div class="progress-section">
+                                <div class="progress-title">
+                                    <span>完成進度</span>
+                                    <span>25%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 公司資訊中心 -->
+            <section class="card">
+                <h2>🏢 公司資訊中心</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-header">
+                            <span class="feature-icon">📚</span>
+                            <span class="feature-title">資訊整合平台</span>
+                            <span class="feature-status status-in-progress">進行中 60%</span>
+                        </div>
+                        <div class="feature-details">
+                            <ul>
+                                <li>通訊錄查詢 - <span class="status-completed">完成</span></li>
+                                <li>樓層平面圖 - <span class="status-completed">完成</span></li>
+                                <li>常用連結整合 - <span class="status-completed">完成</span></li>
+                                <li>NAS 使用指南 - <span class="status-in-progress">進行中</span></li>
+                                <li>新進人員指引 - <span class="status-planned">規劃中</span></li>
+                            </ul>
+                            <div class="progress-section">
+                                <div class="progress-title">
+                                    <span>完成進度</span>
+                                    <span>60%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html> 

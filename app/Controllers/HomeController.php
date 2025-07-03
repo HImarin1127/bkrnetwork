@@ -9,6 +9,8 @@ require_once __DIR__ . '/../Models/Database.php';
 // 引入資料庫連接類別，提供資料庫操作功能
 require_once __DIR__ . '/../Models/Announcement.php';
 // 引入公告模型類別，用於公告相關資料操作
+require_once __DIR__ . '/../Models/CompanyInfo.php';
+// 引入公司資訊模型類別，用於公司資訊相關資料操作
 
 /**
  * 首頁控制器
@@ -29,6 +31,10 @@ class HomeController extends Controller {
     private $announcementModel;
     // 宣告私有成員變數，存放公告模型的實例
     
+    /** @var CompanyInfo 公司資訊模型實例，用於操作公司資訊相關資料 */
+    private $companyInfoModel;
+    // 宣告私有成員變數，存放公司資訊模型的實例
+    
     /**
      * 建構函式
      * 
@@ -38,6 +44,8 @@ class HomeController extends Controller {
         // 建構函數，當類別被實例化時自動執行
         $this->announcementModel = new Announcement();
         // 實例化公告模型，用於後續的公告相關操作
+        $this->companyInfoModel = new CompanyInfo();
+        // 實例化公司資訊模型，用於後續的公司資訊相關操作
         $this->setGlobalViewData();
         // 設定全域視圖資料，如當前使用者資訊、登入狀態等
     }
@@ -173,15 +181,15 @@ class HomeController extends Controller {
      * 幫助員工和訪客了解辦公環境佈局
      */
     public function companyFloor() {
-        // 定義公司樓層圖頁面方法
+        $floorInfo = $this->companyInfoModel->getFloorInfo();
+        $employeeSeats = $this->companyInfoModel->getEmployeeSeats();
+        
         $this->view('company/floor', [
-            // 呼叫視圖方法，載入樓層圖頁面模板
             'title' => '樓層圖',
-            // 設定頁面標題
-            'pageType' => 'company'
-            // 設定頁面類型為公司資訊區
+            'pageType' => 'company',
+            'floorInfo' => $floorInfo,
+            'employeeSeats' => $employeeSeats
         ]);
-        // 視圖參數陣列結束
     }
     // companyFloor 方法結束
     
@@ -192,15 +200,15 @@ class HomeController extends Controller {
      * 提供內外部溝通的聯絡管道
      */
     public function companyContacts() {
-        // 定義公司聯絡資訊頁面方法
+        $departmentContacts = $this->companyInfoModel->getDepartmentContacts();
+        $extensionNumbers = $this->companyInfoModel->getExtensionNumbers();
+        
         $this->view('company/contacts', [
-            // 呼叫視圖方法，載入聯絡資訊頁面模板
             'title' => '聯絡資訊',
-            // 設定頁面標題
-            'pageType' => 'company'
-            // 設定頁面類型為公司資訊區
+            'pageType' => 'company',
+            'departmentContacts' => $departmentContacts,
+            'extensionNumbers' => $extensionNumbers
         ]);
-        // 視圖參數陣列結束
     }
     // companyContacts 方法結束
     

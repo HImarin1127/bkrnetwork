@@ -45,165 +45,33 @@
             </div>
 
             <div class="floor-content-area">
-                <!-- 7樓 -->
-                <div class="floor-panel active" id="floor-7">
-                    <div class="floor-header">
-                        <h3>7樓 - 主管辦公區</h3>
-                        <span class="floor-badge executive">高階管理</span>
-                    </div>
-                    <div class="floor-layout">
-                        <div class="office-grid">
-                            <div class="office-room ceo">
-                                <div class="room-icon">👑</div>
-                                <h4>總經理室</h4>
-                                <p>獨立辦公室，配備會客區</p>
-                            </div>
-                            <div class="office-room vp">
-                                <div class="room-icon">🎯</div>
-                                <h4>副總經理室</h4>
-                                <p>寬敞辦公空間</p>
-                            </div>
-                            <div class="office-room meeting">
-                                <div class="room-icon">🤝</div>
-                                <h4>高階主管會議室</h4>
-                                <p>可容納12人，視訊設備</p>
-                            </div>
-                            <div class="office-room secretary">
-                                <div class="room-icon">📋</div>
-                                <h4>秘書處</h4>
-                                <p>行政支援服務</p>
+                <?php foreach ($floorInfo as $floor): ?>
+                    <div class="floor-panel <?php echo $floor['floor_number'] == 7 ? 'active' : ''; ?>" id="floor-<?php echo $floor['floor_number']; ?>">
+                        <div class="floor-header">
+                            <h3><?php echo $floor['floor_number']; ?>樓 - <?php echo $floor['floor_name']; ?></h3>
+                            <span class="floor-badge <?php echo $floor['floor_type']; ?>"><?php echo $floor['floor_description']; ?></span>
+                        </div>
+                        <div class="floor-layout">
+                            <div class="office-grid">
+                                <?php
+                                $floorEmployees = array_filter($employeeSeats, function($seat) use ($floor) {
+                                    return $seat['floor_number'] == $floor['floor_number'];
+                                });
+                                foreach ($floorEmployees as $employee):
+                                ?>
+                                <div class="employee-seat" data-seat="<?php echo $employee['seat_number']; ?>">
+                                    <div class="seat-info">
+                                        <span class="employee-name"><?php echo $employee['employee_name']; ?></span>
+                                        <?php if ($employee['extension_number']): ?>
+                                            <span class="extension-number">分機: <?php echo $employee['extension_number']; ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- 6樓 -->
-                <div class="floor-panel" id="floor-6">
-                    <div class="floor-header">
-                        <h3>6樓 - 編輯部門</h3>
-                        <span class="floor-badge editorial">內容創作</span>
-                    </div>
-                    <div class="floor-layout">
-                        <div class="office-grid">
-                            <div class="office-room editor-chief">
-                                <div class="room-icon">✏️</div>
-                                <h4>總編輯室</h4>
-                                <p>編輯部門主管辦公室</p>
-                            </div>
-                            <div class="office-room editorial-area">
-                                <div class="room-icon">📝</div>
-                                <h4>編輯部辦公區</h4>
-                                <p>開放式辦公空間，20個工位</p>
-                            </div>
-                            <div class="office-room edit-meeting">
-                                <div class="room-icon">💡</div>
-                                <h4>編輯會議室</h4>
-                                <p>創意討論與書籍企劃</p>
-                            </div>
-                            <div class="office-room archive">
-                                <div class="room-icon">📚</div>
-                                <h4>資料室</h4>
-                                <p>參考書籍與檔案存放</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5樓 -->
-                <div class="floor-panel" id="floor-5">
-                    <div class="floor-header">
-                        <h3>5樓 - 業務行銷部門</h3>
-                        <span class="floor-badge sales">市場拓展</span>
-                    </div>
-                    <div class="floor-layout">
-                        <div class="office-grid">
-                            <div class="office-room sales-dept">
-                                <div class="room-icon">💼</div>
-                                <h4>業務部</h4>
-                                <p>圖書銷售業務團隊</p>
-                            </div>
-                            <div class="office-room marketing-dept">
-                                <div class="room-icon">📢</div>
-                                <h4>行銷部</h4>
-                                <p>品牌推廣與活動策劃</p>
-                            </div>
-                            <div class="office-room sales-meeting">
-                                <div class="room-icon">📊</div>
-                                <h4>業務會議室</h4>
-                                <p>客戶會談與業績檢討</p>
-                            </div>
-                            <div class="office-room customer-service">
-                                <div class="room-icon">📞</div>
-                                <h4>客服中心</h4>
-                                <p>客戶服務與訂單處理</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4樓 -->
-                <div class="floor-panel" id="floor-4">
-                    <div class="floor-header">
-                        <h3>4樓 - 製作發行部門</h3>
-                        <span class="floor-badge production">製作流程</span>
-                    </div>
-                    <div class="floor-layout">
-                        <div class="office-grid">
-                            <div class="office-room production-dept">
-                                <div class="room-icon">🎨</div>
-                                <h4>製作部</h4>
-                                <p>書籍設計與印刷監製</p>
-                            </div>
-                            <div class="office-room distribution-dept">
-                                <div class="room-icon">📦</div>
-                                <h4>發行部</h4>
-                                <p>物流配送與庫存管理</p>
-                            </div>
-                            <div class="office-room prod-meeting">
-                                <div class="room-icon">⚙️</div>
-                                <h4>製作會議室</h4>
-                                <p>製作流程討論</p>
-                            </div>
-                            <div class="office-room sample-room">
-                                <div class="room-icon">📖</div>
-                                <h4>樣書室</h4>
-                                <p>樣書展示與校對</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3樓 -->
-                <div class="floor-panel" id="floor-3">
-                    <div class="floor-header">
-                        <h3>3樓 - 行政支援部門</h3>
-                        <span class="floor-badge admin">後勤服務</span>
-                    </div>
-                    <div class="floor-layout">
-                        <div class="office-grid">
-                            <div class="office-room hr-dept">
-                                <div class="room-icon">👥</div>
-                                <h4>人事行政部</h4>
-                                <p>人力資源與行政管理</p>
-                            </div>
-                            <div class="office-room finance-dept">
-                                <div class="room-icon">💰</div>
-                                <h4>財務會計部</h4>
-                                <p>財務管理與會計作業</p>
-                            </div>
-                            <div class="office-room it-dept">
-                                <div class="room-icon">💻</div>
-                                <h4>資訊部</h4>
-                                <p>資訊系統維護與支援</p>
-                            </div>
-                            <div class="office-room break-room">
-                                <div class="room-icon">☕</div>
-                                <h4>員工休息室</h4>
-                                <p>休憩空間與茶水間</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
@@ -496,6 +364,41 @@
     color: #6b46c1;
 }
 
+.employee-seat {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #f9f9f9;
+}
+
+.seat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.employee-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.extension-number {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.floor-layout {
+    position: relative;
+    margin-top: 20px;
+}
+
+.office-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
 @media (max-width: 768px) {
     .floor-container {
         padding: 15px;
@@ -531,20 +434,21 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // 樓層切換功能
     const floorTabs = document.querySelectorAll('.floor-tab');
     const floorPanels = document.querySelectorAll('.floor-panel');
     
     floorTabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const floor = this.dataset.floor;
+        tab.addEventListener('click', () => {
+            const floor = tab.dataset.floor;
             
-            // 移除所有 active 類別
+            // 移除所有活動狀態
             floorTabs.forEach(t => t.classList.remove('active'));
-            floorPanels.forEach(panel => panel.classList.remove('active'));
+            floorPanels.forEach(p => p.classList.remove('active'));
             
-            // 添加 active 類別
-            this.classList.add('active');
-            document.getElementById('floor-' + floor).classList.add('active');
+            // 設置當前活動狀態
+            tab.classList.add('active');
+            document.getElementById(`floor-${floor}`).classList.add('active');
         });
     });
 });

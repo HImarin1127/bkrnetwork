@@ -1,0 +1,13 @@
+{
+    "name": "bkrnetwork/floor-contacts",
+    "description": "Floor and contacts management system",
+    "type": "project",
+    "require": {
+        "phpoffice/phpspreadsheet": "1.29"
+    },
+    "authors": [
+        {
+            "name": "BKR Network"
+        }
+    ]
+}
