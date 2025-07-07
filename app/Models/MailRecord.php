@@ -249,221 +249,181 @@ class MailRecord extends Model {
             file_put_contents($csvFile . '.utf8', $content);
             // 儲存轉換後的檔案
             $csvFile = $csvFile . '.utf8';
-            // 使用轉換後的檔案
+            // 更新 CSV 檔案路徑為轉換後的檔案
         }
         // 編碼處理結束
         
-        if (($handle = fopen($csvFile, 'r')) !== false) {
-            // 如果檔案開啟成功
-            // 設定檔案編碼
-            stream_filter_append($handle, 'convert.iconv.UTF-8/UTF-8//IGNORE');
-            // 加入編碼過濾器，忽略無效字元
+        // 開啟並讀取 CSV 檔案
+        if (($handle = fopen($csvFile, "r")) !== false) {
+            // 使用 fopen 開啟檔案
             
             // 跳過標題行
-            $headerRow = fgetcsv($handle, 0, ',');
-            // 讀取標題行，設定無字元限制
-            $lineNumber++;
-            // 行號增加
+            fgetcsv($handle);
             
-            // 驗證標題行是否正確
-            if (!$headerRow || count($headerRow) < 7) {
-                // 如果標題行格式不正確
-                fclose($handle);
-                // 關閉檔案
-                return [
-                    'imported' => 0,
-                    'errors' => ['CSV 檔案格式不正確，標題行至少需要 7 個欄位']
-                ];
-            }
-            // 標題行驗證結束
+            // 開始資料庫交易
+            $db = Database::getInstance();
+            // 取得資料庫實例
+            $conn = $db->getConnection();
+            // 取得資料庫連接
+            $conn->beginTransaction();
+            // 開始交易
             
-            // 逐行處理 CSV 資料
-            while (($row = fgetcsv($handle, 0, ',')) !== false) {
-                // 讀取每一行資料，設定無字元限制
-                $lineNumber++;
-                // 行號增加
-                
-                // 跳過空行
-                if (empty(array_filter($row))) {
-                    // 如果是空行則跳過
-                    continue;
-                }
-                // 空行檢查結束
-                
-                // 檢查資料完整性（至少 7 個欄位）
-                if (count($row) < 7) {
-                    // 如果欄位數量不足
-                    $errors[] = "第 {$lineNumber} 行：欄位數量不足（需要至少 7 個欄位，實際 " . count($row) . " 個）";
-                    continue;
-                }
-                // 欄位數量檢查結束
-                
-                // 清理資料（移除前後空白和特殊字元）
-                $data = array_map(function($field) {
-                    // 處理每個欄位
-                    $field = trim($field);
-                    // 移除前後空白
-                    $field = str_replace(["\r", "\n", "\t"], '', $field);
-                    // 移除換行符號和製表符
-                    return $field;
-                }, $row);
-                // 資料清理結束
-                
-                // 解析 CSV 欄位
-                list(
-                    $mail_type,          // 寄件方式
-                    $receiver_name,      // 收件者姓名
-                    $receiver_address,   // 收件地址
-                    $receiver_phone,     // 收件者電話
-                    $declare_department, // 申報部門
-                    $sender_name,        // 寄件者姓名
-                    $sender_ext          // 寄件者分機
-                ) = $data;
-                // 欄位解析結束
-                
-                // 必填欄位檢查
-                $missingFields = [];
-                // 初始化缺少欄位列表
-                if (empty($mail_type)) $missingFields[] = '寄件方式';
-                if (empty($receiver_name)) $missingFields[] = '收件者姓名';
-                if (empty($receiver_address)) $missingFields[] = '收件地址';
-                // 檢查必填欄位
-                
-                if (!empty($missingFields)) {
-                    // 如果有缺少的必填欄位
-                    $errors[] = "第 {$lineNumber} 行：缺少必填欄位：" . implode('、', $missingFields);
-                    continue;
-                }
-                // 必填欄位檢查結束
-                
-                // 驗證寄件方式
-                $validMailTypes = ['掛號', '黑貓', '新竹貨運', '郵局掛號', '宅急便'];
-                // 允許的寄件方式列表
-                if (!in_array($mail_type, $validMailTypes)) {
-                    // 如果寄件方式不在允許列表中
-                    $errors[] = "第 {$lineNumber} 行：寄件方式「{$mail_type}」不正確，請使用：" . implode('、', $validMailTypes);
-                    continue;
-                }
-                // 寄件方式驗證結束
-                
-                // 驗證收件地址長度
-                if (strlen($receiver_address) > 500) {
-                    // 如果地址太長
-                    $errors[] = "第 {$lineNumber} 行：收件地址過長（超過 500 字元）";
-                    continue;
-                }
-                // 地址長度檢查結束
-                
-                try {
-                    // 準備要插入的資料
-                    $recordData = [
-                        'mail_type' => $mail_type,
-                        'receiver_name' => $receiver_name,
-                        'receiver_address' => $receiver_address,
-                        'receiver_phone' => $receiver_phone,
-                        'declare_department' => $declare_department,
-                        'sender_name' => $sender_name,
-                        'sender_ext' => $sender_ext,
-                        'registrar_id' => $registrarId,
-                        'sender_id' => $registrarId,  // 修復：設定 sender_id
-                        'status' => '已送出',
-                        'item_count' => 1,           // 預設件數
-                        'postage' => 0               // 預設郵資
-                    ];
-                    // 記錄資料準備結束
+            // 準備 SQL 插入語句
+            $sql = "INSERT INTO mail_records (
+                        mail_code, mail_type, receiver_name, receiver_address, 
+                        receiver_phone, declare_department, sender_name, sender_ext,
+                        item_count, postage, notes, status, registrar_id, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+            $stmt = $conn->prepare($sql);
+            // 準備 SQL 插入語句
+            
+            try {
+                // 逐行讀取 CSV 資料
+                while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+                    // 使用 fgetcsv 讀取一行資料
+                    $lineNumber++;
+                    // 行號加 1
                     
-                    // 建立郵件記錄
-                    $recordId = $this->createMailRecord($recordData);
-                    // 呼叫建立記錄方法
-                    
-                    if ($recordId) {
-                        // 如果記錄建立成功
-                        $imported++;
-                        // 成功匯入數量增加
-                    } else {
-                        // 如果記錄建立失敗
-                        $errors[] = "第 {$lineNumber} 行：記錄建立失敗";
+                    // 檢查基本欄位數量
+                    if (count($data) < 7) {
+                        // 如果欄位數量不足
+                        $errors[] = "第 {$lineNumber} 行：欄位數量不足，必須至少包含 7 個欄位";
+                        // 記錄錯誤訊息
+                        continue;
+                        // 繼續下一行處理
                     }
-                    // 記錄建立檢查結束
+                    // 欄位數量檢查結束
                     
-                } catch (Exception $e) {
-                    // 捕獲建立記錄時的例外
-                    $errors[] = "第 {$lineNumber} 行匯入失敗：" . $e->getMessage();
+                    // 取得 CSV 欄位資料
+                    $mailType = trim($data[0] ?? '');
+                    // 寄件方式
+                    $receiverName = trim($data[1] ?? '');
+                    // 收件者
+                    $receiverAddress = trim($data[2] ?? '');
+                    // 收件地址
+                    $receiverPhone = trim($data[3] ?? '');
+                    // 收件者電話
+                    $declareDepartment = trim($data[4] ?? '');
+                    // 申報部門
+                    $senderName = trim($data[5] ?? '');
+                    // 寄件者
+                    $senderExt = trim($data[6] ?? '');
+                    // 寄件者分機
+                    
+                    // 驗證必要欄位
+                    if (empty($mailType) || empty($receiverName)) {
+                        // 如果寄件方式或收件者為空
+                        $errors[] = "第 {$lineNumber} 行：寄件方式和收件者為必填欄位";
+                        // 記錄錯誤訊息
+                        continue;
+                        // 繼續下一行處理
+                    }
+                    // 必要欄位驗證結束
+                    
+                    // 執行插入操作
+                    $stmt->execute([
+                        $this->generateMailCode(), // 自動生成寄件編號
+                        $mailType,
+                        $receiverName,
+                        $receiverAddress,
+                        $receiverPhone,
+                        $declareDepartment,
+                        $senderName,
+                        $senderExt,
+                        1,        // 預設件數
+                        0,        // 預設郵資
+                        '批次匯入', // 備註
+                        '已送出',    // 預設狀態
+                        $registrarId // 登記者ID
+                    ]);
+                    // 執行 SQL 插入
+                    
+                    $imported++;
+                    // 成功匯入數量加 1
                 }
-                // 例外處理結束
+                // CSV 讀取迴圈結束
+                
+                // 提交交易
+                $conn->commit();
+                // 如果所有操作都成功，提交交易
+                
+            } catch (Exception $e) {
+                // 捕獲例外
+                // 發生錯誤，回滾交易
+                $conn->rollBack();
+                // 回滾交易
+                $errors[] = "處理第 {$lineNumber} 行時發生資料庫錯誤：" . $e->getMessage();
+                // 記錄錯誤訊息
             }
-            // CSV 資料處理迴圈結束
+            // try-catch 區塊結束
             
-            fclose($handle);
             // 關閉檔案
-            
-            // 清理臨時檔案
-            if (strpos($csvFile, '.utf8') !== false) {
-                // 如果有建立編碼轉換的臨時檔案
-                unlink($csvFile);
-                // 刪除臨時檔案
-            }
-            // 臨時檔案清理結束
-            
+            fclose($handle);
+            // 關閉檔案控制代碼
         } else {
-            // 如果檔案開啟失敗
-            $errors[] = "無法讀取 CSV 檔案，請檢查檔案是否被其他程式佔用";
+            // 如果無法開啟檔案
+            $errors[] = '無法開啟 CSV 檔案';
+            // 記錄錯誤訊息
         }
-        // 檔案開啟檢查結束
+        // 檔案處理結束
         
-        return [
-            'imported' => $imported,
-            'errors' => $errors
-        ];
+        // 刪除暫存的 UTF-8 檔案
+        if (file_exists($csvFile . '.utf8')) {
+            // 如果存在轉換後的檔案
+            unlink($csvFile . '.utf8');
+            // 刪除檔案
+        }
+        // 暫存檔案刪除結束
+        
         // 回傳匯入結果
+        return ['imported' => $imported, 'errors' => $errors];
     }
     // batchImport 方法結束
     
     /**
-     * 檢查使用者是否有權限查看/編輯記錄
+     * 檢查記錄權限
      * 
-     * 權限規則：
-     * - 管理員：可操作所有記錄
-     * - 一般使用者：只能操作自己相關的記錄
+     * 確認目前使用者是否有權限查看或修改指定的郵件記錄
      * 
-     * @param int $recordId 記錄 ID
+     * @param int $recordId 郵件記錄 ID
      * @param int $userId 使用者 ID
      * @param bool $isAdmin 是否為管理員
-     * @return bool 有權限回傳 true，否則回傳 false
+     * @return bool 有權限回傳 true，無權限回傳 false
      */
     public function checkPermission($recordId, $userId, $isAdmin = false) {
-        // 定義權限檢查方法
-        // 管理員有所有權限
+        // 定義檢查記錄權限方法
         if ($isAdmin) {
             // 如果是管理員，直接回傳 true
             return true;
         }
         // 管理員權限檢查結束
         
-        // 檢查記錄是否存在
+        // 查詢記錄的擁有者
         $record = $this->find($recordId);
         // 使用父類別的 find 方法查詢記錄
-        if (!$record) {
-            // 如果記錄不存在，回傳 false
-            return false;
-        }
-        // 記錄存在性檢查結束
         
-        return $record['registrar_id'] == $userId || $record['sender_id'] == $userId;
-        // 檢查使用者是否為登記者或寄件者，符合其中之一即有權限
+        // 檢查記錄是否存在且使用者是登記者或寄件者
+        if ($record && ($record['registrar_id'] == $userId || (isset($record['sender_id']) && $record['sender_id'] == $userId))) {
+            // 如果記錄存在，且目前使用者是登記者或寄件者
+            return true;
+            // 回傳 true
+        }
+        // 權限檢查結束
+        
+        return false;
+        // 預設回傳 false
     }
     // checkPermission 方法結束
     
     /**
      * 搜尋郵件記錄
      * 
-     * 根據關鍵字搜尋郵件記錄，支援多欄位模糊搜尋
-     * 搜尋範圍包括：郵件編號、寄件者姓名、收件者姓名、收件地址
+     * 根據關鍵字搜尋郵件記錄，並套用權限控制
      * 
      * @param string $keyword 搜尋關鍵字
-     * @param int|null $userId 使用者 ID（用於權限控制）
+     * @param int|null $userId 使用者 ID
      * @param bool $isAdmin 是否為管理員
-     * @return array 符合搜尋條件的記錄陣列
+     * @return array 符合條件的郵件記錄
      */
     public function search($keyword, $userId = null, $isAdmin = false) {
         // 定義搜尋郵件記錄方法
@@ -472,32 +432,49 @@ class MailRecord extends Model {
         $conn = $db->getConnection();
         // 取得資料庫連接
         
-        $sql = "SELECT * FROM {$this->table} WHERE 
-                (mail_code LIKE ? OR 
-                 sender_name LIKE ? OR 
-                 receiver_name LIKE ? OR 
-                 receiver_address LIKE ?)";
-        // 建立 SQL 查詢語句，使用 LIKE 進行模糊搜尋
-        // 搜尋欄位：郵件編號、寄件者姓名、收件者姓名、收件地址
+        // 定義要搜尋的欄位
+        $searchableFields = [
+            'mail_code', 'mail_type', 'sender_name', 'sender_ext',
+            'receiver_name', 'receiver_address', 'receiver_phone',
+            'declare_department', 'tracking_number', 'status', 'notes'
+        ];
+        // 搜尋欄位陣列
         
-        $params = ["%{$keyword}%", "%{$keyword}%", "%{$keyword}%", "%{$keyword}%"];
-        // 準備參數陣列，在關鍵字前後加上 % 以進行模糊搜尋
+        // 建立 SQL 查詢語句
+        $sql = "SELECT * FROM {$this->table} WHERE (";
+        // SQL 查詢語句開頭
+        $conditions = [];
+        // 條件陣列
+        foreach ($searchableFields as $field) {
+            // 遍歷所有可搜尋的欄位
+            $conditions[] = "{$field} LIKE ?";
+            // 加入 LIKE 條件
+        }
+        // 迴圈結束
+        $sql .= implode(' OR ', $conditions) . ")";
+        // 組合所有 LIKE 條件
         
-        if (!$isAdmin && $userId) {
-            // 如果不是管理員且有提供使用者 ID，加入權限限制
+        $params = array_fill(0, count($searchableFields), '%' . $keyword . '%');
+        // 準備 LIKE 條件的參數
+        
+        // 權限控制
+        if (!$isAdmin && $userId !== null) {
+            // 如果不是管理員且提供了使用者 ID
             $sql .= " AND (registrar_id = ? OR sender_id = ?)";
-            // 加入權限檢查條件：只能搜尋自己相關的記錄
+            // 加入權限控制條件
             $params[] = $userId;
+            // 加入使用者 ID 參數
             $params[] = $userId;
-            // 將使用者 ID 加入參數陣列
+            // 加入使用者 ID 參數
         }
         // 權限控制結束
         
         $sql .= " ORDER BY created_at DESC";
-        // 加入排序條件：按建立時間降冪排序
+        // 加入排序條件
         
+        // 執行查詢
         $stmt = $conn->prepare($sql);
-        // 準備 SQL 語句
+        // 準備 SQL 查詢語句
         $stmt->execute($params);
         // 執行查詢
         
@@ -509,272 +486,209 @@ class MailRecord extends Model {
     /**
      * 建立收件記錄
      * 
-     * 建立新的收件記錄到 incoming_mail_records 資料表
-     * 如果資料表不存在會自動建立
+     * 這個方法會處理收件的登記，並儲存到 `incoming_mail_records` 資料表中。
+     * - `incoming_mail_records` 資料表如果不存在，會自動建立。
+     * - 記錄收件時間、收件人、寄件人、簽收狀態等。
      * 
-     * @param array $data 收件記錄資料陣列
-     * @return int|false 成功時回傳新記錄的 ID，失敗時回傳 false
+     * @param array $data 收件記錄的資料
+     * @return int 新建立的收件記錄 ID
      */
     public function createIncomingRecord($data) {
-        // 定義建立收件記錄方法
         $db = Database::getInstance();
-        // 取得資料庫實例
         $conn = $db->getConnection();
-        // 取得資料庫連接
-        
-        // 建立收件記錄表（如果不存在）
+
+        // 檢查 `incoming_mail_records` 資料表是否存在，如果不存在就建立它
         $this->createIncomingTable();
-        // 呼叫內部方法確保收件記錄表存在
         
-        $sql = "INSERT INTO incoming_mail_records (
-            tracking_number, mail_type, sender_name, sender_company,
-            recipient_name, recipient_department, received_date, received_time,
-            content_description, urgent, notes, registrar_id, status, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
-        // 建立插入收件記錄的 SQL 語句
+        // 準備要插入的資料
+        $insertData = [
+            'received_at' => $data['received_at'] ?? date('Y-m-d H:i:s'),
+            'recipient_id' => $data['recipient_id'],
+            'sender_info' => $data['sender_info'],
+            'mail_type' => $data['mail_type'],
+            'notes' => $data['notes'] ?? '',
+            'registered_by' => $data['registered_by'],
+            'status' => '待簽收' // 預設狀態
+        ];
+
+        $fields = implode(', ', array_keys($insertData));
+        $placeholders = implode(', ', array_fill(0, count($insertData), '?'));
+
+        $sql = "INSERT INTO incoming_mail_records ({$fields}) VALUES ({$placeholders})";
         
-        $stmt = $conn->prepare($sql);
-        // 準備 SQL 語句
-        $result = $stmt->execute([
-            // 執行 SQL 語句並傳入資料
-            $data['tracking_number'],     // 追蹤號碼
-            $data['mail_type'],           // 郵件類型
-            $data['sender_name'],         // 寄件者姓名
-            $data['sender_company'],      // 寄件者公司
-            $data['recipient_name'],      // 收件者姓名
-            $data['recipient_department'], // 收件者部門
-            $data['received_date'],       // 收件日期
-            $data['received_time'],       // 收件時間
-            $data['content_description'], // 內容描述
-            $data['urgent'],              // 是否緊急
-            $data['notes'],               // 備註
-            $data['registrar_id'],        // 登記者 ID
-            $data['status']               // 狀態
-        ]);
-        // SQL 執行結束
-        
-        return $result ? $conn->lastInsertId() : false;
-        // 如果執行成功回傳新記錄的 ID，否則回傳 false
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array_values($insertData));
+            return $conn->lastInsertId();
+        } catch (PDOException $e) {
+            // 可以在這裡記錄錯誤日誌
+            error_log("建立收件記錄失敗: " . $e->getMessage());
+            return false;
+        }
     }
-    // createIncomingRecord 方法結束
-    
+
     /**
      * 取得收件記錄
      * 
-     * 根據使用者權限取得收件記錄列表
-     * 管理員可查看所有記錄，一般使用者只能查看自己的記錄
+     * 根據使用者權限取得相關的收件記錄。
+     * - 管理員 (`isAdmin` = true) 可以查看所有記錄。
+     * - 一般使用者 (`userId`) 只能查看收件人是自己的記錄。
      * 
-     * @param int|null $userId 使用者 ID
+     * @param int|null $userId 目前登入的使用者ID
      * @param bool $isAdmin 是否為管理員
-     * @return array 收件記錄陣列，按收件時間倒序排列
+     * @return array 收件記錄列表
      */
     public function getIncomingRecords($userId = null, $isAdmin = false) {
-        // 定義取得收件記錄方法
         $db = Database::getInstance();
-        // 取得資料庫實例
         $conn = $db->getConnection();
-        // 取得資料庫連接
+        
+        // 檢查資料表是否存在
+        $this->createIncomingTable();
+        
+        $sql = "SELECT imr.*, u.name as recipient_name 
+                FROM incoming_mail_records imr
+                LEFT JOIN users u ON imr.recipient_id = u.id";
+        
+        $params = [];
+        
+        if (!$isAdmin && $userId) {
+            $sql .= " WHERE imr.recipient_id = ?";
+            $params[] = $userId;
+        }
+        
+        $sql .= " ORDER BY imr.received_at DESC";
         
         try {
-            // 使用 try-catch 處理可能的資料表不存在錯誤
-            if ($isAdmin) {
-                // 管理員可以查看所有收件記錄
-                $stmt = $conn->prepare("
-                    SELECT * FROM incoming_mail_records 
-                    ORDER BY received_date DESC, received_time DESC
-                ");
-                // 準備查詢所有記錄的 SQL 語句
-                $stmt->execute();
-                // 執行查詢
-            } else {
-                // 一般使用者只能查看自己登記的記錄
-                $stmt = $conn->prepare("
-                    SELECT * FROM incoming_mail_records 
-                    WHERE registrar_id = ? OR recipient_name LIKE ?
-                    ORDER BY received_date DESC, received_time DESC
-                ");
-                // 準備查詢特定使用者記錄的 SQL 語句
-                // 可查看自己登記的記錄或以自己為收件者的記錄
-                $userName = $userId ? $this->getUserName($userId) : '';
-                // 取得使用者姓名用於比對收件者
-                $stmt->execute([$userId, "%{$userName}%"]);
-                // 執行查詢
-            }
-            // 權限控制結束
-            
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            // 回傳查詢結果
         } catch (PDOException $e) {
-            // 捕獲 PDO 例外（例如資料表不存在）
-            if (strpos($e->getMessage(), "doesn't exist") !== false) {
-                // 如果是資料表不存在的錯誤
-                $this->createIncomingTable();
-                // 建立收件記錄表
-                return [];
-                // 回傳空陣列
-            }
-            // 資料表不存在處理結束
-            throw $e;
-            // 重新拋出其他例外
+            error_log("取得收件記錄失敗: " . $e->getMessage());
+            return [];
         }
-        // 例外處理結束
     }
-    // getIncomingRecords 方法結束
     
     /**
-     * 建立收件記錄表
+     * 建立收件記錄資料表
+     * 
+     * 如果 `incoming_mail_records` 資料表不存在，這個私有方法會自動建立它。
+     * 包含收件記錄需要的各個欄位，並設定適當的索引。
      */
     private function createIncomingTable() {
         $db = Database::getInstance();
         $conn = $db->getConnection();
         
-        $sql = "CREATE TABLE IF NOT EXISTS incoming_mail_records (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            tracking_number VARCHAR(255),
-            mail_type VARCHAR(50) NOT NULL,
-            sender_name VARCHAR(100) NOT NULL,
-            sender_company VARCHAR(200),
-            recipient_name VARCHAR(100) NOT NULL,
-            recipient_department VARCHAR(100),
-            received_date DATE NOT NULL,
-            received_time TIME,
-            content_description TEXT,
-            urgent TINYINT(1) DEFAULT 0,
-            notes TEXT,
-            status VARCHAR(50) DEFAULT '已收件',
-            registrar_id INT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            INDEX idx_received_date (received_date),
-            INDEX idx_status (status),
-            INDEX idx_registrar (registrar_id),
-            INDEX idx_tracking (tracking_number)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-        
-        $conn->exec($sql);
+        try {
+            $conn->query("SELECT 1 FROM incoming_mail_records LIMIT 1");
+        } catch (PDOException $e) {
+            // 資料表不存在，建立它
+            $sql = "
+            CREATE TABLE `incoming_mail_records` (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              `received_at` datetime NOT NULL,
+              `recipient_id` int(11) NOT NULL,
+              `sender_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `mail_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `notes` text COLLATE utf8mb4_unicode_ci,
+              `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '待簽收',
+              `signed_at` datetime DEFAULT NULL,
+              `registered_by` int(11) NOT NULL,
+              `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`),
+              KEY `recipient_id` (`recipient_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ";
+            try {
+                $conn->exec($sql);
+            } catch (PDOException $ex) {
+                // 如果建立資料表失敗，記錄錯誤日誌
+                error_log("建立 incoming_mail_records 資料表失敗: " . $ex->getMessage());
+            }
+        }
     }
     
     /**
      * 搜尋收件記錄
      * 
-     * 根據多種條件搜尋收件記錄
-     * 支援關鍵字、日期範圍、狀態等複合搜尋條件
+     * 根據提供的篩選條件搜尋收件記錄。
+     * - `startDate`, `endDate`: 篩選收件日期範圍。
+     * - `status`: 篩選簽收狀態。
+     * - `keyword`: 模糊搜尋寄件人資訊和備註。
      * 
-     * @param array $filters 搜尋條件陣列
-     * @param int|null $userId 使用者 ID（用於權限控制）
+     * @param array $filters 篩選條件
+     * @param int|null $userId 使用者ID
      * @param bool $isAdmin 是否為管理員
-     * @return array 符合搜尋條件的收件記錄陣列
+     * @return array 搜尋結果
      */
     public function searchIncomingRecords($filters, $userId = null, $isAdmin = false) {
-        // 定義搜尋收件記錄方法
         $db = Database::getInstance();
-        // 取得資料庫實例
         $conn = $db->getConnection();
-        // 取得資料庫連接
+
+        $sql = "SELECT imr.*, u.name as recipient_name 
+                FROM incoming_mail_records imr
+                LEFT JOIN users u ON imr.recipient_id = u.id
+                WHERE 1=1";
         
-        // 確保收件記錄表存在
-        $this->createIncomingTable();
-        // 呼叫內部方法確保資料表存在
-        
-        $sql = "SELECT * FROM incoming_mail_records WHERE 1=1";
-        // 建立基本 SQL 查詢語句，使用 WHERE 1=1 便於後續條件拼接
         $params = [];
-        // 初始化參數陣列
-        
-        if (!empty($filters['keyword'])) {
-            // 如果有關鍵字搜尋條件
-            $sql .= " AND (sender_name LIKE ? OR recipient_name LIKE ? OR content_description LIKE ? OR tracking_number LIKE ?)";
-            // 加入關鍵字搜尋條件：寄件者、收件者、內容描述、追蹤號碼
-            $keyword = "%{$filters['keyword']}%";
-            // 準備模糊搜尋的關鍵字
-            $params = array_merge($params, [$keyword, $keyword, $keyword, $keyword]);
-            // 將關鍵字參數加入參數陣列（4個欄位各需要一個參數）
-        }
-        // 關鍵字搜尋條件結束
-        
-        if (!empty($filters['dateFrom'])) {
-            // 如果有起始日期條件
-            $sql .= " AND received_date >= ?";
-            // 加入起始日期條件
-            $params[] = $filters['dateFrom'];
-            // 將起始日期加入參數陣列
-        }
-        // 起始日期條件結束
-        
-        if (!empty($filters['dateTo'])) {
-            // 如果有結束日期條件
-            $sql .= " AND received_date <= ?";
-            // 加入結束日期條件
-            $params[] = $filters['dateTo'];
-            // 將結束日期加入參數陣列
-        }
-        // 結束日期條件結束
-        
-        if (!empty($filters['status'])) {
-            // 如果有狀態篩選條件
-            $sql .= " AND status = ?";
-            // 加入狀態條件
-            $params[] = $filters['status'];
-            // 將狀態加入參數陣列
-        }
-        // 狀態條件結束
-        
+
         if (!$isAdmin && $userId) {
-            // 如果不是管理員且有提供使用者 ID，加入權限限制
-            $sql .= " AND registrar_id = ?";
-            // 加入權限檢查條件：只能搜尋自己登記的記錄
+            $sql .= " AND imr.recipient_id = ?";
             $params[] = $userId;
-            // 將使用者 ID 加入參數陣列
         }
-        // 權限控制結束
-        
-        $sql .= " ORDER BY received_date DESC, received_time DESC";
-        // 加入排序條件：按收件日期和時間降冪排序
-        
-        $stmt = $conn->prepare($sql);
-        // 準備 SQL 語句
-        $stmt->execute($params);
-        // 執行查詢
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // 回傳搜尋結果
+
+        if (!empty($filters['startDate'])) {
+            $sql .= " AND imr.received_at >= ?";
+            $params[] = $filters['startDate'] . ' 00:00:00';
+        }
+
+        if (!empty($filters['endDate'])) {
+            $sql .= " AND imr.received_at <= ?";
+            $params[] = $filters['endDate'] . ' 23:59:59';
+        }
+
+        if (!empty($filters['status'])) {
+            $sql .= " AND imr.status = ?";
+            $params[] = $filters['status'];
+        }
+
+        if (!empty($filters['keyword'])) {
+            $sql .= " AND (imr.sender_info LIKE ? OR imr.notes LIKE ?)";
+            $params[] = '%' . $filters['keyword'] . '%';
+            $params[] = '%' . $filters['keyword'] . '%';
+        }
+
+        $sql .= " ORDER BY imr.received_at DESC";
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("搜尋收件記錄失敗: " . $e->getMessage());
+            return [];
+        }
     }
-    // searchIncomingRecords 方法結束
     
     /**
-     * 取得使用者姓名
+     * 取得使用者名稱
      * 
-     * 根據使用者 ID 取得使用者的姓名
-     * 用於收件記錄的權限檢查
+     * 根據使用者ID取得使用者名稱，用於在收件記錄中顯示登記人姓名。
      * 
-     * @param int $userId 使用者 ID
-     * @return string 使用者姓名，找不到時回傳空字串
+     * @param int $userId 使用者ID
+     * @return string|null 使用者名稱
      */
     private function getUserName($userId) {
-        // 定義取得使用者姓名的私有方法
         $db = Database::getInstance();
-        // 取得資料庫實例
         $conn = $db->getConnection();
-        // 取得資料庫連接
         
         try {
             $stmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
-            // 準備查詢使用者姓名的 SQL 語句
             $stmt->execute([$userId]);
-            // 執行查詢
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            // 取得查詢結果
-            
-            return $result ? $result['name'] : '';
-            // 如果找到使用者回傳姓名，否則回傳空字串
+            return $result['name'] ?? null;
         } catch (PDOException $e) {
-            // 捕獲查詢過程中的例外
-            error_log("查詢使用者姓名失敗: " . $e->getMessage());
-            // 記錄錯誤訊息到系統日誌
-            return '';
-            // 發生錯誤時回傳空字串
+            error_log("取得使用者名稱失敗: " . $e->getMessage());
+            return null;
         }
-        // 例外處理結束
     }
-    // getUserName 方法結束
 } 

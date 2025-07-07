@@ -63,6 +63,9 @@ return [
     // 需要登入的路由 - 核心業務功能
     // ========================================
     
+    '/group-announcements' => ['GroupAnnouncementsController', 'sharedFiles'],
+    '/group-announcements/download' => ['GroupAnnouncementsController', 'download'],
+
     // 郵務管理系統 - 企業郵件寄送管理
     '/mail' => ['MailController', 'request'],
     '/mail/request' => ['MailController', 'request'],                 // 寄件登記

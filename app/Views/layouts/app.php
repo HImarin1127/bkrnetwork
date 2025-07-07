@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $appName; ?></title>
+    <!-- Font Awesome 6 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -823,6 +825,7 @@
                             <li><a href="<?php echo $baseUrl; ?>/announcements">最新公告</a></li>
                             <li><a href="<?php echo $baseUrl; ?>/announcements/holidays">假日資訊</a></li>
                             <li><a href="<?php echo $baseUrl; ?>/announcements/handbook">員工手冊</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/group-announcements">集團公告</a></li>
                         </ul>
                     </li>
                     

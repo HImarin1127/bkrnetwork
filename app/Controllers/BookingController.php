@@ -3,6 +3,8 @@
 // PHP 開始標籤，表示這是一個 PHP 檔案
 // 檔案路徑註解，說明此檔案位置
 
+namespace App\Controllers;
+
 require_once __DIR__ . '/Controller.php';
 // 引入父類別 Controller.php，使用 require_once 確保只載入一次
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';

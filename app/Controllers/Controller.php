@@ -1,18 +1,33 @@
 <?php
 // app/Controllers/Controller.php
 
+namespace App\Controllers;
+
 /**
- * 控制器基礎類別
+ * 基礎控制器類別
  * 
- * 提供所有控制器的共用功能，包括視圖渲染、重新導向、JSON回應等
- * 實作 MVC 架構中控制器層的核心功能
+ * 處理所有控制器的共用邏輯，例如視圖載入、重新導向和使用者驗證
+ * 透過提供一組通用的工具方法，簡化子控制器的開發
  */
 abstract class Controller {
-    /** @var array 視圖資料陣列，用於傳遞資料到視圖 */
+    /** @var array 儲存傳遞給視圖的資料 */
     protected $viewData = [];
     
     /**
-     * 渲染視圖檔案
+     * 建構函式
+     * 
+     * 初始化控制器，設定全域視圖資料
+     * 自動設定所有頁面都需要的共用變數，例如使用者資訊、登入狀態等
+     */
+    public function __construct() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $this->setGlobalViewData();
+    }
+    
+    /**
+     * 載入視圖
      * 
      * 載入指定的視圖檔案並使用佈局包裝輸出
      * 支援資料傳遞和佈局系統
@@ -34,7 +49,7 @@ abstract class Controller {
         
         // 檢查視圖檔案是否存在
         if (!file_exists($viewFile)) {
-            throw new Exception("視圖檔案不存在: {$view}");
+            throw new \Exception("視圖檔案不存在: {$view}");
         }
         
         // 使用輸出緩衝捕獲視圖內容
@@ -47,7 +62,7 @@ abstract class Controller {
             $layoutFile = __DIR__ . "/../Views/{$layout}.php";
             
             if (!file_exists($layoutFile)) {
-                throw new Exception("佈局檔案不存在: {$layout}");
+                throw new \Exception("佈局檔案不存在: {$layout}");
             }
             
             // 在佈局中，$content 變數包含視圖內容
@@ -124,7 +139,7 @@ abstract class Controller {
      */
     protected function getCurrentUser() {
         require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
-        return AuthMiddleware::getCurrentUser();
+        return \AuthMiddleware::getCurrentUser();
     }
     
     /**
@@ -200,7 +215,7 @@ abstract class Controller {
         if ($this->isLoggedIn() && isset($_SESSION['username'])) {
             try {
                 require_once __DIR__ . '/../Models/User.php';
-                $userModel = new User();
+                $userModel = new \User();
                 $this->viewData['canManageAnnouncements'] = $userModel->canManageAnnouncements($_SESSION['username']);
             } catch (Exception $e) {
                 // 如果出現錯誤，預設為無權限

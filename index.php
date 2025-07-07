@@ -118,8 +118,14 @@ foreach ($routes as $route => $action) {
             die('控制器檔案不存在: ' . $controller);
         }
         
+        // 手動載入控制器檔案，繞過有問題的自動載入器
+        require_once $controllerFile;
+        
+        // 加上命名空間前綴
+        $fullControllerName = 'App\\Controllers\\' . $controller;
+        
         // 實例化控制器
-        $controllerInstance = new $controller();
+        $controllerInstance = new $fullControllerName();
         
         // 檢查控制器方法是否存在
         if (!method_exists($controllerInstance, $method)) {

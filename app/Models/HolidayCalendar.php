@@ -248,82 +248,68 @@ class HolidayCalendar extends Model {
     }
     
     /**
-     * 產生HTML行事曆表格
+     * 產生行事曆 HTML
      */
     public function generateCalendarHTML($year = 2025) {
-        $holidays = $this->getHolidayCalendar($year);
-        
-        // 建立假日對照表
+        $holidayData = $this->getHolidayCalendar($year);
         $holidayMap = [];
-        foreach ($holidays as $holiday) {
-            $key = sprintf('%02d-%02d', $holiday['month'], $holiday['day']);
-            $holidayMap[$key] = $holiday['name'];
+        foreach ($holidayData as $holiday) {
+            $holidayMap[$holiday['month']][$holiday['day']] = $holiday;
         }
         
-        $html = '<div class="holiday-calendar">';
-        $html .= '<h3>中華民國115年（西元2026年）政府行政機關辦公日曆表</h3>';
-        
-        // 產生12個月的行事曆
+        $html = '<div class="calendar">';
         for ($month = 1; $month <= 12; $month++) {
             $html .= $this->generateMonthHTML($year, $month, $holidayMap);
         }
-        
-        $html .= '<div class="calendar-legend">';
-        $html .= '<div class="legend-item"><span class="holiday-color"></span> 放假日</div>';
-        $html .= '<div class="legend-item"><span class="workday-color"></span> 上班日</div>';
-        $html .= '</div>';
         $html .= '</div>';
         
         return $html;
     }
     
-    /**
-     * 產生單月HTML
-     */
     private function generateMonthHTML($year, $month, $holidayMap) {
-        $monthNames = [
-            1 => '一', 2 => '二', 3 => '三', 4 => '四', 5 => '五', 6 => '六',
-            7 => '七', 8 => '八', 9 => '九', 10 => '十', 11 => '十一', 12 => '十二'
-        ];
-        
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $firstDayOfWeek = date('w', mktime(0, 0, 0, $month, 1, $year));
+        $firstDayOfMonth = date('N', strtotime("$year-$month-01"));
         
-        $html = '<div class="month-calendar">';
-        $html .= '<h4>' . $monthNames[$month] . '月</h4>';
-        $html .= '<table class="calendar-table">';
-        $html .= '<tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>';
+        $html = '<div class="month">';
+        $html .= '<h2>' . $year . '年' . $month . '月</h2>';
+        $html .= '<table>';
+        $html .= '<thead><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>';
+        $html .= '<tbody><tr>';
         
-        $day = 1;
-        for ($week = 0; $week < 6; $week++) {
-            $html .= '<tr>';
-            for ($dayOfWeek = 0; $dayOfWeek < 7; $dayOfWeek++) {
-                if (($week == 0 && $dayOfWeek < $firstDayOfWeek) || $day > $daysInMonth) {
-                    $html .= '<td class="empty-day"></td>';
-                } else {
-                    $dateKey = sprintf('%02d-%02d', $month, $day);
-                    $isHoliday = isset($holidayMap[$dateKey]);
-                    $isWeekend = ($dayOfWeek == 0 || $dayOfWeek == 6);
-                    
-                    $class = 'calendar-day';
-                    if ($isHoliday || $isWeekend) {
-                        $class .= ' holiday';
-                    }
-                    
-                    $html .= '<td class="' . $class . '">';
-                    $html .= '<div class="day-number">' . $day . '</div>';
-                    if ($isHoliday) {
-                        $html .= '<div class="holiday-name">' . $holidayMap[$dateKey] . '</div>';
-                    }
-                    $html .= '</td>';
-                    $day++;
-                }
-            }
-            $html .= '</tr>';
-            
-            if ($day > $daysInMonth) break;
+        // 補上第一週的空白
+        for ($i = 1; $i < $firstDayOfMonth; $i++) {
+            $html .= '<td></td>';
         }
         
+        for ($day = 1; $day <= $daysInMonth; $day++) {
+            $currentDayOfWeek = date('N', strtotime("$year-$month-$day"));
+            $class = '';
+            $tooltip = '';
+            
+            if (isset($holidayMap[$month][$day])) {
+                $holiday = $holidayMap[$month][$day];
+                $class = 'holiday';
+                $tooltip = ' title="' . htmlspecialchars($holiday['name']) . '"';
+            } elseif ($currentDayOfWeek >= 6) {
+                $class = 'weekend';
+            }
+            
+            $html .= '<td class="' . $class . '"' . $tooltip . '>' . $day . '</td>';
+            
+            if ($currentDayOfWeek == 7) {
+                $html .= '</tr><tr>';
+            }
+        }
+        
+        // 補上最後一週的空白
+        $lastDayOfMonth = date('N', strtotime("$year-$month-$daysInMonth"));
+        if ($lastDayOfMonth != 7) {
+            for ($i = $lastDayOfMonth; $i < 7; $i++) {
+                $html .= '<td></td>';
+            }
+        }
+        
+        $html .= '</tr></tbody>';
         $html .= '</table>';
         $html .= '</div>';
         
@@ -335,17 +321,7 @@ class HolidayCalendar extends Model {
      */
     public function updateHolidays() {
         $holidays = $this->fetchGovernmentHolidays();
-        $saved = $this->saveHolidays($holidays);
-        
-        if ($saved) {
-            return [
-                'status' => 'success', 
-                'message' => '成功更新假日行事曆',
-                'count' => count($holidays)
-            ];
-        } else {
-            return ['status' => 'error', 'message' => '儲存資料失敗'];
-        }
+        return $this->saveHolidays($holidays);
     }
 }
 ?> 

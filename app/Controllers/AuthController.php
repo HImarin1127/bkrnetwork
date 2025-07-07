@@ -1,9 +1,12 @@
 <?php
 // app/Controllers/AuthController.php
 
+namespace App\Controllers;
+
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../Models/Database.php';
 require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../Services/LdapService.php';
 
 /**
  * 認證控制器
@@ -15,13 +18,22 @@ class AuthController extends Controller {
     /** @var User 使用者模型實例 */
     private $userModel;
     
+    /** @var LdapService LDAP服務實例 */
+    private $ldapService;
+    
     /**
      * 建構函式
      * 
      * 初始化使用者模型和全域視圖資料
      */
     public function __construct() {
-        $this->userModel = new User();
+        $this->userModel = new \User();
+        
+        // 只有在 LDAP 啟用時才實例化 LdapService
+        if (isset($GLOBALS['ldap_config']) && $GLOBALS['ldap_config']['enabled']) {
+            $this->ldapService = new \LdapService();
+        }
+        
         $this->setGlobalViewData();
     }
     
@@ -53,10 +65,21 @@ class AuthController extends Controller {
             }
             
             // 驗證使用者身分
-            $user = $this->userModel->authenticate($username, $password);
-            
-            if ($user) {
-                // 登入成功，設定 session
+            if ($this->ldapService && $this->ldapService->authenticate($username, $password)) {
+                // LDAP 認證成功
+                
+                // 檢查使用者是否存在於本地資料庫
+                $user = $this->userModel->findByUsername($username);
+                
+                if (!$user) {
+                    // 如果使用者不存在，從 LDAP 獲取資訊並在本地建立
+                    $userInfo = $this->ldapService->getUserInfo($username);
+                    if ($userInfo) {
+                        $this->userModel->createOrUpdateFromLdap($userInfo);
+                    }
+                }
+                
+                // 設定 session
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_name'] = $user['name'];
                 
@@ -66,14 +89,29 @@ class AuthController extends Controller {
                 
                 $this->redirect($redirectTo);
             } else {
-                // 登入失敗，顯示錯誤訊息
-                $errorMessage = $this->getAuthenticationErrorMessage($username);
-                
-                $this->view('auth/login', [
-                    'title' => '登入',
-                    'error' => $errorMessage,
-                    'pageType' => 'auth'
-                ]);
+                // LDAP 認證失敗，或未啟用
+                // 使用本地資料庫認證
+                $user = $this->userModel->authenticate($username, $password);
+                if ($user) {
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['username'] = $user['username'];
+                    $_SESSION['user_name'] = $user['name'];
+                    
+                    // 重新導向到原來要去的頁面或首頁
+                    $redirectTo = $_SESSION['redirect_after_login'] ?? BASE_URL;
+                    unset($_SESSION['redirect_after_login']);
+                    
+                    $this->redirect($redirectTo);
+                } else {
+                    // 登入失敗，顯示錯誤訊息
+                    $errorMessage = $this->getAuthenticationErrorMessage($username);
+                    
+                    $this->view('auth/login', [
+                        'title' => '登入',
+                        'error' => $errorMessage,
+                        'pageType' => 'auth'
+                    ]);
+                }
             }
         } else {
             // GET 請求：顯示登入表單
@@ -217,71 +255,30 @@ class AuthController extends Controller {
      * 提供LDAP診斷和測試功能
      */
     public function ldapTest() {
-        // 檢查是否有POST請求
-        $testUsername = $_POST['test_username'] ?? '';
-        $testPassword = $_POST['test_password'] ?? '';
-        $testResult = null;
-
-        if (!empty($testUsername) && !empty($testPassword)) {
-            // 執行認證測試
-            try {
-                $result = $this->userModel->authenticate($testUsername, $testPassword);
-                
-                if ($result) {
-                    $testResult = [
-                        'success' => true,
-                        'message' => '認證成功！',
-                        'data' => $result
-                    ];
-                } else {
-                    $testResult = [
-                        'success' => false,
-                        'message' => '認證失敗 - 帳號或密碼錯誤'
-                    ];
-                }
-            } catch (Exception $e) {
-                $testResult = [
-                    'success' => false,
-                    'message' => '認證過程發生錯誤: ' . $e->getMessage()
-                ];
-            }
+        if (!$this->ldapService) {
+            return $this->view('auth/ldap-test', [
+                'title' => 'LDAP 連線測試',
+                'error' => 'LDAP 服務未啟用或設定不正確。'
+            ]);
         }
 
-        // 載入LDAP配置進行顯示
-        $ldapConfig = require __DIR__ . '/../../config/ldap.php';
-
-        // 測試LDAP連接
-        $connectionTest = null;
-        $ldapUsers = [];
-        
-        if ($ldapConfig['enabled']) {
-            try {
-                require_once __DIR__ . '/../Services/LdapService.php';
-                $ldapService = new LdapService();
-                $connectionTest = $ldapService->testConnection();
-                
-                // 如果連接成功，獲取使用者清單
-                if ($connectionTest['success']) {
-                    $ldapUsers = $this->getLdapUsersList();
-                }
-            } catch (Exception $e) {
-                $connectionTest = [
-                    'success' => false,
-                    'message' => 'LDAP服務載入失敗: ' . $e->getMessage(),
-                    'details' => []
-                ];
-            }
+        try {
+            $connectionTest = $this->ldapService->testConnection();
+            $users = $this->ldapService->listAllUsers();
+            
+            $this->view('auth/ldap-test', [
+                'title' => 'LDAP 測試工具',
+                'connectionTest' => $connectionTest,
+                'users' => $users,
+                'pageType' => 'auth'
+            ]);
+        } catch (Exception $e) {
+            $this->view('auth/ldap-test', [
+                'title' => 'LDAP 測試工具',
+                'error' => '測試過程發生錯誤: ' . $e->getMessage(),
+                'pageType' => 'auth'
+            ]);
         }
-
-        $this->view('auth/ldap-test', [
-            'title' => 'LDAP 測試工具',
-            'ldapConfig' => $ldapConfig,
-            'connectionTest' => $connectionTest,
-            'testResult' => $testResult,
-            'testUsername' => $testUsername,
-            'ldapUsers' => $ldapUsers,
-            'pageType' => 'auth'
-        ]);
     }
     
     /**

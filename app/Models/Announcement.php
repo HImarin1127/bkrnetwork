@@ -248,12 +248,12 @@ class Announcement extends Model {
      * 刪除公告附件
      * 
      * @param int $announcementId 公告ID
-     * @return bool 刪除成功回傳 true
+     * @return bool
      */
     public function removeAttachment($announcementId) {
         $announcement = $this->find($announcementId);
         
-        if ($announcement && $announcement['attachment_url']) {
+        if ($announcement && !empty($announcement['attachment_url'])) {
             $filePath = __DIR__ . '/../../' . $announcement['attachment_url'];
             
             // 刪除實體檔案
@@ -261,7 +261,7 @@ class Announcement extends Model {
                 unlink($filePath);
             }
             
-            // 清除資料庫記錄
+            // 清除資料庫中的附件資訊
             $updateData = [
                 'attachment_url' => null,
                 'attachment_name' => null
@@ -277,47 +277,54 @@ class Announcement extends Model {
      * 記錄公告操作日誌
      * 
      * @param int $announcementId 公告ID
-     * @param string $action 操作類型
-     * @param string $actionByUsername 操作者的使用者名稱
-     * @param array $details 操作詳情
+     * @param string $action 操作類型 (e.g., 'create', 'update', 'publish', 'unpublish')
+     * @param string $actionByUsername 操作者
+     * @param array $details 操作細節 (JSON 格式)
      */
     public function logAction($announcementId, $action, $actionByUsername, $details = []) {
-        $sql = "INSERT INTO announcement_logs (announcement_id, action, action_by_username, action_details, created_at) 
-                VALUES (?, ?, ?, ?, ?)";
+        $logTable = 'announcement_logs';
+        $logData = [
+            'announcement_id' => $announcementId,
+            'action' => $action,
+            'action_by_username' => $actionByUsername,
+            'action_at' => date('Y-m-d H:i:s'),
+            'details' => json_encode($details, JSON_UNESCAPED_UNICODE)
+        ];
         
-        $this->db->execute($sql, [
-            $announcementId,
-            $action,
-            $actionByUsername,
-            json_encode($details),
-            date('Y-m-d H:i:s')
-        ]);
+        $fields = array_keys($logData);
+        $placeholders = array_fill(0, count($fields), '?');
+        
+        $sql = "INSERT INTO {$logTable} (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")";
+        
+        $this->db->execute($sql, array_values($logData));
     }
     
     /**
-     * 取得公告操作日誌
+     * 取得公告的操作日誌
      * 
      * @param int $announcementId 公告ID
-     * @return array 操作日誌陣列
+     * @return array
      */
     public function getActionLogs($announcementId) {
-        $sql = "SELECT * FROM announcement_logs WHERE announcement_id = ? ORDER BY created_at DESC";
-        
+        $logTable = 'announcement_logs';
+        $sql = "SELECT * FROM {$logTable} WHERE announcement_id = ? ORDER BY action_at DESC";
         return $this->db->fetchAll($sql, [$announcementId]);
     }
     
     /**
-     * 取得所有公告（管理用）
-     * 
      * 取得所有公告並包含作者資訊
      * 
      * @param string $orderBy 排序方式
-     * @return array 公告資料陣列
+     * @return array
      */
     public function getAllAnnouncementsWithAuthor($orderBy = 'created_at DESC') {
-        $sql = "SELECT * FROM {$this->table} ORDER BY {$orderBy}";
-        
-        return $this->db->fetchAll($sql, []);
+        $sql = "
+            SELECT a.*, u.name as author_name
+            FROM {$this->table} a
+            LEFT JOIN users u ON a.author_username = u.username
+            ORDER BY {$orderBy}
+        ";
+        return $this->db->fetchAll($sql);
     }
 } 
 // Announcement 類別結束 

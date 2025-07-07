@@ -1,5 +1,7 @@
 <?php
 // app/Controllers/HomeController.php
+namespace App\Controllers;
+
 // PHP 開始標籤，表示這是一個 PHP 檔案
 // 檔案路徑註解，說明此檔案位置
 
@@ -11,6 +13,7 @@ require_once __DIR__ . '/../Models/Announcement.php';
 // 引入公告模型類別，用於公告相關資料操作
 require_once __DIR__ . '/../Models/CompanyInfo.php';
 // 引入公司資訊模型類別，用於公司資訊相關資料操作
+require_once __DIR__ . '/../Models/User.php';
 
 /**
  * 首頁控制器
@@ -42,9 +45,9 @@ class HomeController extends Controller {
      */
     public function __construct() {
         // 建構函數，當類別被實例化時自動執行
-        $this->announcementModel = new Announcement();
+        $this->announcementModel = new \Announcement();
         // 實例化公告模型，用於後續的公告相關操作
-        $this->companyInfoModel = new CompanyInfo();
+        $this->companyInfoModel = new \CompanyInfo();
         // 實例化公司資訊模型，用於後續的公司資訊相關操作
         $this->setGlobalViewData();
         // 設定全域視圖資料，如當前使用者資訊、登入狀態等
@@ -90,8 +93,7 @@ class HomeController extends Controller {
         // 檢查當前使用者是否有公告管理權限
         $canManageAnnouncements = false;
         if (isset($_SESSION['username'])) {
-            require_once __DIR__ . '/../Models/User.php';
-            $userModel = new User();
+            $userModel = new \User();
             $canManageAnnouncements = $userModel->canManageAnnouncements($_SESSION['username']);
         }
         

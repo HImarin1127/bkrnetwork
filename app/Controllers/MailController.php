@@ -1,6 +1,8 @@
 <?php
 // app/Controllers/MailController.php
 
+namespace App\Controllers;
+
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../Models/MailRecord.php';
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
@@ -19,7 +21,7 @@ require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
  */
 class MailController extends Controller {
     /** @var MailRecord 郵務記錄模型實例 */
-    private $mailModel;
+    private $mailRecordModel;
     
     /**
      * 建構函式
@@ -27,7 +29,8 @@ class MailController extends Controller {
      * 初始化郵務記錄模型
      */
     public function __construct() {
-        $this->mailModel = new MailRecord();
+        $this->mailRecordModel = new \MailRecord();
+        $this->setGlobalViewData();
     }
     
     /**
@@ -249,7 +252,7 @@ class MailController extends Controller {
         // 檢查是否為管理員
         
         // 檢查權限
-        if (!$this->mailModel->checkPermission($id, $user['id'], $isAdmin)) {
+        if (!$this->mailRecordModel->checkPermission($id, $user['id'], $isAdmin)) {
             // 使用郵務模型檢查使用者是否有權限編輯此記錄
             $this->redirect(BASE_URL . 'mail/records?error=權限不足');
             // 無權限時重新導向到記錄列表頁面
@@ -257,7 +260,7 @@ class MailController extends Controller {
         }
         // 權限檢查結束
         
-        $record = $this->mailModel->find($id);
+        $record = $this->mailRecordModel->find($id);
         // 從資料庫取得要編輯的記錄
         if (!$record) {
             // 檢查記錄是否存在
@@ -307,13 +310,13 @@ class MailController extends Controller {
             if (empty($errors)) {
                 // 如果沒有驗證錯誤
                 try {
-                    $this->mailModel->update($id, $updateData);
+                    $this->mailRecordModel->update($id, $updateData);
                     // 呼叫郵務模型更新記錄
                     $success = '記錄更新成功！';
                     // 設定成功訊息
                     
                     // 重新載入記錄
-                    $record = $this->mailModel->find($id);
+                    $record = $this->mailRecordModel->find($id);
                     // 取得更新後的記錄資料
                 } catch (Exception $e) {
                     // 捕獲更新過程中的例外
@@ -353,7 +356,7 @@ class MailController extends Controller {
         // 檢查是否為管理員
         
         // 檢查權限
-        if (!$this->mailModel->checkPermission($id, $user['id'], $isAdmin)) {
+        if (!$this->mailRecordModel->checkPermission($id, $user['id'], $isAdmin)) {
             // 使用郵務模型檢查刪除權限
             $this->json(['success' => false, 'message' => '權限不足']);
             // 回傳 JSON 錯誤回應
@@ -361,7 +364,7 @@ class MailController extends Controller {
         }
         // 權限檢查結束
         
-        $record = $this->mailModel->find($id);
+        $record = $this->mailRecordModel->find($id);
         // 從資料庫取得要刪除的記錄
         if (!$record) {
             // 檢查記錄是否存在
@@ -380,7 +383,7 @@ class MailController extends Controller {
         // 狀態檢查結束
         
         try {
-            $this->mailModel->delete($id);
+            $this->mailRecordModel->delete($id);
             $this->json(['success' => true, 'message' => '記錄已刪除']);
         } catch (Exception $e) {
             $this->json(['success' => false, 'message' => '刪除失敗：' . $e->getMessage()]);
@@ -400,16 +403,16 @@ class MailController extends Controller {
         
         // 處理 CSV 匯出
         if ($isAdmin && isset($_GET['export'])) {
-            $this->mailModel->exportToCsv();
+            $this->mailRecordModel->exportToCsv();
             return;
         }
         
         // 處理搜尋
         $keyword = trim($_GET['search'] ?? '');
         if (!empty($keyword)) {
-            $records = $this->mailModel->search($keyword, $user['id'], $isAdmin);
+            $records = $this->mailRecordModel->search($keyword, $user['id'], $isAdmin);
         } else {
-            $records = $this->mailModel->getByUserId($user['id'], $isAdmin);
+            $records = $this->mailRecordModel->getByUserId($user['id'], $isAdmin);
         }
         
         $this->view('mail/outgoing-records', [
@@ -473,7 +476,7 @@ class MailController extends Controller {
                 try {
                     $formData['registrar_id'] = $user['id'];
                     $formData['status'] = '已收件';
-                    $recordId = $this->mailModel->createIncomingRecord($formData);
+                    $recordId = $this->mailRecordModel->createIncomingRecord($formData);
                     
                     if ($recordId) {
                         $success = "收件已登記成功！登記編號：<strong>IN-{$recordId}</strong>";
@@ -528,9 +531,9 @@ class MailController extends Controller {
         $filters = compact('keyword', 'dateFrom', 'dateTo', 'status');
         
         if (!empty($keyword) || !empty($dateFrom) || !empty($dateTo) || !empty($status)) {
-            $records = $this->mailModel->searchIncomingRecords($filters, $user['id'], $isAdmin);
+            $records = $this->mailRecordModel->searchIncomingRecords($filters, $user['id'], $isAdmin);
         } else {
-            $records = $this->mailModel->getIncomingRecords($user['id'], $isAdmin);
+            $records = $this->mailRecordModel->getIncomingRecords($user['id'], $isAdmin);
         }
         
         $this->view('mail/incoming-records', [

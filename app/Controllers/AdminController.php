@@ -3,6 +3,8 @@
 // PHP 開始標籤，表示這是一個 PHP 檔案
 // 檔案路徑註解，說明此檔案位置
 
+namespace App\Controllers;
+
 require_once __DIR__ . '/Controller.php';
 // 引入父類別 Controller.php，使用 require_once 確保只載入一次
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
@@ -11,6 +13,7 @@ require_once __DIR__ . '/../Models/User.php';
 // 引入使用者模型
 require_once __DIR__ . '/../Models/Announcement.php';
 // 引入公告模型
+require_once __DIR__ . '/../Models/HolidayCalendar.php';
 
 /**
  * 管理員控制器
@@ -35,6 +38,9 @@ class AdminController extends Controller {
     /** @var Announcement 公告模型實例 */
     private $announcementModel;
     
+    /** @var HolidayCalendar 假日日曆模型實例 */
+    private $holidayCalendarModel;
+    
     /**
      * 建構函數
      * 
@@ -50,8 +56,10 @@ class AdminController extends Controller {
         // 呼叫認證中介軟體的 requireLogin 方法，檢查使用者是否已登入
         
         // 初始化模型
-        $this->userModel = new User();
-        $this->announcementModel = new Announcement();
+        $this->userModel = new \User();
+        $this->announcementModel = new \Announcement();
+        $this->holidayCalendarModel = new \HolidayCalendar();
+        $this->setGlobalViewData();
     }
     
     /**
@@ -130,10 +138,11 @@ class AdminController extends Controller {
         // 定義使用者管理頁面方法
         $this->setGlobalViewData();
         // 設定全域視圖資料
+        $users = $this->userModel->getAllUsersWithCompany();
         $this->view('admin/users', [
             // 呼叫視圖方法，載入使用者管理頁面模板
             'title' => '使用者管理',
-            'users' => $this->userModel->all() // 獲取所有使用者
+            'users' => $users
         ]);
         // 視圖參數陣列結束
     }
@@ -154,10 +163,11 @@ class AdminController extends Controller {
         // 定義新增使用者頁面方法
         $this->setGlobalViewData();
         // 設定全域視圖資料
+        $companies = $this->userModel->getAllCompanies();
         $this->view('admin/create-user', [
             // 呼叫視圖方法，載入新增使用者頁面模板
-            'title' => '新增使用者'
-            // 傳遞頁面標題到視圖
+            'title' => '新增使用者',
+            'companies' => $companies
         ]);
         // 視圖參數陣列結束
     }
@@ -171,16 +181,19 @@ class AdminController extends Controller {
      * 
      * @return void
      */
-    public function editUser() {
+    public function editUser($id) {
         // 檢查權限
         if (!$this->checkMethodPermission(__FUNCTION__)) return;
         
         // 定義編輯使用者頁面方法
         $this->setGlobalViewData();
+        $user = $this->userModel->getUserById($id);
+        $companies = $this->userModel->getAllCompanies();
         $this->view('admin/edit-user', [
             // 呼叫視圖方法，載入編輯使用者頁面模板
-            'title' => '編輯使用者'
-            // 傳遞頁面標題到視圖
+            'title' => '編輯使用者',
+            'user' => $user,
+            'companies' => $companies
         ]);
         // 視圖參數陣列結束
     }
@@ -318,17 +331,18 @@ class AdminController extends Controller {
      * 
      * @return void
      */
-    public function editAnnouncement() {
+    public function editAnnouncement($id) {
         // 檢查權限
         if (!$this->checkMethodPermission(__FUNCTION__)) return;
         
         // 定義編輯公告頁面方法
         $this->setGlobalViewData();
         // 設定全域視圖資料
+        $announcement = $this->announcementModel->getAnnouncementById($id);
         $this->view('admin/edit-announcement', [
             // 呼叫視圖方法，載入編輯公告頁面模板
-            'title' => '編輯公告'
-            // 傳遞頁面標題到視圖
+            'title' => '編輯公告',
+            'announcement' => $announcement
         ]);
         // 視圖參數陣列結束
     }
