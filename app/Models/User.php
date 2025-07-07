@@ -296,8 +296,8 @@ class User extends Model {
      */
     public function create($data) {
         // 設定預設值
-        $data['created_at'] = date('Y-m-d H:i:s');
-        $data['updated_at'] = date('Y-m-d H:i:s');
+        // $data['created_at'] = date('Y-m-d H:i:s');
+        // $data['updated_at'] = date('Y-m-d H:i:s');
         
         $fields = array_keys($data);
         $placeholders = array_fill(0, count($fields), '?');
