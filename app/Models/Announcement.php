@@ -91,26 +91,6 @@ class Announcement extends Model {
     // getHandbookContents 方法結束
     
     /**
-     * 建立新公告
-     * 
-     * 建立新的公告記錄，自動加入時間戳記
-     * 
-     * @param array $data 公告資料陣列
-     * @return int 新建立的公告 ID
-     */
-    public function createAnnouncement($data) {
-        // 定義建立新公告方法
-        $data['created_at'] = date('Y-m-d H:i:s');
-        // 設定記錄建立時間為當前時間
-        $data['updated_at'] = date('Y-m-d H:i:s');
-        // 設定記錄更新時間為當前時間
-        
-        return $this->create($data);
-        // 呼叫父類別的 create 方法新增公告資料，並回傳新建立的公告 ID
-    }
-    // createAnnouncement 方法結束
-    
-    /**
      * 更新公告資料
      * 
      * 更新指定公告的資料，自動更新時間戳記
@@ -172,23 +152,21 @@ class Announcement extends Model {
     // toggleStatus 方法結束
     
     /**
-     * 建立新公告（增強版）
-     * 
      * 建立新的公告記錄，支援公告日期和附件功能
      * 
      * @param array $data 公告資料陣列
-     * @param int $authorId 作者ID
+     * @param string $authorUsername 作者的使用者名稱
      * @return int 新建立的公告 ID
      */
-    public function createAnnouncementWithDetails($data, $authorId) {
-        $data['author_id'] = $authorId;
+    public function createAnnouncementWithDetails($data, $authorUsername) {
+        $data['author_username'] = $authorUsername;
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
         
         // 如果設定為發布狀態，記錄發布時間和發布者
         if (isset($data['status']) && $data['status'] === 'published') {
             $data['published_at'] = date('Y-m-d H:i:s');
-            $data['published_by'] = $authorId;
+            $data['published_by_username'] = $authorUsername;
         }
         
         return $this->create($data);
@@ -200,14 +178,14 @@ class Announcement extends Model {
      * 將草稿狀態的公告正式發布
      * 
      * @param int $id 公告 ID
-     * @param int $publisherId 發布者ID
+     * @param string $publisherUsername 發布者的使用者名稱
      * @return int|false 成功時回傳受影響的記錄數量，失敗時回傳 false
      */
-    public function publishAnnouncement($id, $publisherId) {
+    public function publishAnnouncement($id, $publisherUsername) {
         $updateData = [
             'status' => 'published',
             'published_at' => date('Y-m-d H:i:s'),
-            'published_by' => $publisherId
+            'published_by_username' => $publisherUsername
         ];
         
         return $this->updateAnnouncement($id, $updateData);
@@ -225,7 +203,7 @@ class Announcement extends Model {
         $updateData = [
             'status' => 'draft',
             'published_at' => null,
-            'published_by' => null
+            'published_by_username' => null
         ];
         
         return $this->updateAnnouncement($id, $updateData);
@@ -300,17 +278,17 @@ class Announcement extends Model {
      * 
      * @param int $announcementId 公告ID
      * @param string $action 操作類型
-     * @param int $actionBy 操作者ID
+     * @param string $actionByUsername 操作者的使用者名稱
      * @param array $details 操作詳情
      */
-    public function logAction($announcementId, $action, $actionBy, $details = []) {
-        $sql = "INSERT INTO announcement_logs (announcement_id, action, action_by, action_details, created_at) 
+    public function logAction($announcementId, $action, $actionByUsername, $details = []) {
+        $sql = "INSERT INTO announcement_logs (announcement_id, action, action_by_username, action_details, created_at) 
                 VALUES (?, ?, ?, ?, ?)";
         
         $this->db->execute($sql, [
             $announcementId,
             $action,
-            $actionBy,
+            $actionByUsername,
             json_encode($details),
             date('Y-m-d H:i:s')
         ]);
@@ -323,11 +301,7 @@ class Announcement extends Model {
      * @return array 操作日誌陣列
      */
     public function getActionLogs($announcementId) {
-        $sql = "SELECT al.*, u.name as action_user_name 
-                FROM announcement_logs al 
-                LEFT JOIN users u ON al.action_by = u.id 
-                WHERE al.announcement_id = ? 
-                ORDER BY al.created_at DESC";
+        $sql = "SELECT * FROM announcement_logs WHERE announcement_id = ? ORDER BY created_at DESC";
         
         return $this->db->fetchAll($sql, [$announcementId]);
     }
@@ -341,12 +315,7 @@ class Announcement extends Model {
      * @return array 公告資料陣列
      */
     public function getAllAnnouncementsWithAuthor($orderBy = 'created_at DESC') {
-        $sql = "SELECT a.*, u.name as author_name, u.username as author_username,
-                       p.name as publisher_name
-                FROM {$this->table} a 
-                LEFT JOIN users u ON a.author_id = u.id
-                LEFT JOIN users p ON a.published_by = p.id
-                ORDER BY {$orderBy}";
+        $sql = "SELECT * FROM {$this->table} ORDER BY {$orderBy}";
         
         return $this->db->fetchAll($sql, []);
     }

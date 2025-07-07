@@ -58,61 +58,14 @@ class MailController extends Controller {
             'receiver_name' => '',
             'receiver_address' => '',
             'receiver_phone' => '',
-            'declare_department' => $user['department'] ?? '',
+            // 'declare_department' => $user['department'] ?? '',
             'sender_name' => $user['name'] ?? $user['username'],
             'sender_ext' => ''
         ];
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 取得並清理表單資料
-            $formData = [
-                'mail_type' => trim($_POST['mail_type'] ?? ''),
-                'receiver_name' => trim($_POST['receiver_name'] ?? ''),
-                'receiver_address' => trim($_POST['receiver_address'] ?? ''),
-                'receiver_phone' => trim($_POST['receiver_phone'] ?? ''),
-                'declare_department' => trim($_POST['declare_department'] ?? ''),
-                'sender_name' => trim($_POST['sender_name'] ?? ''),
-                'sender_ext' => trim($_POST['sender_ext'] ?? '')
-            ];
-            
-            // 必填欄位驗證
-            if (empty($formData['mail_type'])) $errors[] = '請選擇寄件方式';
-            if (empty($formData['receiver_name'])) $errors[] = '請填寫收件者姓名';
-            if (empty($formData['receiver_address'])) $errors[] = '請填寫收件地址';
-            if (empty($formData['receiver_phone'])) $errors[] = '請填寫收件者行動電話';
-            if (empty($formData['declare_department'])) $errors[] = '請填寫費用申報單位';
-            if (empty($formData['sender_name'])) $errors[] = '請填寫寄件者姓名';
-            if (empty($formData['sender_ext'])) $errors[] = '請填寫寄件者分機';
-            
-            if (empty($errors)) {
-                try {
-                    // 加入登記者 ID
-                    $formData['registrar_id'] = $user['id'];
-                    
-                    // 建立郵件記錄
-                    $recordId = $this->mailModel->createMailRecord($formData);
-                    
-                    if ($recordId) {
-                        // 取得新建立記錄的郵件編號
-                        $record = $this->mailModel->find($recordId);
-                        $mailCode = $record['mail_code'] ?? '';
-                        $success = "寄件已登記成功！寄件序號：<strong>{$mailCode}</strong>";
-                        
-                        // 成功後重置表單，保留使用者資訊
-                        $formData = [
-                            'mail_type' => '',
-                            'receiver_name' => '',
-                            'receiver_address' => '',
-                            'receiver_phone' => '',
-                            'declare_department' => $user['department'] ?? '',
-                            'sender_name' => $user['name'] ?? $user['username'],
-                            'sender_ext' => ''
-                        ];
-                    }
-                } catch (Exception $e) {
-                    $errors[] = '登記失敗：' . $e->getMessage();
-                }
-            }
+            // 功能已停用，因為 mail_records 資料表不存在
+            $errors[] = "登記失敗：SQLSTATE[42S02]: 資料表 'bkrnetwork.mail_records' 不存在。此功能已被管理員停用。";
         }
         
         $this->view('mail/request', [
@@ -139,30 +92,30 @@ class MailController extends Controller {
         
         $this->setGlobalViewData();
         
-        $user = AuthMiddleware::getCurrentUser();
-        $isAdmin = $user['role'] === 'admin';
+        // $user = AuthMiddleware::getCurrentUser();
+        // $isAdmin = $user['role'] === 'admin';
         
-        // 處理 CSV 匯出請求（僅限管理員）
-        if ($isAdmin && isset($_GET['export'])) {
-            $this->mailModel->exportToCsv();
-            return;
-        }
+        // // 處理 CSV 匯出請求（僅限管理員）
+        // if ($isAdmin && isset($_GET['export'])) {
+        //     $this->mailModel->exportToCsv();
+        //     return;
+        // }
         
-        // 處理搜尋請求
-        $keyword = trim($_GET['search'] ?? '');
-        if (!empty($keyword)) {
-            // 執行關鍵字搜尋
-            $records = $this->mailModel->search($keyword, $user['id'], $isAdmin);
-        } else {
-            // 顯示所有記錄（根據權限過濾）
-            $records = $this->mailModel->getByUserId($user['id'], $isAdmin);
-        }
+        // // 處理搜尋請求
+        // $keyword = trim($_GET['search'] ?? '');
+        // if (!empty($keyword)) {
+        //     // 執行關鍵字搜尋
+        //     $records = $this->mailModel->search($keyword, $user['id'], $isAdmin);
+        // } else {
+        //     // 顯示所有記錄（根據權限過濾）
+        //     $records = $this->mailModel->getByUserId($user['id'], $isAdmin);
+        // }
         
         $this->view('mail/records', [
             'title' => '寄件記錄',
-            'records' => $records,
-            'isAdmin' => $isAdmin,
-            'keyword' => $keyword
+            'records' => [], // 功能已停用，回傳空陣列
+            'isAdmin' => false,
+            'keyword' => ''
         ]);
     }
     
@@ -185,70 +138,12 @@ class MailController extends Controller {
         
         $this->setGlobalViewData();
         
-        $user = AuthMiddleware::getCurrentUser();
-        $message = '';
-        $messageType = '';
-        
-        // 檢查是否有從 session 中的訊息（重新導向後顯示）
-        if (isset($_SESSION['import_message'])) {
-            $message = $_SESSION['import_message'];
-            $messageType = $_SESSION['import_message_type'];
-            // 清除 session 中的訊息
-            unset($_SESSION['import_message']);
-            unset($_SESSION['import_message_type']);
-        }
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 檢查檔案上傳
-            if (empty($_FILES['csv_file']['tmp_name'])) {
-                $message = "請選擇要匯入的 CSV 檔案。";
-                $messageType = 'error';
-            } elseif ($_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
-                $uploadErrors = [
-                    UPLOAD_ERR_INI_SIZE => '檔案大小超過系統限制',
-                    UPLOAD_ERR_FORM_SIZE => '檔案大小超過表單限制',
-                    UPLOAD_ERR_PARTIAL => '檔案只有部分被上傳',
-                    UPLOAD_ERR_NO_FILE => '沒有檔案被上傳',
-                    UPLOAD_ERR_NO_TMP_DIR => '找不到暫存目錄',
-                    UPLOAD_ERR_CANT_WRITE => '檔案寫入失敗',
-                    UPLOAD_ERR_EXTENSION => 'PHP 擴充功能停止了檔案上傳'
-                ];
-                $message = "檔案上傳失敗：" . ($uploadErrors[$_FILES['csv_file']['error']] ?? '未知錯誤');
-                $messageType = 'error';
-            } else {
-                try {
-                    // 執行批次匯入
-                    $result = $this->mailModel->batchImport($_FILES['csv_file']['tmp_name'], $user['id']);
-                    
-                    if ($result['imported'] > 0) {
-                        $message = "🎉 批次匯入完成！共成功匯入 {$result['imported']} 筆寄件資料。";
-                        $messageType = 'success';
-                        
-                        // 如果有部分失敗，顯示警告訊息
-                        if (!empty($result['errors'])) {
-                            $message .= "<br><br>⚠️ 以下資料匯入失敗：<br>" . implode('<br>', $result['errors']);
-                            $messageType = 'warning';
-                        }
-                        
-                        // 成功後重新導向到匯入頁面顯示結果（避免重複提交）
-                        $_SESSION['import_message'] = $message;
-                        $_SESSION['import_message_type'] = $messageType;
-                        $this->redirect($this->getBaseUrl() . '/mail/import?success=1');
-                        return;
-                    } else {
-                        $errorDetails = !empty($result['errors']) ? '<br><br>詳細錯誤：<br>' . implode('<br>', $result['errors']) : '';
-                        $message = "❌ 匯入失敗，沒有成功匯入任何資料。請檢查檔案格式是否正確。" . $errorDetails;
-                        $messageType = 'error';
-                    }
-                } catch (Exception $e) {
-                    $message = "❌ 匯入失敗：" . $e->getMessage();
-                    $messageType = 'error';
-                }
-            }
-        }
+        // $user = AuthMiddleware::getCurrentUser();
+        $message = "錯誤：資料表 'bkrnetwork.mail_records' 不存在。此功能已被管理員停用。";
+        $messageType = 'error';
         
         $this->view('mail/import', [
-            'title' => '寄件匯入',
+            'title' => '批次匯入寄件資料',
             'message' => $message,
             'messageType' => $messageType
         ]);

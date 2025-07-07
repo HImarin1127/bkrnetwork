@@ -13,7 +13,7 @@
                         <div class="stat-icon">🏢</div>
                         <div class="stat-details">
                             <h4>總樓層數</h4>
-                            <span>7層辦公樓</span>
+                            <span>5層辦公樓</span>
                         </div>
                     </div>
                     <div class="stat-item">
@@ -37,11 +37,12 @@
         <div class="floor-selector-card glass-card">
             <h2>樓層導覽</h2>
             <div class="floor-tabs">
-                <button class="floor-tab active" data-floor="7">7F 主管辦公區</button>
-                <button class="floor-tab" data-floor="6">6F 編輯部門</button>
-                <button class="floor-tab" data-floor="5">5F 業務行銷</button>
-                <button class="floor-tab" data-floor="4">4F 製作發行</button>
-                <button class="floor-tab" data-floor="3">3F 行政支援</button>
+                <button class="floor-tab active" data-floor="7">108-2 9F 出版單位+社長辦公室</button>
+                <button class="floor-tab" data-floor="6">108-4 8F 營業單位辦公室</button>
+                <button class="floor-tab" data-floor="6">108-3 8F 出版單位</button>
+                <button class="floor-tab" data-floor="5">108-3 6F 出版單位</button>
+                <button class="floor-tab" data-floor="4">108-4 5F 出版單位+營業單位</button>
+                <button class="floor-tab" data-floor="3">108-3 3F 出版單位</button>
             </div>
 
             <div class="floor-content-area">

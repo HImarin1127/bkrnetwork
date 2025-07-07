@@ -114,25 +114,6 @@ class GuidesController extends Controller {
     // nas 方法結束
     
     /**
-     * 電子郵件操作指引頁面
-     * 
-     * 顯示電子郵件系統的使用說明
-     * 包括信箱設定、收發郵件、簽名檔設定等
-     */
-    public function email() {
-        // 定義電子郵件操作指引頁面方法
-        $this->setGlobalViewData();
-        // 設定全域視圖資料
-        $this->view('guides/email', [
-            // 呼叫視圖方法，載入電子郵件操作指引頁面模板
-            'title' => '電子郵件操作指引'
-            // 設定頁面標題
-        ]);
-        // 視圖參數陣列結束
-    }
-    // email 方法結束
-    
-    /**
      * 文化部免稅系統操作指引頁面
      * 
      * 顯示文化部圖書免稅系統的操作說明

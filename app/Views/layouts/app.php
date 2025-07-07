@@ -268,8 +268,6 @@
             flex-wrap: nowrap;
         }
 
-
-
         .nav-item {
             position: relative;
         }
@@ -364,8 +362,6 @@
             border-left-color: #C8102E;
             padding-left: 1.5rem;
         }
-
-
 
         /* 子選單樣式 */
         .dropdown-submenu {
@@ -601,14 +597,6 @@
         .data-table tr:last-child td {
             border-bottom: none;
         }
-            background: white;
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border: 1px solid #e2e8f0;
-            position: relative;
-            z-index: 1;
-        }
 
         /* Footer */
         .footer {
@@ -721,6 +709,60 @@
                 padding: 1rem;
                 border-radius: 12px;
             }
+        }
+
+        .main-content {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Flash 訊息樣式 */
+        .flash-message {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        }
+
+        .flash-message.success {
+            background-color: #dcfce7;
+            border: 1px solid #4ade80;
+            color: #166534;
+        }
+
+        .flash-message.error {
+            background-color: #fee2e2;
+            border: 1px solid #f87171;
+            color: #991b1b;
+        }
+
+        .flash-message::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+        }
+
+        .flash-message.success::before {
+            content: '✓'; /* 或者使用SVG圖示 */
+            font-weight: bold;
+        }
+
+        .flash-message.error::before {
+            content: '✗'; /* 或者使用SVG圖示 */
+            font-weight: bold;
         }
     </style>
 </head>
@@ -941,7 +983,15 @@
 
     <!-- 主要內容區域 -->
     <main class="main-layout">
-        <div class="container">
+        <div class="main-content">
+            <?php
+            // 顯示 Flash 訊息
+            if (isset($_SESSION['flash_message'])) {
+                $flash = $_SESSION['flash_message'];
+                echo "<div class='flash-message {$flash['type']}'>{$flash['message']}</div>";
+                unset($_SESSION['flash_message']);
+            }
+            ?>
             <?php echo $content; ?>
         </div>
     </main>

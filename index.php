@@ -62,25 +62,33 @@ spl_autoload_register(function ($class) {
 // 載入路由定義檔案
 $routes = require_once BASE_PATH . 'routes/web.php';
 
-// 解析當前請求的 URI
-$requestUri = $_SERVER['REQUEST_URI'];
+// 首先檢查 ?route= 參數
+$routeParam = isset($_GET['route']) ? $_GET['route'] : '';
 
-// 處理基礎路徑，移除應用程式所在的目錄路徑
-$basePath = dirname($_SERVER['SCRIPT_NAME']);
-if ($basePath !== '/' && $basePath !== '') {
-    // 確保 basePath 以 / 結尾
-    $basePath = rtrim($basePath, '/') . '/';
-    if (strpos($requestUri, $basePath) === 0) {
-        $requestUri = substr($requestUri, strlen($basePath));
+if (!empty($routeParam)) {
+    $uri = $routeParam;
+} else {
+    // 解析當前請求的 URI
+    $requestUri = $_SERVER['REQUEST_URI'];
+
+    // 處理基礎路徑，移除應用程式所在的目錄路徑
+    $basePath = dirname($_SERVER['SCRIPT_NAME']);
+    if ($basePath !== '/' && $basePath !== '') {
+        // 確保 basePath 以 / 結尾
+        $basePath = rtrim($basePath, '/') . '/';
+        if (strpos($requestUri, $basePath) === 0) {
+            $requestUri = substr($requestUri, strlen($basePath));
+        }
     }
+
+    // 移除查詢字串並清理 URI
+    $uri = parse_url($requestUri, PHP_URL_PATH);
 }
 
-// 移除查詢字串並清理 URI
-$uri = parse_url($requestUri, PHP_URL_PATH);
 $uri = '/' . trim($uri, '/');
 
 // 特殊處理：如果 URI 是空的，設為根路由
-if ($uri === '//') {
+if ($uri === '//' || $uri === '') {
     $uri = '/';
 }
 

@@ -35,6 +35,24 @@ return [
     '/company/contacts' => ['HomeController', 'companyContacts'],     // 聯絡資訊
     '/company/nas' => ['HomeController', 'companyNas'],               // 網路存儲資訊
     
+    // 免稅申請流程
+    '/guides/tax-exempt/process' => ['HomeController', 'taxExemptProcess'],   // 免稅流程
+    
+    // Windows 遠端連線
+    '/guides/windows/remote' => ['HomeController', 'windowsRemote'],          // Windows 遠端連線
+
+    // 印表機基本操作
+    '/guides/printer/basic' => ['HomeController', 'printerBasic'],            // 印表機基本操作
+
+    // 印表機疑難排解
+    '/guides/printer/troubleshoot' => ['HomeController', 'printerTroubleshoot'], // 印表機疑難排解
+
+    // 免稅系統操作說明
+    '/guides/tax-exempt/system' => ['HomeController', 'taxExemptSystem'],     // 免稅系統
+
+    // 電子郵件設定指引
+    '/guides/email' => ['HomeController', 'email'],                           // 信箱設定
+
     // 認證路由 - 使用者登入、註冊、登出
     '/login' => ['AuthController', 'login'],
     '/register' => ['AuthController', 'register'],
@@ -75,18 +93,16 @@ return [
     '/booking/equipment' => ['BookingController', 'equipment'],                 // 設備預約
     
     // 操作指引系統 - 各種系統使用說明
-    '/guides/windows/remote' => ['GuidesController', 'windowsRemote'],          // Windows 遠端連線
+    // '/guides/windows/remote' => ['GuidesController', 'windowsRemote'],          // Windows 遠端連線 - 已移至公開路由
     '/guides/windows/audio' => ['GuidesController', 'windowsAudio'],            // Windows 音效設定
-    '/guides/printer/basic' => ['GuidesController', 'printerBasic'],            // 印表機基本操作
-    '/guides/printer/troubleshoot' => ['GuidesController', 'printerTroubleshoot'], // 印表機故障排除
+    // '/guides/printer/basic' => ['GuidesController', 'printerBasic'],            // 印表機基本操作 - 已移至公開路由
+    // '/guides/printer/troubleshoot' => ['GuidesController', 'printerTroubleshoot'], // 印表機故障排除 - 已移至公開路由
     '/guides/mac/web-print' => ['GuidesController', 'macWebPrint'],             // Mac 網頁列印
     '/guides/mac/driver' => ['GuidesController', 'macDriver'],                  // Mac 驅動程式
     '/guides/pos' => ['GuidesController', 'pos'],                               // POS 系統
     '/guides/nas/password' => ['GuidesController', 'nasPassword'],              // NAS 密碼管理
     '/guides/nas/web-auth' => ['GuidesController', 'nasWebAuth'],               // NAS 網頁認證
-    '/guides/email' => ['GuidesController', 'email'],                           // 信箱設定
-    '/guides/tax-exempt/process' => ['GuidesController', 'taxExemptProcess'],   // 免稅流程
-    '/guides/tax-exempt/system' => ['GuidesController', 'taxExemptSystem'],     // 免稅系統
+    // '/guides/tax-exempt/system' => ['GuidesController', 'taxExemptSystem'],     // 免稅系統 - 已移至公開路由
     
     // ========================================
     // 管理員路由（需要管理員權限）

@@ -58,35 +58,36 @@ class AdminController extends Controller {
      * 檢查當前方法是否需要特殊權限
      */
     private function checkMethodPermission($method) {
-        $currentUserId = $_SESSION['user_id'] ?? null;
+        $currentUsername = $_SESSION['username'] ?? null;
         
         // 確保使用者已登入
-        if (!$currentUserId) {
+        if (!$currentUsername) {
             $this->redirect(BASE_URL . '/login?error=請先登入');
             return false;
         }
-        
-        $isAdmin = $this->isAdmin();
-        
-        // 公告相關方法：管理員或有公告管理權限的使用者可以訪問
-        $announcementMethods = ['announcements', 'createAnnouncement', 'editAnnouncement'];
-        if (in_array($method, $announcementMethods)) {
-            $canManageAnnouncements = $this->userModel->canManageAnnouncements($currentUserId);
-            if (!$isAdmin && !$canManageAnnouncements) {
-                error_log("權限檢查失敗 - 使用者ID: $currentUserId, 是否管理員: " . ($isAdmin ? 'Y' : 'N') . ", 公告權限: " . ($canManageAnnouncements ? 'Y' : 'N'));
-                $this->redirect(BASE_URL . '?error=您沒有公告管理權限，請聯絡管理員或確認您的部門權限');
-                return false;
-            }
+
+        // 使用者 'admin' 擁有所有權限
+        if ($currentUsername === 'admin') {
             return true;
         }
         
-        // 其他管理功能：只有管理員可以訪問
-        if (!$isAdmin) {
-            $this->redirect(BASE_URL . '?error=權限不足，需要管理員權限');
-            return false;
+        // 公告相關方法：有公告管理權限的使用者可以訪問
+        $announcementMethods = ['announcements', 'createAnnouncement', 'editAnnouncement'];
+        if (in_array($method, $announcementMethods)) {
+            if ($this->userModel->canManageAnnouncements($currentUsername)) {
+                return true;
+            } else {
+                error_log("權限檢查失敗 - 使用者: $currentUsername, 方法: $method");
+                $this->redirect(BASE_URL . '?error=您沒有公告管理權限');
+                return false;
+            }
         }
         
-        return true;
+        // 其他管理功能：預設需要 admin 等級權限 (目前邏輯下只有 admin 能訪問)
+        // 這裡可以根據未來需求擴充其他角色的權限
+        error_log("權限檢查失敗 - 使用者: $currentUsername, 方法: $method, 需要更高權限");
+        $this->redirect(BASE_URL . '?error=權限不足');
+        return false;
     }
     // 建構函數結束
     
@@ -131,8 +132,8 @@ class AdminController extends Controller {
         // 設定全域視圖資料
         $this->view('admin/users', [
             // 呼叫視圖方法，載入使用者管理頁面模板
-            'title' => '使用者管理'
-            // 傳遞頁面標題到視圖
+            'title' => '使用者管理',
+            'users' => $this->userModel->all() // 獲取所有使用者
         ]);
         // 視圖參數陣列結束
     }
@@ -176,7 +177,6 @@ class AdminController extends Controller {
         
         // 定義編輯使用者頁面方法
         $this->setGlobalViewData();
-        // 設定全域視圖資料
         $this->view('admin/edit-user', [
             // 呼叫視圖方法，載入編輯使用者頁面模板
             'title' => '編輯使用者'
@@ -198,7 +198,7 @@ class AdminController extends Controller {
         // 檢查權限
         if (!$this->checkMethodPermission(__FUNCTION__)) return;
         
-        $currentUserId = $_SESSION['user_id'];
+        $currentUsername = $_SESSION['username'];
         
         // 取得所有公告
         $announcements = $this->announcementModel->getAllAnnouncementsWithAuthor();
@@ -207,7 +207,7 @@ class AdminController extends Controller {
         $this->view('admin/announcements', [
             'title' => '公告管理',
             'announcements' => $announcements,
-            'canUploadPDF' => $this->userModel->canUploadPDF($currentUserId)
+            'canUploadPDF' => $this->userModel->canUploadPDF($currentUsername)
         ]);
     }
     // announcements 方法結束
@@ -224,7 +224,7 @@ class AdminController extends Controller {
         // 檢查權限
         if (!$this->checkMethodPermission(__FUNCTION__)) return;
         
-        $currentUserId = $_SESSION['user_id'];
+        $currentUsername = $_SESSION['username'];
         
         // 處理POST請求（表單提交）
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -235,7 +235,7 @@ class AdminController extends Controller {
         $this->setGlobalViewData();
         $this->view('admin/create-announcement', [
             'title' => '新增公告',
-            'canUploadPDF' => $this->userModel->canUploadPDF($currentUserId)
+            'canUploadPDF' => $this->userModel->canUploadPDF($currentUsername)
         ]);
     }
     // createAnnouncement 方法結束
@@ -244,52 +244,44 @@ class AdminController extends Controller {
      * 處理新增公告的POST請求
      */
     private function handleCreateAnnouncement() {
-        $currentUserId = $_SESSION['user_id'];
+        $currentUsername = $_SESSION['username'];
+        $currentUser = AuthMiddleware::getCurrentUser(); // 獲取當前使用者物件
         
         // 驗證必填欄位
-        $title = trim($_POST['title'] ?? '');
-        $content = trim($_POST['content'] ?? '');
-        $type = $_POST['type'] ?? 'general';
-        $status = $_POST['status'] ?? 'draft';
-        $date = $_POST['announcement_date'] ?? date('Y-m-d');
-        
-        if (empty($title) || empty($content)) {
-            $this->redirect(BASE_URL . '/admin/announcements/create?error=標題和內容為必填欄位');
+        if (empty($_POST['title']) || empty($_POST['content'])) {
+            $this->redirectWithError(BASE_URL . '/admin/announcements/create', '標題和內容為必填欄位');
             return;
         }
-        
-        // 準備公告資料
-        $announcementData = [
-            'title' => $title,
-            'content' => $content,
-            'type' => $type,
-            'status' => $status,
-            'date' => $date,
-            'sort_order' => (int)($_POST['sort_order'] ?? 0)
-        ];
-        
+
         try {
-            // 創建公告
-            $announcementId = $this->announcementModel->createAnnouncementWithDetails($announcementData, $currentUserId);
-            
-            // 處理PDF附件上傳
-            if (isset($_FILES['pdf_attachment']) && $_FILES['pdf_attachment']['error'] === UPLOAD_ERR_OK) {
-                if ($this->userModel->canUploadPDF($currentUserId)) {
-                    $this->handlePDFUpload($announcementId, $_FILES['pdf_attachment']);
+            // 準備公告資料
+            $data = [
+                'title' => $_POST['title'],
+                'content' => $_POST['content'],
+                'type' => $_POST['type'] ?? 'general',
+                'status' => $_POST['status'] ?? 'draft',
+                'date' => !empty($_POST['date']) ? $_POST['date'] : null,
+                'sort_order' => !empty($_POST['sort_order']) ? (int)$_POST['sort_order'] : 0,
+            ];
+
+            // 呼叫新的 Model 方法，傳入作者 username
+            $announcementId = $this->announcementModel->createAnnouncementWithDetails($data, $currentUsername);
+
+            if ($announcementId) {
+                // 如果有上傳 PDF 檔案，進行處理
+                if (!empty($_FILES['attachment']['name']) && $this->userModel->canUploadPDF($currentUsername)) {
+                    $this->handlePDFUpload($announcementId, $_FILES['attachment']);
                 }
+                
+                $this->redirectWithSuccess(BASE_URL . '/admin/announcements', '公告已成功建立');
+            } else {
+                $this->redirectWithError(BASE_URL . '/admin/announcements/create', '建立公告失敗，請稍後再試');
             }
-            
-            // 記錄操作日誌
-            $this->announcementModel->logAction($announcementId, 'created', $currentUserId, [
-                'title' => $title,
-                'type' => $type,
-                'status' => $status
-            ]);
-            
-            $this->redirect(BASE_URL . '/admin/announcements?success=公告創建成功');
-            
         } catch (Exception $e) {
-            $this->redirect(BASE_URL . '/admin/announcements/create?error=創建公告失敗：' . $e->getMessage());
+            // 記錄詳細錯誤
+            error_log("創建公告失敗： " . $e->getMessage());
+            // 給使用者一個通用的錯誤訊息
+            $this->redirectWithError(BASE_URL . '/admin/announcements/create', '建立失敗<br>' . $e->getMessage());
         }
     }
     

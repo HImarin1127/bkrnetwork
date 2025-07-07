@@ -57,11 +57,8 @@ class AuthController extends Controller {
             
             if ($user) {
                 // 登入成功，設定 session
-                $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
-                $_SESSION['user_role'] = $user['role'];
                 $_SESSION['user_name'] = $user['name'];
-                $_SESSION['auth_source'] = $user['auth_source'] ?? 'local';
                 
                 // 重新導向到原來要去的頁面或首頁
                 $redirectTo = $_SESSION['redirect_after_login'] ?? BASE_URL;
@@ -138,13 +135,11 @@ class AuthController extends Controller {
                     'password' => $password,
                     'name' => $name,
                     'email' => $email,
-                    'role' => 'user',        // 預設為一般使用者
-                    'status' => 'active'     // 預設為啟用狀態
                 ];
                 
-                $userId = $this->userModel->createUser($userData);
+                $newUsername = $this->userModel->createUser($userData);
                 
-                if ($userId) {
+                if ($newUsername) {
                     // 註冊成功
                     $this->view('auth/register', [
                         'title' => '註冊',

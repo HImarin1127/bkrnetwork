@@ -17,6 +17,9 @@ class User extends Model {
     
     /** @var string 資料表名稱 */
     protected $table = 'users';
+
+    /** @var string 主鍵 */
+    protected $primaryKey = 'username';
     // 宣告受保護的成員變數，指定對應的資料庫資料表名稱
     
     /**
@@ -47,6 +50,27 @@ class User extends Model {
         return false; // 認證失敗
     }
     
+    /**
+     * 根據使用者名稱查詢單筆記錄 (覆寫 Model::find)
+     * 
+     * @param string $username 使用者名稱
+     * @return array|false 找到記錄時回傳關聯陣列，找不到時回傳 false
+     */
+    public function find($username) {
+        return $this->findBy($this->primaryKey, $username);
+    }
+
+    /**
+     * 刪除記錄 (覆寫 Model::delete)
+     * 
+     * @param string $username 要刪除的使用者名稱
+     * @return int 受影響的記錄數量
+     */
+    public function delete($username) {
+        $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = ?";
+        return $this->db->execute($sql, [$username]);
+    }
+
     /**
      * LDAP 認證
      * 
@@ -88,9 +112,9 @@ class User extends Model {
         }
         
         // 如果是 LDAP 使用者，拒絕本地認證
-        if ($user['auth_source'] === 'ldap' || $user['password'] === 'LDAP_AUTH_ONLY') {
-            return false;
-        }
+        // if ($user['auth_source'] === 'ldap' || $user['password'] === 'LDAP_AUTH_ONLY') {
+        //     return false;
+        // }
         
         // 如果使用者存在且密碼驗證正確
         if (password_verify($password, $user['password'])) {
@@ -138,16 +162,16 @@ class User extends Model {
         if ($localUser) {
             // 使用者已存在，檢查是否需要同步屬性
             if ($this->shouldSyncAttributes()) {
-                $this->updateLdapUserData($localUser['id'], $ldapUser);
+                $this->updateLdapUserData($localUser['username'], $ldapUser);
                 // 重新取得更新後的使用者資料
-                $localUser = $this->find($localUser['id']);
+                $localUser = $this->find($localUser['username']);
             }
             return $localUser;
         } else {
             // 使用者不存在，檢查是否自動建立
             if ($this->shouldAutoCreateUsers()) {
-                $userId = $this->createLdapUser($ldapUser);
-                return $this->find($userId);
+                $username = $this->createLdapUser($ldapUser);
+                return $this->find($username);
             }
         }
         
@@ -158,46 +182,47 @@ class User extends Model {
      * 建立 LDAP 使用者到本地資料庫
      * 
      * @param array $ldapUser LDAP 使用者資料
-     * @return int 新建立的使用者 ID
+     * @return string 新建立的使用者 username
      */
     private function createLdapUser($ldapUser) {
         $userData = [
             'username' => $ldapUser['username'],
             'name' => $ldapUser['name'] ?: $ldapUser['username'],
             'email' => $ldapUser['email'] ?: '',
-            'role' => $ldapUser['role'] ?: 'user',
-            'status' => 'active',
-            'auth_source' => 'ldap',
-            'department' => $ldapUser['department'] ?: '',
-            'phone' => $ldapUser['phone'] ?: '',
-            'title' => $ldapUser['title'] ?: '',
+            // 'role' => $ldapUser['role'] ?: 'user',
+            // 'status' => 'active',
+            // 'auth_source' => 'ldap',
+            // 'department' => $ldapUser['department'] ?: '',
+            // 'phone' => $ldapUser['phone'] ?: '',
+            // 'title' => $ldapUser['title'] ?: '',
             // LDAP 使用者不儲存本地密碼，使用特殊標識符
             'password' => 'LDAP_AUTH_ONLY',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            // 'created_at' => date('Y-m-d H:i:s'),
+            // 'updated_at' => date('Y-m-d H:i:s')
         ];
         
-        return $this->create($userData);
+        $this->create($userData);
+        return $userData['username'];
     }
     
     /**
      * 更新 LDAP 使用者資料
      * 
-     * @param int $userId 使用者 ID
+     * @param string $username 使用者名稱
      * @param array $ldapUser LDAP 使用者資料
      */
-    private function updateLdapUserData($userId, $ldapUser) {
+    private function updateLdapUserData($username, $ldapUser) {
         $updateData = [
             'name' => $ldapUser['name'] ?: $ldapUser['username'],
             'email' => $ldapUser['email'] ?: '',
-            'role' => $ldapUser['role'] ?: 'user',
-            'department' => $ldapUser['department'] ?: '',
-            'phone' => $ldapUser['phone'] ?: '',
-            'title' => $ldapUser['title'] ?: '',
-            'updated_at' => date('Y-m-d H:i:s')
+            // 'role' => $ldapUser['role'] ?: 'user',
+            // 'department' => $ldapUser['department'] ?: '',
+            // 'phone' => $ldapUser['phone'] ?: '',
+            // 'title' => $ldapUser['title'] ?: '',
+            // 'updated_at' => date('Y-m-d H:i:s')
         ];
         
-        $this->update($userId, $updateData);
+        $this->update($username, $updateData);
     }
     
     /**
@@ -246,81 +271,102 @@ class User extends Model {
     // authenticate 方法結束
     
     /**
-     * 建立新使用者
-     * 
      * 建立新的使用者帳號，自動處理密碼加密和時間戳記
      * 
      * @param array $data 使用者資料陣列，必須包含 password 欄位
-     * @return int 新建立的使用者 ID
+     * @return string|false 新建立的使用者 username，失敗回傳 false
      */
     public function createUser($data) {
-        // 定義建立新使用者方法
-        // 加密密碼（使用 PHP 預設的強化演算法）
+        // 移除已不存在的欄位
+        // $data['created_at'] = date('Y-m-d H:i:s');
+        // $data['updated_at'] = date('Y-m-d H:i:s');
+        
+        // 確保有密碼欄位
         if (isset($data['password'])) {
-            // 檢查傳入的資料陣列中是否包含 password 欄位
+            // 加密密碼（使用 PHP 預設的強化演算法）
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
             // 使用 password_hash 函數加密密碼，採用預設演算法
         }
         // 密碼處理條件結束
         
-        // 自動加入建立和更新時間戳記
-        $data['created_at'] = date('Y-m-d H:i:s');
-        // 設定記錄建立時間為當前時間
-        $data['updated_at'] = date('Y-m-d H:i:s');
-        // 設定記錄更新時間為當前時間
-        
-        return $this->create($data);
-        // 呼叫父類別的 create 方法新增使用者資料，並回傳新建立的使用者 ID
+        if ($this->create($data)) {
+            return $data['username'];
+        }
+        return false;
     }
-    // createUser 方法結束
     
+    /**
+     * 新增記錄 (覆寫 Model::create)
+     * 
+     * @param array $data 要新增的資料陣列，格式：['欄位名' => '值']
+     * @return bool 新增成功回傳 true
+     */
+    public function create($data) {
+        $fields = array_keys($data);
+        $placeholders = array_fill(0, count($fields), '?');
+        
+        $sql = "INSERT INTO {$this->table} (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")";
+        
+        return $this->db->execute($sql, array_values($data)) !== false;
+    }
+
     /**
      * 更新使用者資料
      * 
      * 更新使用者資料，如果包含密碼則進行加密
      * 空密碼不會更新現有密碼
      * 
-     * @param int $id 使用者 ID
+     * @param string $username 使用者名稱
      * @param array $data 要更新的資料陣列
-     * @return int 受影響的記錄數量
+     * @return int|false 受影響的記錄數量或 false
      */
-    public function updateUser($id, $data) {
-        // 定義更新使用者資料方法
+    public function updateUser($username, $data) {
+        // 移除已不存在的欄位
+        // $data['updated_at'] = date('Y-m-d H:i:s');
+
         // 如果有密碼且不為空，進行加密
-        if (isset($data['password']) && !empty($data['password'])) {
-            // 檢查是否包含密碼欄位且密碼不為空字串
+        if (!empty($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            // 對新密碼進行加密
         } else {
             // 如果密碼為空，不更新密碼欄位
             unset($data['password']);
-            // 從更新資料中移除密碼欄位，保持原有密碼不變
         }
         // 密碼處理條件結束
         
-        // 自動更新時間戳記
-        $data['updated_at'] = date('Y-m-d H:i:s');
-        // 設定記錄更新時間為當前時間
-        
-        return $this->update($id, $data);
-        // 呼叫父類別的 update 方法更新使用者資料，並回傳受影響的記錄數量
+        return $this->update($username, $data);
     }
-    // updateUser 方法結束
+
+    /**
+     * 更新記錄 (覆寫 Model::update)
+     * 
+     * @param string $username 要更新的使用者名稱
+     * @param array $data 要更新的資料陣列，格式：['欄位名' => '值']
+     * @return int 受影響的記錄數量
+     */
+    public function update($username, $data) {
+        $fields = array_keys($data);
+        $setClause = implode(' = ?, ', $fields) . ' = ?';
+        
+        $sql = "UPDATE {$this->table} SET {$setClause} WHERE {$this->primaryKey} = ?";
+        
+        $params = array_values($data);
+        $params[] = $username;
+        
+        return $this->db->execute($sql, $params);
+    }
     
     /**
      * 檢查使用者是否為管理員
      * 
-     * 根據使用者 ID 檢查該使用者是否具有管理員權限
+     * 根據使用者名稱檢查該使用者是否具有管理員權限
      * 
-     * @param int $userId 使用者 ID
-     * @return bool 是管理員回傳 true，否則回傳 false
+     * @param string $username 使用者名稱
+     * @return bool 使用者是否為管理員
      */
-    public function isAdmin($userId) {
-        // 定義檢查管理員權限方法
-        $user = $this->find($userId);
-        // 使用父類別的 find 方法根據使用者 ID 查詢使用者資料
-        return $user && $user['role'] === 'admin';
-        // 檢查使用者是否存在且角色欄位值為 'admin'，回傳布林值
+    public function isAdmin($username) {
+        // $user = $this->find($username);
+        // return $user && $user['role'] === 'admin';
+        return false; // 移除 role 欄位後，暫時禁用此功能
     }
     // isAdmin 方法結束
     
@@ -333,9 +379,8 @@ class User extends Model {
      * @return array 啟用使用者的陣列集合
      */
     public function getActiveUsers() {
-        // 定義取得啟用使用者方法
-        return $this->where(['status' => 'active'], 'username ASC');
-        // 使用父類別的 where 方法查詢狀態為 'active' 的使用者，按使用者名稱升冪排序
+        // return $this->where(['status' => 'active']);
+        return $this->all(); // 移除 status 欄位後，回傳所有使用者
     }
     // getActiveUsers 方法結束
     
@@ -359,27 +404,27 @@ class User extends Model {
      * 
      * 檢查使用者姓名是否包含資訊、人資、總務、財務關鍵字或為管理員
      * 
-     * @param int $userId 使用者ID
+     * @param string $username 使用者名稱
      * @return bool 是否有公告管理權限
      */
-    public function canManageAnnouncements($userId) {
-        $user = $this->find($userId);
+    public function canManageAnnouncements($username) {
+        $user = $this->find($username);
         if (!$user) {
             return false;
         }
         
-        // 管理員一律有權限
-        if ($user['role'] === 'admin') {
+        // 管理員 'admin' 固定有權限
+        if ($username === 'admin') {
             return true;
         }
         
         // 檢查姓名中是否包含部門關鍵字
         $name = $user['name'];
         $allowedDepartmentKeywords = [
-            '資訊',      // 資訊部門
-            '人資',      // 人資部門  
-            '總務',      // 總務部門
-            '財務'       // 財務部門
+            '總務',
+            '人資',
+            '資訊',
+            '財務'
         ];
         
         foreach ($allowedDepartmentKeywords as $keyword) {
@@ -396,11 +441,12 @@ class User extends Model {
      * 
      * 檢查使用者姓名是否包含總務人資、資訊、財務關鍵字或為管理員
      * 
-     * @param int $userId 使用者ID
+     * @param string $username 使用者名稱
      * @return bool 是否可以上傳PDF附件
      */
-    public function canUploadPDF($userId) {
-        return $this->canManageAnnouncements($userId); // 與公告管理權限相同
+    public function canUploadPDF($username) {
+        // 權限與公告管理相同
+        return $this->canManageAnnouncements($username);
     }
     
     /**
@@ -410,23 +456,19 @@ class User extends Model {
      * @return array 使用者資料陣列
      */
     public function getUsersByDepartments($departmentKeywords) {
-        if (empty($departmentKeywords)) {
-            return [];
-        }
+        // $sql = "SELECT * FROM {$this->table} WHERE ";
+        // $conditions = [];
+        // $params = [];
         
-        // 建立查詢條件，檢查name欄位是否包含任何一個關鍵字
-        $conditions = [];
-        $params = [];
+        // foreach ($departmentKeywords as $keyword) {
+        //     $conditions[] = "department LIKE ?";
+        //     $params[] = '%' . $keyword . '%';
+        // }
         
-        foreach ($departmentKeywords as $keyword) {
-            $conditions[] = "name LIKE ?";
-            $params[] = "%{$keyword}%";
-        }
+        // $sql .= implode(' OR ', $conditions);
         
-        $whereClause = implode(' OR ', $conditions);
-        $sql = "SELECT * FROM {$this->table} WHERE ({$whereClause}) AND status = 'active'";
-        
-        return $this->db->fetchAll($sql, $params);
+        // return $this->db->fetchAll($sql, $params);
+        return []; // 移除 department 欄位後，此功能已失效
     }
 } 
 // User 類別結束 

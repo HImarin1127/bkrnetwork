@@ -71,6 +71,34 @@ abstract class Controller {
     }
     
     /**
+     * 帶成功訊息的重新導向
+     * 
+     * @param string $url 目標 URL
+     * @param string $message 成功訊息
+     */
+    protected function redirectWithSuccess($url, $message) {
+        $_SESSION['flash_message'] = [
+            'type' => 'success',
+            'message' => $message
+        ];
+        $this->redirect($url);
+    }
+
+    /**
+     * 帶錯誤訊息的重新導向
+     * 
+     * @param string $url 目標 URL
+     * @param string $message 錯誤訊息
+     */
+    protected function redirectWithError($url, $message) {
+        $_SESSION['flash_message'] = [
+            'type' => 'error',
+            'message' => $message
+        ];
+        $this->redirect($url);
+    }
+    
+    /**
      * 回傳 JSON 回應
      * 
      * 設定適當的 HTTP 狀態碼和 Content-Type 標頭，
@@ -102,12 +130,12 @@ abstract class Controller {
     /**
      * 檢查使用者是否已登入
      * 
-     * 檢查 session 中是否存在 user_id，判斷使用者登入狀態
+     * 檢查 session 中是否存在 username，判斷使用者登入狀態
      * 
      * @return bool 已登入回傳 true，未登入回傳 false
      */
     protected function isLoggedIn() {
-        return isset($_SESSION['user_id']);
+        return isset($_SESSION['username']);
     }
     
     /**
@@ -169,11 +197,11 @@ abstract class Controller {
         
         // 檢查公告管理權限
         $this->viewData['canManageAnnouncements'] = false;
-        if ($this->isLoggedIn() && isset($_SESSION['user_id'])) {
+        if ($this->isLoggedIn() && isset($_SESSION['username'])) {
             try {
                 require_once __DIR__ . '/../Models/User.php';
                 $userModel = new User();
-                $this->viewData['canManageAnnouncements'] = $userModel->canManageAnnouncements($_SESSION['user_id']);
+                $this->viewData['canManageAnnouncements'] = $userModel->canManageAnnouncements($_SESSION['username']);
             } catch (Exception $e) {
                 // 如果出現錯誤，預設為無權限
                 $this->viewData['canManageAnnouncements'] = false;

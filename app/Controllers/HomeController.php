@@ -89,10 +89,10 @@ class HomeController extends Controller {
         
         // 檢查當前使用者是否有公告管理權限
         $canManageAnnouncements = false;
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['username'])) {
             require_once __DIR__ . '/../Models/User.php';
             $userModel = new User();
-            $canManageAnnouncements = $userModel->canManageAnnouncements($_SESSION['user_id']);
+            $canManageAnnouncements = $userModel->canManageAnnouncements($_SESSION['username']);
         }
         
         $this->view('announcements/index', [
@@ -230,5 +230,72 @@ class HomeController extends Controller {
         // 視圖參數陣列結束
     }
     // companyNas 方法結束
+    
+    /**
+     * 文化部免稅申請流程頁面
+     * 
+     * 顯示文化部圖書免稅的申請流程圖
+     */
+    public function taxExemptProcess() {
+        $this->view('guides/tax-exempt', [
+            'title' => '免稅申請流程'
+        ]);
+    }
+    
+    /**
+     * Windows 遠端連線指引頁面
+     * 
+     * 顯示 Windows 遠端桌面連線的操作說明
+     */
+    public function windowsRemote() {
+        $this->view('guides/windows-remote', [
+            'title' => 'Windows 遠端連線'
+        ]);
+    }
+
+    /**
+     * 印表機基本操作說明頁面
+     * 
+     * 顯示印表機基本操作，包括列印、掃描、傳真
+     */
+    public function printerBasic() {
+        $this->view('guides/printer-basic', [
+            'title' => '印表機基本操作'
+        ]);
+    }
+
+    /**
+     * 印表機疑難排解頁面
+     * 
+     * 提供印表機常見問題的解決方案
+     */
+    public function printerTroubleshoot() {
+        $this->view('guides/printer-troubleshoot', [
+            'title' => '印表機疑難排解'
+        ]);
+    }
+
+    /**
+     * 免稅系統操作說明頁面
+     * 
+     * 顯示文化部免稅系統的操作教學文件
+     */
+    public function taxExemptSystem() {
+        $this->view('guides/tax-exempt-system', [
+            'title' => '免稅系統操作說明'
+        ]);
+    }
+
+    /**
+     * 電子郵件操作指引頁面
+     * 
+     * 顯示電子郵件系統的使用說明
+     * 包括信箱設定、收發郵件、簽名檔設定等
+     */
+    public function email() {
+        $this->view('guides/email', [
+            'title' => '電子郵件操作指引'
+        ]);
+    }
 } 
 // HomeController 類別結束 

@@ -100,12 +100,12 @@ class AuthMiddleware {
     /**
      * 檢查使用者是否已登入
      * 
-     * 檢查 session 中是否存在 user_id
+     * 檢查 session 中是否存在 username
      * 
      * @return bool 已登入回傳 true，否則回傳 false
      */
     private function isLoggedIn() {
-        return isset($_SESSION['user_id']);
+        return isset($_SESSION['username']);
     }
     
     /**
@@ -116,7 +116,8 @@ class AuthMiddleware {
      * @return bool 是管理員回傳 true，否則回傳 false
      */
     private function isAdmin() {
-        return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+        // return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+        return false; // 移除 role 欄位後，暫時禁用此功能
     }
     
     /**
@@ -126,7 +127,7 @@ class AuthMiddleware {
      * 未登入時自動重新導向到登入頁面
      */
     public static function requireLogin() {
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['username'])) {
             header('Location: /bkrnetwork/public/index.php?route=/login');
             exit();
         }
@@ -139,10 +140,13 @@ class AuthMiddleware {
      * 非管理員時自動重新導向到首頁
      */
     public static function requireAdmin() {
-        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-            header('Location: /bkrnetwork/public/index.php?route=/home');
-            exit();
-        }
+        // if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+        //     header('Location: /bkrnetwork/public/index.php?route=/home');
+        //     exit();
+        // }
+        // 移除 role 欄位後，暫時禁用此功能，直接導向首頁
+        header('Location: /bkrnetwork/public/index.php?route=/home');
+        exit();
     }
     
     /**
@@ -155,32 +159,9 @@ class AuthMiddleware {
      * @return array|null 使用者資訊陣列，未登入時回傳 null
      */
     public static function getCurrentUser() {
-        if (isset($_SESSION['user_id'])) {
-            // 檢查認證模式
-            $authMode = $_SESSION['auth_mode'] ?? 'local';
-            
-            if ($authMode === 'ldap') {
-                // LDAP 模式：從 session 建構使用者資料
-                return [
-                    'id' => $_SESSION['user_id'],
-                    'username' => $_SESSION['username'] ?? $_SESSION['user_id'],
-                    'name' => $_SESSION['name'] ?? $_SESSION['username'] ?? $_SESSION['user_id'],
-                    'email' => $_SESSION['email'] ?? '',
-                    'role' => $_SESSION['role'] ?? 'user',
-                    'status' => 'active',
-                    'auth_source' => 'ldap',
-                    'department' => $_SESSION['department'] ?? '',
-                    'phone' => $_SESSION['phone'] ?? '',
-                    'title' => $_SESSION['title'] ?? ''
-                ];
-            } else {
-                // 本地模式：從資料庫查詢最新的使用者資料
-                require_once __DIR__ . '/../Models/Database.php';
-                require_once __DIR__ . '/../Models/User.php';
-                
-                $userModel = new User();
-                return $userModel->find($_SESSION['user_id']);
-            }
+        if (isset($_SESSION['username'])) {
+            $userModel = new User();
+            return $userModel->find($_SESSION['username']);
         }
         return null;
     }
