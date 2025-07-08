@@ -1,7 +1,7 @@
 <?php
 // app/Models/CompanyInfo.php
 
-require_once __DIR__ . '/Model.php';
+namespace App\Models;
 
 /**
  * 公司資訊模型

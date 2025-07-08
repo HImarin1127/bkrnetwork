@@ -38,20 +38,32 @@ define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_
 require_once BASE_PATH . 'config/app.php';
 require_once BASE_PATH . 'config/database.php';
 
-// 自動載入類別機制
-// 當實例化類別時自動載入對應的檔案
+// PSR-4 自動載入器
+// 將命名空間 App\... 對應到 app/... 資料夾
 spl_autoload_register(function ($class) {
-    $paths = [
-        BASE_PATH . 'app/Models/' . $class . '.php',        // 模型檔案
-        BASE_PATH . 'app/Controllers/' . $class . '.php',   // 控制器檔案
-        BASE_PATH . 'app/Middleware/' . $class . '.php'     // 中介軟體檔案
-    ];
-    
-    foreach ($paths as $path) {
-        if (file_exists($path)) {
-            require_once $path;
-            return;
-        }
+    // 專案特定的命名空間前綴
+    $prefix = 'App\\';
+
+    // 命名空間前綴對應的基礎目錄
+    $base_dir = __DIR__ . '/app/';
+
+    // 檢查類別是否使用此命名空間前綴
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // 否，交給下一個已註冊的自動載入器處理
+        return;
+    }
+
+    // 取得在命名空間前綴之後的相對類別名稱
+    $relative_class = substr($class, $len);
+
+    // 將命名空間分隔符號(\)換成目錄分隔符號(/)，
+    // 並在後面加上 .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // 如果檔案存在，就載入它
+    if (file_exists($file)) {
+        require $file;
     }
 });
 
@@ -112,14 +124,14 @@ foreach ($routes as $route => $action) {
         }
         
         // 檢查控制器檔案是否存在
-        $controllerFile = BASE_PATH . 'app/Controllers/' . $controller . '.php';
-        if (!file_exists($controllerFile)) {
-            http_response_code(500);
-            die('控制器檔案不存在: ' . $controller);
-        }
+        // $controllerFile = BASE_PATH . 'app/Controllers/' . $controller . '.php';
+        // if (!file_exists($controllerFile)) {
+        //     http_response_code(500);
+        //     die('控制器檔案不存在: ' . $controller);
+        // }
         
-        // 手動載入控制器檔案，繞過有問題的自動載入器
-        require_once $controllerFile;
+        // 手動載入控制器檔案，繞過有問題的自動載入器 - 已被新的自動載入器取代
+        // require_once $controllerFile;
         
         // 加上命名空間前綴
         $fullControllerName = 'App\\Controllers\\' . $controller;

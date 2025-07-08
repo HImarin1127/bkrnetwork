@@ -3,6 +3,10 @@
 
 namespace App\Controllers;
 
+use App\Middleware\AuthMiddleware;
+use App\Models\User;
+use Exception;
+
 /**
  * 基礎控制器類別
  * 
@@ -138,8 +142,7 @@ abstract class Controller {
      * @return array|null 使用者資訊陣列，未登入時回傳 null
      */
     protected function getCurrentUser() {
-        require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
-        return \AuthMiddleware::getCurrentUser();
+        return AuthMiddleware::getCurrentUser();
     }
     
     /**
@@ -214,8 +217,7 @@ abstract class Controller {
         $this->viewData['canManageAnnouncements'] = false;
         if ($this->isLoggedIn() && isset($_SESSION['username'])) {
             try {
-                require_once __DIR__ . '/../Models/User.php';
-                $userModel = new \User();
+                $userModel = new User();
                 $this->viewData['canManageAnnouncements'] = $userModel->canManageAnnouncements($_SESSION['username']);
             } catch (Exception $e) {
                 // 如果出現錯誤，預設為無權限

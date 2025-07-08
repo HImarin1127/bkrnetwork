@@ -3,8 +3,10 @@
 // PHP 開始標籤，表示這是一個 PHP 檔案
 // 檔案路徑註解，說明此檔案位置
 
-require_once __DIR__ . '/Model.php';
-// 引入父類別 Model.php，使用 require_once 確保只載入一次
+namespace App\Models;
+
+use App\Services\LdapService;
+use Exception;
 
 /**
  * 使用者模型
@@ -80,11 +82,6 @@ class User extends Model {
      */
     private function authenticateWithLdap($username, $password) {
         try {
-            // 檢查 LDAP 服務是否可用
-            if (!class_exists('LdapService')) {
-                require_once __DIR__ . '/../Services/LdapService.php';
-            }
-            
             $ldapService = new LdapService();
             return $ldapService->authenticate($username, $password);
             

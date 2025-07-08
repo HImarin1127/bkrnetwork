@@ -1,6 +1,10 @@
 <?php
 // app/Middleware/AuthMiddleware.php
 
+namespace App\Middleware;
+
+use App\Models\User;
+
 /**
  * 認證中介軟體
  * 

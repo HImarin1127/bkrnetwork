@@ -1,6 +1,9 @@
 <?php
 // app/Services/LdapService.php
-// LDAP 認證服務類
+
+namespace App\Services;
+
+use Exception;
 
 /**
  * LDAP 認證服務
