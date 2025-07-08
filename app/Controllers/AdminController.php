@@ -5,15 +5,20 @@
 
 namespace App\Controllers;
 
+use App\Middleware\AuthMiddleware;
+use App\Models\User;
+use App\Models\Announcement;
+use App\Models\HolidayCalendar;
+
 require_once __DIR__ . '/Controller.php';
 // 引入父類別 Controller.php，使用 require_once 確保只載入一次
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
 // 引入認證中介軟體，用於驗證使用者權限
-require_once __DIR__ . '/../Models/User.php';
+// require_once __DIR__ . '/../Models/User.php';
 // 引入使用者模型
-require_once __DIR__ . '/../Models/Announcement.php';
+// require_once __DIR__ . '/../Models/Announcement.php';
 // 引入公告模型
-require_once __DIR__ . '/../Models/HolidayCalendar.php';
+// require_once __DIR__ . '/../Models/HolidayCalendar.php';
 
 /**
  * 管理員控制器
@@ -56,9 +61,9 @@ class AdminController extends Controller {
         // 呼叫認證中介軟體的 requireLogin 方法，檢查使用者是否已登入
         
         // 初始化模型
-        $this->userModel = new \User();
-        $this->announcementModel = new \Announcement();
-        $this->holidayCalendarModel = new \HolidayCalendar();
+        $this->userModel = new User();
+        $this->announcementModel = new Announcement();
+        $this->holidayCalendarModel = new HolidayCalendar();
         $this->setGlobalViewData();
     }
     

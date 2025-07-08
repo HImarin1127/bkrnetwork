@@ -37,7 +37,7 @@ class MailController extends Controller {
                 'receiver_address' => $_POST['receiver_address'] ?? '',
                 'receiver_phone' => $_POST['receiver_phone'] ?? '',
                 'declare_department' => $_POST['declare_department'] ?? '',
-                'sender_name' => $_POST['sender_name'] ?? ($user['name'] ?? $user['username']),
+                'sender_name' => $_POST['sender_name'] ?? '',
                 'sender_ext' => $_POST['sender_ext'] ?? '',
                 'item_count' => $_POST['item_count'] ?? 1,
                 'postage' => $_POST['postage'] ?? 0,
@@ -45,15 +45,15 @@ class MailController extends Controller {
                 'notes' => $_POST['notes'] ?? ''
             ];
     
-            if (empty($formData['mail_type']) || empty($formData['receiver_name']) || empty($formData['receiver_address'])) {
-                $errors[] = '寄件方式、收件者姓名和收件地址為必填欄位。';
+            if (empty($formData['mail_type']) || empty($formData['receiver_name']) || empty($formData['receiver_address']) || empty($formData['sender_name'])) {
+                $errors[] = '寄件方式、收件者姓名、收件地址和寄件者姓名為必填欄位。';
             } else {
                 $newMailCode = $this->mailRecordModel->createMailRecord($formData, $user['username']);
                 if ($newMailCode) {
                     $success = "寄件登記成功！您的郵件編號是： " . htmlspecialchars($newMailCode);
                     $formData = [
                         'mail_type' => '', 'receiver_name' => '', 'receiver_address' => '', 'receiver_phone' => '',
-                        'declare_department' => '', 'sender_name' => $user['name'] ?? $user['username'], 'sender_ext' => '',
+                        'declare_department' => '', 'sender_name' => '', 'sender_ext' => '',
                         'item_count' => 1, 'postage' => 0, 'tracking_number' => '', 'notes' => ''
                     ];
                 } else {
@@ -63,7 +63,7 @@ class MailController extends Controller {
         } else {
             $formData = [
                 'mail_type' => '', 'receiver_name' => '', 'receiver_address' => '', 'receiver_phone' => '',
-                'declare_department' => $user['department'] ?? '', 'sender_name' => $user['name'] ?? $user['username'], 'sender_ext' => ''
+                'declare_department' => $user['department'] ?? '', 'sender_name' => '', 'sender_ext' => ''
             ];
         }
         

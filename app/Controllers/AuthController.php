@@ -3,9 +3,11 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
+use App\Services\LdapService;
+
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../Models/Database.php';
-require_once __DIR__ . '/../Models/User.php';
 require_once __DIR__ . '/../Services/LdapService.php';
 
 /**
@@ -27,7 +29,7 @@ class AuthController extends Controller {
      * 初始化使用者模型和全域視圖資料
      */
     public function __construct() {
-        $this->userModel = new \User();
+        $this->userModel = new User();
         
         // 只有在 LDAP 啟用時才實例化 LdapService
         if (isset($GLOBALS['ldap_config']) && $GLOBALS['ldap_config']['enabled']) {

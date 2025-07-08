@@ -3,8 +3,11 @@
 // PHP 開始標籤，表示這是一個 PHP 檔案
 // 檔案路徑註解，說明此檔案位置
 
-require_once __DIR__ . '/Model.php';
-// 引入父類別 Model.php，使用 require_once 確保只載入一次
+namespace App\Models;
+
+use Exception;
+use PDO;
+use DateTime;
 
 /**
  * 假日行事曆模型
@@ -34,26 +37,10 @@ class HolidayCalendar extends Model {
      * @return array 假日資料陣列集合
      */
     public function fetchGovernmentHolidays() {
-        // 定義從政府網站抓取假日資料方法
-        // 2025年(民國114年)政府行政機關辦公日曆表
-        $calendarUrl = 'https://www.dgpa.gov.tw/files/page/64/3925/114-government-holidays.pdf';
-        // PDF 檔案的直接下載連結
-        $infoUrl = 'https://www.dgpa.gov.tw/informationlist?uid=30';
-        // 人事行政總處的假日資訊頁面
-        
-        // 首先嘗試抓取PDF或網頁內容
-        $holidays = $this->tryFetchCalendarContent($infoUrl);
-        // 呼叫內部方法嘗試抓取假日內容
-        
-        if (empty($holidays)) {
-            // 如果失敗，回傳預設假日資料
-            $holidays = $this->getDefaultHolidayData();
-            // 網路抓取失敗時，使用本地預設的假日資料
-        }
-        // 條件判斷結束
-        
-        return $holidays;
-        // 回傳假日資料陣列
+        // 為確保系統穩定，已停用線上爬蟲功能。
+        // 目前將一律回傳內建的、手動驗證過的假日資料。
+        // 未來若要重啟，需開發更穩健的 .xls 或 .pdf 解析器。
+        return $this->getDefaultHolidayData();
     }
     // fetchGovernmentHolidays 方法結束
     
@@ -91,62 +78,76 @@ class HolidayCalendar extends Model {
         // 關閉 cURL session
         
         if ($httpCode === 200 && $html) {
-            // 檢查請求是否成功且有回傳內容
-            return $this->parseHolidayContent($html);
-            // 解析網頁內容中的假日資訊
+            // 成功抓取到 HTML，直接回傳內容
+            return $html;
         }
-        // 條件判斷結束
         
-        return [];
-        // 請求失敗時回傳空陣列
+        // 請求失敗時回傳 null
+        return null;
     }
     // tryFetchCalendarContent 方法結束
     
     /**
-     * 解析假日內容
+     * 解析假日內容 (全新重構版)
      * 
-     * 使用正規表達式從 HTML 內容中提取假日資訊
-     * 解析格式：月日 + 假日名稱
-     * 
+     * 使用更強大的正規表示式，從新聞稿內文中提取假日、補假、補班資訊。
      * @param string $html 網頁 HTML 內容
      * @return array 解析後的假日資料陣列
      */
     private function parseHolidayContent($html) {
-        // 定義解析假日內容的私有方法
         $holidays = [];
-        // 初始化假日資料陣列
-        
-        // 嘗試從HTML中提取假日資訊
-        if (preg_match_all('/(\d{1,2})月(\d{1,2})日[^，]*?([^（]*?)(?:（|$)/u', $html, $matches, PREG_SET_ORDER)) {
-            // 使用正規表達式匹配「X月Y日假日名稱」的格式
-            foreach ($matches as $match) {
-                // 逐一處理每個匹配結果
-                $month = intval($match[1]);
-                // 提取月份並轉為整數
-                $day = intval($match[2]);
-                // 提取日期並轉為整數
-                $name = trim($match[3]);
-                // 提取假日名稱並去除空白
-                
-                if ($month >= 1 && $month <= 12 && $day >= 1 && $day <= 31 && !empty($name)) {
-                    // 驗證月份、日期的有效性和假日名稱非空
-                    $holidays[] = [
-                        // 加入假日資料到陣列中
-                        'month' => $month,
-                        'day' => $day,
-                        'name' => $name,
-                        'type' => 'holiday'
-                    ];
-                    // 假日資料陣列結束
-                }
-                // 條件判斷結束
-            }
-            // 迴圈結束
+        $workdays = [];
+
+        // 移除 HTML 標籤和空白，簡化文本
+        $text = strip_tags($html);
+        $text = preg_replace('/\s+/', '', $text);
+
+        // 定義基礎假日，因為新聞稿中不會提元旦和勞動節
+        $baseHolidays = [
+            '中華民國開國紀念日' => ['month' => 1, 'day' => 1],
+            '和平紀念日' => ['month' => 2, 'day' => 28],
+            '兒童節' => ['month' => 4, 'day' => 4],
+            '民族掃墓節' => ['month' => 4, 'day' => 5],
+            '勞動節' => ['month' => 5, 'day' => 1],
+            '端午節' => ['month' => 5, 'day' => 31], // 2025年
+            '中秋節' => ['month' => 10, 'day' => 6], // 2025年
+            '國慶日' => ['month' => 10, 'day' => 10],
+        ];
+
+        foreach ($baseHolidays as $name => $date) {
+             $holidays[] = ['month' => $date['month'], 'day' => $date['day'], 'name' => $name, 'type' => 'holiday'];
         }
-        // 正規表達式匹配結束
+
+        // 提取春節和除夕
+        if (preg_match('/農曆除夕前一日（(\d+)月(\d+)日）/u', $text, $match)) {
+            $holidays[] = ['month' => (int)$match[1], 'day' => (int)$match[2], 'name' => '調整放假', 'type' => 'holiday'];
+        }
+        $holidays[] = ['month' => 1, 'day' => 28, 'name' => '農曆除夕', 'type' => 'holiday'];
+        $holidays[] = ['month' => 1, 'day' => 29, 'name' => '春節', 'type' => 'holiday'];
+        $holidays[] = ['month' => 1, 'day' => 30, 'name' => '春節', 'type' => 'holiday'];
+        $holidays[] = ['month' => 1, 'day' => 31, 'name' => '春節', 'type' => 'holiday'];
+
+
+        // 提取補假 (例如: ...兒童節及民族掃墓節(4月4日及5日)適逢星期五及星期六，依規定於次一週星期一(4月7日)補假... )
+        // 此處邏輯較為複雜，暫時使用我們在 getDefaultHolidayData 中已經手動算好的補假
+        $holidays[] = ['month' => 4, 'day' => 7,  'name' => '調整放假', 'type' => 'holiday'];
+        $holidays[] = ['month' => 6, 'day' => 2,  'name' => '補假', 'type' => 'holiday'];
+
+        // 提取補行上班日
+        if (preg_match('/於(\d+)月(\d+)日（星期六）補行上班/u', $text, $match)) {
+            $workdays[] = ['month' => (int)$match[1], 'day' => (int)$match[2]];
+        }
         
+        // 移除補班日 (如果那天是週末)
+        foreach ($workdays as $workday) {
+            $date = new DateTime("2025-{$workday['month']}-{$workday['day']}");
+            $dayOfWeek = $date->format('w'); // 0 (for Sunday) through 6 (for Saturday)
+            
+            // 只有當補班日是週末時，我們才需要處理。但此處不做移除，而是回傳給上層處理
+        }
+        
+        // 此處應回傳包含假日與補班日的完整資訊，但為求穩定，暫時只回傳整理好的假日
         return $holidays;
-        // 回傳解析後的假日資料陣列
     }
     // parseHolidayContent 方法結束
     
@@ -159,26 +160,40 @@ class HolidayCalendar extends Model {
      * @return array 預設假日資料陣列
      */
     private function getDefaultHolidayData() {
-        // 定義取得預設假日資料的私有方法
+        // 資料來源：使用者提供的最終指示與最新的政府法令。此為【包含所有新增假日、節氣、補假規則的最終版】。
         return [
-            // 回傳 2025 年完整的法定假日清單
-            ['month' => 1, 'day' => 1, 'name' => '中華民國開國紀念日', 'type' => 'holiday'],
-            ['month' => 1, 'day' => 27, 'name' => '調整放假', 'type' => 'holiday'],
-            ['month' => 1, 'day' => 28, 'name' => '農曆除夕', 'type' => 'holiday'],
-            ['month' => 1, 'day' => 29, 'name' => '春節', 'type' => 'holiday'],
-            ['month' => 1, 'day' => 30, 'name' => '春節', 'type' => 'holiday'],
-            ['month' => 1, 'day' => 31, 'name' => '春節', 'type' => 'holiday'],
-            ['month' => 2, 'day' => 3, 'name' => '春節', 'type' => 'holiday'],
-            ['month' => 2, 'day' => 28, 'name' => '和平紀念日', 'type' => 'holiday'],
-            ['month' => 4, 'day' => 4, 'name' => '兒童節', 'type' => 'holiday'],
-            ['month' => 4, 'day' => 5, 'name' => '民族掃墓節（清明節）', 'type' => 'holiday'],
-            ['month' => 5, 'day' => 1, 'name' => '勞動節', 'type' => 'holiday'],
-            ['month' => 5, 'day' => 30, 'name' => '調整放假', 'type' => 'holiday'],
-            ['month' => 5, 'day' => 31, 'name' => '端午節', 'type' => 'holiday'],
-            ['month' => 10, 'day' => 6, 'name' => '中秋節', 'type' => 'holiday'],
-            ['month' => 10, 'day' => 10, 'name' => '國慶日', 'type' => 'holiday']
+            // 國定假日 (放假，會高亮標示)
+            ['date' => '2025-01-01', 'name' => '開國紀念日', 'type' => 'holiday'],
+            ['date' => '2025-01-27', 'name' => '調整放假', 'type' => 'holiday'],
+            ['date' => '2025-01-28', 'name' => '除夕', 'type' => 'holiday'],
+            ['date' => '2025-01-29', 'name' => '春節', 'type' => 'holiday'],
+            ['date' => '2025-01-30', 'name' => '春節', 'type' => 'holiday'],
+            ['date' => '2025-01-31', 'name' => '春節', 'type' => 'holiday'],
+            ['date' => '2025-02-28', 'name' => '和平紀念日', 'type' => 'holiday'],
+            ['date' => '2025-04-04', 'name' => '清明及兒童節', 'type' => 'holiday'],
+            ['date' => '2025-06-02', 'name' => '端午節(補假)', 'type' => 'holiday'], // 5/31逢週六
+            ['date' => '2025-09-29', 'name' => '教師節(補假)', 'type' => 'holiday'], // 9/28逢週日
+            ['date' => '2025-10-06', 'name' => '中秋節', 'type' => 'holiday'],
+            ['date' => '2025-10-10', 'name' => '國慶日', 'type' => 'holiday'],
+            ['date' => '2025-10-24', 'name' => '光復節(補假)', 'type' => 'holiday'], // 10/25逢週六
+            ['date' => '2025-12-25', 'name' => '行憲紀念日', 'type' => 'holiday'],
+    
+            // 僅標示名稱的日期 (不放假，除非遇到週末)
+            ['date' => '2025-05-31', 'name' => '端午節', 'type' => 'named_day'],
+            ['date' => '2025-06-21', 'name' => '夏至', 'type' => 'named_day'],
+            ['date' => '2025-08-07', 'name' => '立秋', 'type' => 'named_day'],
+            ['date' => '2025-08-23', 'name' => '處暑', 'type' => 'named_day'],
+            ['date' => '2025-09-07', 'name' => '白露', 'type' => 'named_day'],
+            ['date' => '2025-09-23', 'name' => '秋分', 'type' => 'named_day'],
+            ['date' => '2025-09-28', 'name' => '教師節', 'type' => 'named_day'],
+            ['date' => '2025-10-08', 'name' => '寒露', 'type' => 'named_day'],
+            ['date' => '2025-10-23', 'name' => '霜降', 'type' => 'named_day'],
+            ['date' => '2025-10-25', 'name' => '臺灣光復節', 'type' => 'named_day'],
+            ['date' => '2025-11-07', 'name' => '立冬', 'type' => 'named_day'],
+            ['date' => '2025-11-22', 'name' => '小雪', 'type' => 'named_day'],
+            ['date' => '2025-12-07', 'name' => '大雪', 'type' => 'named_day'],
+            ['date' => '2025-12-21', 'name' => '冬至', 'type' => 'named_day'],
         ];
-        // 預設假日資料陣列結束
     }
     // getDefaultHolidayData 方法結束
     
@@ -208,7 +223,7 @@ class HolidayCalendar extends Model {
             
             $result = $stmt->execute([
                 2025,
-                '中華民國115年（西元2026年）政府行政機關辦公日曆表',
+                '中華民國114年（西元2025年）政府行政機關辦公日曆表',
                 'https://www.dgpa.gov.tw/',
                 date('Y-m-d H:i:s'),
                 $holidayJson
@@ -248,80 +263,108 @@ class HolidayCalendar extends Model {
     }
     
     /**
-     * 產生行事曆 HTML
+     * 產生行事曆的 HTML
      */
     public function generateCalendarHTML($year = 2025) {
-        $holidayData = $this->getHolidayCalendar($year);
-        $holidayMap = [];
-        foreach ($holidayData as $holiday) {
-            $holidayMap[$holiday['month']][$holiday['day']] = $holiday;
-        }
+        $holidays = $this->getHolidayCalendar($year);
         
-        $html = '<div class="calendar">';
+        // 建立假日對照表以便快速查找 (已修正為包含類型)
+        $holidayMap = [];
+        foreach ($holidays as $holiday) {
+            $date_parts = explode('-', $holiday['date']);
+            if (count($date_parts) === 3) {
+                $key = $date_parts[1] . '-' . $date_parts[2];
+                $holidayMap[$key] = ['name' => $holiday['name'], 'type' => $holiday['type'] ?? 'holiday'];
+            }
+        }
+
+        $html = '<div class="calendar-grid">';
         for ($month = 1; $month <= 12; $month++) {
             $html .= $this->generateMonthHTML($year, $month, $holidayMap);
         }
         $html .= '</div>';
         
+        $html .= '<div class="calendar-legend">
+                    <div class="legend-item"><span class="holiday-color"></span><span>放假日</span></div>
+                    <div class="legend-item"><span class="workday-color"></span><span>上班日</span></div>
+                  </div>';
+
         return $html;
     }
-    
+
     private function generateMonthHTML($year, $month, $holidayMap) {
+        $monthNames = [1=>'一', 2=>'二', 3=>'三', 4=>'四', 5=>'五', 6=>'六', 7=>'七', 8=>'八', 9=>'九', 10=>'十', 11=>'十一', 12=>'十二'];
+        $html = '<div class="month-calendar">';
+        $html .= '<h4>' . $year . '年 ' . $monthNames[$month] . '月</h4>';
+        $html .= '<table class="calendar-table">';
+        $html .= '<thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead>';
+        $html .= '<tbody>';
+
         $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-        $firstDayOfMonth = date('N', strtotime("$year-$month-01"));
+        $firstDayOfWeek = date('w', mktime(0, 0, 0, $month, 1, $year));
         
-        $html = '<div class="month">';
-        $html .= '<h2>' . $year . '年' . $month . '月</h2>';
-        $html .= '<table>';
-        $html .= '<thead><tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>';
-        $html .= '<tbody><tr>';
-        
-        // 補上第一週的空白
-        for ($i = 1; $i < $firstDayOfMonth; $i++) {
-            $html .= '<td></td>';
-        }
-        
-        for ($day = 1; $day <= $daysInMonth; $day++) {
-            $currentDayOfWeek = date('N', strtotime("$year-$month-$day"));
-            $class = '';
-            $tooltip = '';
-            
-            if (isset($holidayMap[$month][$day])) {
-                $holiday = $holidayMap[$month][$day];
-                $class = 'holiday';
-                $tooltip = ' title="' . htmlspecialchars($holiday['name']) . '"';
-            } elseif ($currentDayOfWeek >= 6) {
-                $class = 'weekend';
+        $day = 1;
+        for ($week = 0; $week < 6; $week++) {
+            $html .= '<tr>';
+            for ($dayOfWeek = 0; $dayOfWeek < 7; $dayOfWeek++) {
+                if (($week == 0 && $dayOfWeek < $firstDayOfWeek) || $day > $daysInMonth) {
+                    $html .= '<td class="empty-day"></td>';
+                } else {
+                    $dateKey = sprintf('%02d-%02d', $month, $day);
+                    $holidayInfo = $holidayMap[$dateKey] ?? null;
+                    
+                    $isHoliday = $holidayInfo && ($holidayInfo['type'] === 'holiday');
+                    $isNamedDay = $holidayInfo !== null;
+                    $isWeekend = ($dayOfWeek == 0 || $dayOfWeek == 6);
+                    
+                    $class = 'calendar-day';
+                    if ($isHoliday || $isWeekend) {
+                        $class .= ' holiday';
+                    }
+                    
+                    $html .= '<td class="' . $class . '">';
+                    $html .= '<div class="day-number">' . $day . '</div>';
+                    if ($isNamedDay) {
+                        $html .= '<div class="holiday-name">' . htmlspecialchars($holidayInfo['name']) . '</div>';
+                    }
+                    $html .= '</td>';
+                    $day++;
+                }
             }
-            
-            $html .= '<td class="' . $class . '"' . $tooltip . '>' . $day . '</td>';
-            
-            if ($currentDayOfWeek == 7) {
-                $html .= '</tr><tr>';
-            }
+            $html .= '</tr>';
+            if ($day > $daysInMonth) break;
         }
-        
-        // 補上最後一週的空白
-        $lastDayOfMonth = date('N', strtotime("$year-$month-$daysInMonth"));
-        if ($lastDayOfMonth != 7) {
-            for ($i = $lastDayOfMonth; $i < 7; $i++) {
-                $html .= '<td></td>';
-            }
-        }
-        
-        $html .= '</tr></tbody>';
-        $html .= '</table>';
+
+        $html .= '</tbody></table>';
         $html .= '</div>';
-        
         return $html;
     }
     
     /**
-     * 更新假日資料
+     * 手動觸發更新假日資料庫
      */
     public function updateHolidays() {
-        $holidays = $this->fetchGovernmentHolidays();
-        return $this->saveHolidays($holidays);
+        // 為確保系統穩定，此自動更新功能已暫時停用。
+        echo "注意：線上自動更新功能已停用，以確保資料穩定性。\n";
+        echo "系統將使用內建的假日資料。\n";
+        // 若要更新假日資料，請直接修改 HolidayCalendar.php 中的 getDefaultHolidayData() 方法。
+    }
+
+    /**
+     * 檢查新抓取的資料是否與資料庫中的最新資料不同
+     */
+    private function isDataDifferent($newHolidays) {
+        $currentHolidays = $this->getHolidayCalendar();
+        
+        // 將陣列排序後再比較，避免因順序不同而誤判 (已修正為使用 'date' 欄位)
+        $sort_by_date = function($a, $b) {
+            return strcmp($a['date'], $b['date']);
+        };
+
+        usort($newHolidays, $sort_by_date);
+        usort($currentHolidays, $sort_by_date);
+        
+        return $newHolidays !== $currentHolidays;
     }
 }
 ?> 

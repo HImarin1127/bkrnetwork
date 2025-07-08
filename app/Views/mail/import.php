@@ -215,17 +215,28 @@ uploadArea.addEventListener('drop', function(e) {
 
 // 下載範本功能
 function downloadTemplate() {
-    // 建立範本 CSV 內容
-    const template = '寄件方式,收件者姓名,收件地址,收件者電話,申報部門,寄件者姓名,寄件者分機\n' +
-                    '掛號,王小明,台北市大安區信義路四段1號,0912-345-678,總務部,李小華,1234\n' +
-                    '黑貓,張小美,新北市板橋區中山路二段2號,02-1234-5678,行銷部,陳小強,5678';
+    // 【關鍵修正】根據使用者提供的正確格式，重寫 CSV 範本內容
+    const headers = "寄件方式,寄件者姓名,寄件者分機,收件者姓名,收件地址,收件者行動電話,費用申報部門\n";
+    const example1 = "掛號,張經理,1234,王小明,台北市信義區信義路一段1號,0912345678,行政部\n";
+    const example2 = "黑貓,林主任,2345,陳小美,新北市板橋區文化路二段2號,0923456789,財務部\n";
+    const example3 = "新竹貨運,周協理,3456,李大華,台中市西屯區市政路三段3號,0935678901,資訊部\n";
     
-    // 建立下載連結
-    const blob = new Blob(['\ufeff' + template], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = '寄件匯入範本_' + new Date().toISOString().slice(0, 10) + '.csv';
+    const csvContent = headers + example1 + example2 + example3;
+    
+    // 加上 BOM 來確保 Excel 能正確讀取 UTF-8 中文
+    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+    const blob = new Blob([bom, csvContent], { type: 'text/csv;charset=utf-8;' });
+    
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute("href", url);
+    link.setAttribute("download", "mail_import_template.csv");
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
 }
 
 // 表單提交前的最後檢查

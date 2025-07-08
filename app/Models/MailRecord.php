@@ -284,6 +284,7 @@ class MailRecord extends Model {
      */
     public function batchImport($csvFile, $registrarUsername) {
         $errors = [];
+        $importedCount = 0; // 新增成功計數器
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
@@ -323,6 +324,7 @@ class MailRecord extends Model {
                     // 呼叫我們之前建立的 createMailRecord 方法
                     // 它會自動處理 mail_code 和 registrar_username
                     $this->createMailRecord($record, $registrarUsername);
+                    $importedCount++; // 成功處理一筆，計數器加一
                 }
                 
                 // 提交交易
@@ -347,7 +349,11 @@ class MailRecord extends Model {
             unlink($csvFile);
         }
 
-        return $errors;
+        // 回傳一個包含成功筆數和錯誤訊息的陣列
+        return [
+            'imported' => $importedCount,
+            'errors' => $errors
+        ];
     }
 
     /**

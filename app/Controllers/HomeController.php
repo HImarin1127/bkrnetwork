@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Announcement;
 use App\Models\CompanyInfo;
 use App\Models\User;
+use App\Models\HolidayCalendar;
 
 /**
  * 首頁控制器
@@ -111,16 +112,16 @@ class HomeController extends Controller {
      */
     public function holidays() {
         // 定義假日資訊頁面方法
-        // 直接載入假日公告頁面
-        // 頁面內部會自動載入 HolidayCalendar 模型
+        $holidayModel = new HolidayCalendar();
+        $holidays = $holidayModel->getHolidayCalendar();
+        $calendarHtml = $holidayModel->generateCalendarHTML(date('Y'));
+
         $this->view('announcements/holidays', [
-            // 呼叫視圖方法，載入假日資訊頁面模板
             'title' => '假日資訊',
-            // 設定頁面標題
+            'holidays' => $holidays,
+            'calendarHtml' => $calendarHtml,
             'pageType' => 'announcements'
-            // 設定頁面類型為公告區
         ]);
-        // 視圖參數陣列結束
     }
     // holidays 方法結束
     
