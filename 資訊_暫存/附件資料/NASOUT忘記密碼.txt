@@ -1,2 +1,1 @@
-https://192.168.2.61:5001/webman/3rdparty/DirectoryServer/profile.cgi?action=chprofile%40bookrep.com.tw&SynoToken=h38GSfR9VmKeY
-S
+qrcode.bookrep.com.tw/naspwd

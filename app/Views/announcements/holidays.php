@@ -296,18 +296,16 @@ $breadcrumb = [
         <div class="holiday-list">
             <h4><?= date('Y') ?>年 國定假日列表</h4>
             <div class="holiday-items">
-                <?php foreach ($holidays as $holiday): ?>
-                <?php
-                    // 從 'YYYY-MM-DD' 格式的 date 欄位中，解析出月份和日期
-                    $dateParts = explode('-', $holiday['date']);
-                    $month = isset($dateParts[1]) ? ltrim($dateParts[1], '0') : ''; // 移除月份前面的 0
-                    $day = isset($dateParts[2]) ? ltrim($dateParts[2], '0') : '';   // 移除日期前面的 0
-                ?>
-                <div class="holiday-item">
-                    <div class="holiday-date"><?= htmlspecialchars($month) ?>月<?= htmlspecialchars($day) ?>日</div>
-                    <div class="holiday-desc"><?= htmlspecialchars($holiday['name']) ?></div>
-                </div>
-                <?php endforeach; ?>
+                <?php if (!empty($holidays)): ?>
+                    <?php foreach ($holidays as $holiday): ?>
+                        <?php if (isset($holiday['type']) && $holiday['type'] === 'holiday'): ?>
+                            <div class="holiday-item">
+                                <div class="holiday-date"><?php echo date('n月j日', strtotime($holiday['date'])); ?></div>
+                                <div class="holiday-desc"><?php echo htmlspecialchars($holiday['name']); ?></div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
         <?php endif; ?>

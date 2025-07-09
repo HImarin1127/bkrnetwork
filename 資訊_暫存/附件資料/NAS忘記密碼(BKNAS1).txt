@@ -1,1 +1,1 @@
-http://192.168.2.61:5000/#/forgot-pwdS
+qrcode.bookrep.com.tw/forgot-pwd

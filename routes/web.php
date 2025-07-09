@@ -105,6 +105,9 @@ return [
     '/guides/pos' => ['GuidesController', 'pos'],                               // POS 系統
     '/guides/nas/password' => ['GuidesController', 'nasPassword'],              // NAS 密碼管理
     '/guides/nas/web-auth' => ['GuidesController', 'nasWebAuth'],               // NAS 網頁認證
+    '/guides/mf2000/workflow' => ['GuidesController', 'mf2000Workflow'],      // MF2000 公文流程
+    '/guides/mf2000/attendance' => ['GuidesController', 'mf2000Attendance'],  // MF2000 出缺勤管理
+    '/guides/mf2000/connection' => ['GuidesController', 'mf2000Connection'],  // MF2000 連線說明
     // '/guides/tax-exempt/system' => ['GuidesController', 'taxExemptSystem'],     // 免稅系統 - 已移至公開路由
     
     // ========================================

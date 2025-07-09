@@ -160,7 +160,8 @@ class HolidayCalendar extends Model {
      * @return array 預設假日資料陣列
      */
     private function getDefaultHolidayData() {
-        // 資料來源：使用者提供的最終指示與最新的政府法令。此為【包含所有新增假日、節氣、補假規則的最終版】。
+        // 資料來源：使用者提供的最終指示與最新的政府法令。
+        // 此版本已移除所有非國定假日的節氣。
         return [
             // 國定假日 (放假，會高亮標示)
             ['date' => '2025-01-01', 'name' => '開國紀念日', 'type' => 'holiday'],
@@ -171,28 +172,15 @@ class HolidayCalendar extends Model {
             ['date' => '2025-01-31', 'name' => '春節', 'type' => 'holiday'],
             ['date' => '2025-02-28', 'name' => '和平紀念日', 'type' => 'holiday'],
             ['date' => '2025-04-04', 'name' => '清明及兒童節', 'type' => 'holiday'],
+            ['date' => '2025-05-31', 'name' => '端午節', 'type' => 'holiday'],
             ['date' => '2025-06-02', 'name' => '端午節(補假)', 'type' => 'holiday'], // 5/31逢週六
+            ['date' => '2025-09-28', 'name' => '教師節', 'type' => 'holiday'],
             ['date' => '2025-09-29', 'name' => '教師節(補假)', 'type' => 'holiday'], // 9/28逢週日
             ['date' => '2025-10-06', 'name' => '中秋節', 'type' => 'holiday'],
             ['date' => '2025-10-10', 'name' => '國慶日', 'type' => 'holiday'],
+            ['date' => '2025-10-25', 'name' => '臺灣光復節', 'type' => 'holiday'],
             ['date' => '2025-10-24', 'name' => '光復節(補假)', 'type' => 'holiday'], // 10/25逢週六
             ['date' => '2025-12-25', 'name' => '行憲紀念日', 'type' => 'holiday'],
-    
-            // 僅標示名稱的日期 (不放假，除非遇到週末)
-            ['date' => '2025-05-31', 'name' => '端午節', 'type' => 'named_day'],
-            ['date' => '2025-06-21', 'name' => '夏至', 'type' => 'named_day'],
-            ['date' => '2025-08-07', 'name' => '立秋', 'type' => 'named_day'],
-            ['date' => '2025-08-23', 'name' => '處暑', 'type' => 'named_day'],
-            ['date' => '2025-09-07', 'name' => '白露', 'type' => 'named_day'],
-            ['date' => '2025-09-23', 'name' => '秋分', 'type' => 'named_day'],
-            ['date' => '2025-09-28', 'name' => '教師節', 'type' => 'named_day'],
-            ['date' => '2025-10-08', 'name' => '寒露', 'type' => 'named_day'],
-            ['date' => '2025-10-23', 'name' => '霜降', 'type' => 'named_day'],
-            ['date' => '2025-10-25', 'name' => '臺灣光復節', 'type' => 'named_day'],
-            ['date' => '2025-11-07', 'name' => '立冬', 'type' => 'named_day'],
-            ['date' => '2025-11-22', 'name' => '小雪', 'type' => 'named_day'],
-            ['date' => '2025-12-07', 'name' => '大雪', 'type' => 'named_day'],
-            ['date' => '2025-12-21', 'name' => '冬至', 'type' => 'named_day'],
         ];
     }
     // getDefaultHolidayData 方法結束

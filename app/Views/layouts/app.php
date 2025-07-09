@@ -960,10 +960,9 @@
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/document">MF2000公文簽核</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/workflow">MF2000公文</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/attendance">MF2000出缺勤管理</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/connection">MF2000連線說明</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/edoc">MF2000電子公文</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">

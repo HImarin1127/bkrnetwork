@@ -5,6 +5,8 @@
 
 namespace App\Controllers;
 
+use App\Middleware\AuthMiddleware;
+
 require_once __DIR__ . '/Controller.php';
 // 引入父類別 Controller.php，使用 require_once 確保只載入一次
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
@@ -34,7 +36,7 @@ class GuidesController extends Controller {
      */
     public function __construct() {
         // 建構函數，當類別被實例化時自動執行
-        AuthMiddleware::requireLogin();
+        // AuthMiddleware::requireLogin();
         // 呼叫認證中介軟體的 requireLogin 方法，檢查使用者是否已登入
     }
     // 建構函數結束
@@ -133,5 +135,57 @@ class GuidesController extends Controller {
         // 視圖參數陣列結束
     }
     // taxExempt 方法結束
+    
+    /**
+     * NAS 密碼管理頁面
+     * 
+     * 顯示 NAS 忘記密碼的相關連結
+     */
+    public function nasPassword() {
+        $this->setGlobalViewData();
+        $this->view('guides/nas', [
+            'title' => 'NAS 密碼管理'
+        ]);
+    }
+
+    /**
+     * NAS 網頁版使用與二次驗證頁面
+     */
+    public function nasWebAuth() {
+        $this->setGlobalViewData();
+        $this->view('guides/nas-web-auth', [
+            'title' => '網頁版使用與二次驗證'
+        ]);
+    }
+
+    /**
+     * MF2000 公文流程頁面
+     */
+    public function mf2000Workflow() {
+        $this->setGlobalViewData();
+        $this->view('guides/mf2000/workflow', [
+            'title' => 'MF2000 公文'
+        ]);
+    }
+
+    /**
+     * MF2000 出缺勤管理頁面
+     */
+    public function mf2000Attendance() {
+        $this->setGlobalViewData();
+        $this->view('guides/mf2000/attendance', [
+            'title' => 'MF2000 出缺勤管理'
+        ]);
+    }
+
+    /**
+     * MF2000 連線說明頁面
+     */
+    public function mf2000Connection() {
+        $this->setGlobalViewData();
+        $this->view('guides/mf2000/connection', [
+            'title' => 'MF2000 連線說明'
+        ]);
+    }
 } 
 // GuidesController 類別結束 
