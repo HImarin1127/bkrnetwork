@@ -135,6 +135,25 @@ class GuidesController extends Controller {
         // 視圖參數陣列結束
     }
     // taxExempt 方法結束
+
+    /**
+     * @deprecated since v1.1, use windowsUpdate instead
+     */
+    public function windowsAudio() {
+        $this->windowsUpdate();
+    }
+
+    /**
+     * Windows 自動更新頁面
+     * 
+     * 顯示 Windows 自動更新的相關說明
+     */
+    public function windowsUpdate() {
+        $this->setGlobalViewData();
+        $this->view('guides/windows-update', [
+            'title' => 'Windows 自動更新'
+        ]);
+    }
     
     /**
      * NAS 密碼管理頁面
@@ -185,6 +204,16 @@ class GuidesController extends Controller {
         $this->setGlobalViewData();
         $this->view('guides/mf2000/connection', [
             'title' => 'MF2000 連線說明'
+        ]);
+    }
+
+    /**
+     * POS 收銀機操作手冊頁面
+     */
+    public function pos() {
+        $this->setGlobalViewData();
+        $this->view('guides/pos', [
+            'title' => 'POS 收銀機操作手冊'
         ]);
     }
 } 

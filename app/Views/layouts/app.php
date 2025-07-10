@@ -930,7 +930,7 @@
                                 </a>
                                 <ul class="submenu">
                                     <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote">Windows遠端連線</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/audio">Windows音訊更新</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/update">取消windows自動更新</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">

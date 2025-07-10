@@ -97,7 +97,7 @@ return [
     
     // 操作指引系統 - 各種系統使用說明
     // '/guides/windows/remote' => ['GuidesController', 'windowsRemote'],          // Windows 遠端連線 - 已移至公開路由
-    '/guides/windows/audio' => ['GuidesController', 'windowsAudio'],            // Windows 音效設定
+    '/guides/windows/update' => ['GuidesController', 'windowsUpdate'],            // Windows 自動更新
     // '/guides/printer/basic' => ['GuidesController', 'printerBasic'],            // 印表機基本操作 - 已移至公開路由
     // '/guides/printer/troubleshoot' => ['GuidesController', 'printerTroubleshoot'], // 印表機故障排除 - 已移至公開路由
     '/guides/mac/web-print' => ['GuidesController', 'macWebPrint'],             // Mac 網頁列印
