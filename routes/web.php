@@ -90,6 +90,7 @@ return [
     '/forms/vpn' => ['FormsController', 'vpn'],                                 // VPN 申請
     '/forms/it-training' => ['FormsController', 'itTraining'],                  // 資訊教育訓練
     '/forms/qrcode' => ['FormsController', 'qrcode'],                           // QR Code 生成
+    '/forms/education-training' => ['FormsController', 'educationTraining'],      // 教育訓練
     
     // 資源預約系統 - 會議室、設備預約
     '/booking/meeting-room' => ['BookingController', 'meetingRoom'],            // 會議室預約

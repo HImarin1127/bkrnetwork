@@ -10,237 +10,79 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
     </div>
 
     <div class="contacts-content">
-        <!-- 公司基本資訊卡片 -->
-        <div class="company-info glass-card">
-            <h2>公司基本資訊</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon">🏢</div>
-                    <div class="info-details">
-                        <h4>公司名稱</h4>
-                        <p>讀書共和國出版集團股份有限公司</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
-                    <div class="info-details">
-                        <h4>公司地址</h4>
-                        <p>新北市新店區民權路2號9樓No.108</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📞</div>
-                    <div class="info-details">
-                        <h4>總機電話</h4>
-                        <p>(02) 2500-7008</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">📠</div>
-                    <div class="info-details">
-                        <h4>傳真號碼</h4>
-                        <p>(02) 2500-7759</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">✉️</div>
-                    <div class="info-details">
-                        <h4>電子信箱</h4>
-                        <p>service@bookrep.com.tw</p>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">🌐</div>
-                    <div class="info-details">
-                        <h4>官方網站</h4>
-                        <p>www.bookrep.com.tw</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 部門聯絡方式卡片 -->
-        <div class="departments glass-card">
-            <h2>各部門聯絡方式</h2>
-            <div class="search-bar">
-                <input type="text" id="departmentSearch" placeholder="搜尋部門名稱...">
-                <button type="button" class="clear-search" id="clearDepartmentSearch">✕</button>
-            </div>
-            <div class="department-list">
-                <?php foreach ($departmentContacts as $dept): ?>
-                <div class="department-item" data-department="<?php echo strtolower($dept['department_name']); ?>">
-                    <div class="dept-header">
-                        <h3><?php echo $dept['department_name']; ?></h3>
-                        <div class="dept-location">
-                            <span class="dept-building"><?php 
-                                switch($dept['building']) {
-                                    case '108-2':
-                                        echo '108-2號';
-                                        break;
-                                    case '108-3':
-                                        echo '108-3號';
-                                        break;
-                                    case '108-4':
-                                        echo '108-4號';
-                                        break;
-                                    case 'nankan':
-                                        echo '南崁';
-                                        break;
-                                    default:
-                                        echo $dept['building'];
-                                }
-                            ?></span>
-                            <span class="dept-floor"><?php echo $dept['floor_number']; ?>F</span>
-                        </div>
-                    </div>
-                    <div class="dept-contacts">
-                        <div class="contact-row">
-                            <span class="contact-label">分機</span>
-                            <span class="contact-value"><?php echo $dept['extension_range']; ?></span>
-                        </div>
-                        <div class="contact-row">
-                            <span class="contact-label">信箱</span>
-                            <span class="contact-value"><?php echo $dept['email']; ?></span>
-                        </div>
-                        <?php if (!empty($dept['description'])): ?>
-                        <div class="contact-row">
-                            <span class="contact-label">說明</span>
-                            <span class="contact-value"><?php echo $dept['description']; ?></span>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
         <!-- 分機目錄卡片 -->
         <div class="extension-directory glass-card">
             <h2>分機目錄</h2>
-            <div class="extension-image-container">
-                <?php 
-                $imagePath = __DIR__ . '/../../../assets/images/extension-table-2025.jpg';
-                $imageUrl = $baseUrl . '/assets/images/extension-table-2025.jpg';
-                if (file_exists($imagePath)): 
-                ?>
-                    <div class="extension-image-wrapper">
-                        <img src="<?php echo $imageUrl; ?>" 
-                             alt="讀書共和國分機表 2025/1/2 更新" 
-                             class="extension-table-image"
-                             onerror="this.parentElement.style.display='none'; document.getElementById('fallback-message').style.display='block';">
-                        <div class="image-overlay">
-                            <div class="image-info">
-                                <h4>📞 分機表 (2025/1/2 更新)</h4>
-                                <p>點擊圖片可放大檢視</p>
-                            </div>
-                        </div>
-                    </div>
-                <?php else: ?>
-                    <div class="no-image-fallback" id="fallback-message">
-                        <div class="fallback-content">
-                            <div class="fallback-icon">📞</div>
-                            <h4>分機表尚未上傳</h4>
-                            <p>請將分機表圖片儲存為：<br>
-                               <code>assets/images/extension-table-2025.jpg</code></p>
-                            <div class="upload-instructions">
-                                <p><strong>📋 上傳步驟：</strong></p>
-                                <ol>
-                                    <li>將分機表圖片重新命名為 <code>extension-table-2025.jpg</code></li>
-                                    <li>上傳到 <code>assets/images/</code> 目錄</li>
-                                    <li>重新整理此頁面</li>
-                                </ol>
-                            </div>
-                            <button type="button" onclick="showTextDirectory()" class="show-text-btn">
-                                查看文字版分機目錄
-                            </button>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
             
-            <!-- 備用文字分機目錄 (隱藏但保留功能) -->
-            <div class="text-extension-list" style="display: none;">
-                <div class="text-directory-header">
-                    <h3>📝 文字版分機目錄</h3>
-                    <p class="directory-description">使用下方搜尋功能快速找到聯絡人資訊</p>
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="extensionSearch" placeholder="搜尋員工姓名或分機號碼...">
-                    <button type="button" class="clear-search" id="clearExtensionSearch">✕</button>
-                </div>
-                <div class="extension-list">
-                    <?php if (!empty($extensionNumbers)): ?>
-                        <?php foreach ($extensionNumbers as $ext): ?>
-                        <div class="extension-item" 
-                             data-name="<?php echo strtolower($ext['employee_name']); ?>" 
-                             data-number="<?php echo $ext['extension_number']; ?>">
-                            <div class="extension-info">
-                                <span class="employee-name"><?php echo $ext['employee_name']; ?></span>
-                                <span class="extension-number">分機: <?php echo $ext['extension_number']; ?></span>
+            <!-- Tabbed Interface -->
+            <div class="extension-tabs">
+                <button class="ext-tab active" data-tab="summary">分機總表</button>
+                <button class="ext-tab" data-tab="floor-plans">樓層分機圖 (電腦版)</button>
+                <button class="ext-tab" data-tab="mobile-contacts">手機聯絡資訊</button>
+            </div>
+
+            <div class="extension-content">
+                <!-- Tab 1: 分機總表 -->
+                <div class="ext-panel active" id="tab-summary">
+                    <div class="extension-image-container">
+                        <?php 
+                        $imagePath = __DIR__ . '/../../../assets/images/extension-table-2025.jpg';
+                        $imageUrl = $baseUrl . '/assets/images/extension-table-2025.jpg';
+                        if (file_exists($imagePath)): 
+                        ?>
+                            <div class="extension-image-wrapper">
+                                <img src="<?php echo $imageUrl; ?>" alt="讀書共和國分機表" class="extension-table-image">
+                                <div class="image-overlay">
+                                    <div class="image-info">
+                                        <h4>📞 分機表 (點擊圖片可放大檢視)</h4>
+                                    </div>
+                                </div>
                             </div>
-                            <?php if (!empty($ext['description'])): ?>
-                            <div class="extension-description">
-                                <?php echo $ext['description']; ?>
+                        <?php else: ?>
+                            <div class="no-image-fallback">
+                                <h4>分機總表尚未上傳</h4>
+                                <p>請將圖片儲存至 <code>assets/images/extension-table-2025.jpg</code></p>
                             </div>
-                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Tab 2: 樓層分機圖 -->
+                <div class="ext-panel" id="tab-floor-plans">
+                    <div class="floor-plan-container">
+                        <div class="floor-plan-tabs">
+                            <button class="floor-plan-tab active" data-image="108-2-9FEXT.png">108-2 9F</button>
+                            <button class="floor-plan-tab" data-image="108-4-5F-8FEXT.png">108-4 5F&8F</button>
+                            <button class="floor-plan-tab" data-image="108-3-8FEXT.png">108-3 8F</button>
+                            <button class="floor-plan-tab" data-image="108-3-6FEXT.png">108-3 6F</button>
+                            <button class="floor-plan-tab" data-image="108-3-3FEXT.png">108-3 3F</button>
+                            <button class="floor-plan-tab" data-image="OUTSIDE.png">集團外單位</button>
                         </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="no-data">目前沒有分機資料</div>
-                    <?php endif; ?>
+                        <div class="floor-plan-display">
+                            <img src="<?php echo $baseUrl; ?>/assets/images/108-2-9FEXT.png" alt="樓層分機圖" id="floorPlanImage">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- 辦公時間卡片 -->
-        <div class="office-hours glass-card">
-            <h2>辦公時間</h2>
-            <div class="hours-info">
-                <div class="hours-item">
-                    <div class="hours-icon">🕘</div>
-                    <div class="hours-details">
-                        <h4>上班時間</h4>
-                        <p>週一至週五 09:00 - 18:00</p>
-                    </div>
-                </div>
-                <div class="hours-item">
-                    <div class="hours-icon">🍽️</div>
-                    <div class="hours-details">
-                        <h4>午休時間</h4>
-                        <p>12:00 - 13:00</p>
-                    </div>
-                </div>
-                <div class="hours-item">
-                    <div class="hours-icon">🚫</div>
-                    <div class="hours-details">
-                        <h4>例假日</h4>
-                        <p>週六、週日及國定假日</p>
+                <!-- Tab 3: 手機聯絡資訊 -->
+                <div class="ext-panel" id="tab-mobile-contacts">
+                    <div class="floor-plan-container">
+                        <div class="mobile-plan-tabs">
+                            <button class="mobile-plan-tab active" data-image="108-2-9FEXTMOBILE.png">108-2 9F</button>
+                            <button class="mobile-plan-tab" data-image="108-4-5F-8FEXTMOBILE.png">108-4 5F&8F</button>
+                            <button class="mobile-plan-tab" data-image="108-3-8FEXTMOBILE.png">108-3 8F</button>
+                            <button class="mobile-plan-tab" data-image="108-3-6FEXTMOBILE.png">108-3 6F</button>
+                            <button class="mobile-plan-tab" data-image="108-3-3FEXTMOBILE.png">108-3 3F</button>
+                            <button class="mobile-plan-tab" data-image="OUTSIDEEXTMOBILE.png">集團外單位</button>
+                        </div>
+                        <div class="mobile-plan-display">
+                            <img src="<?php echo $baseUrl; ?>/assets/images/108-2-9FEXTMOBILE.png" alt="手機版聯絡資訊" id="mobilePlanImage">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 緊急聯絡卡片 -->
-        <div class="emergency-contacts glass-card">
-            <h2>緊急聯絡</h2>
-            <div class="emergency-grid">
-                <div class="emergency-item">
-                    <div class="emergency-icon">🚨</div>
-                    <h4>24小時緊急聯絡</h4>
-                    <p>保全室：(02) 2500-7000</p>
-                </div>
-                <div class="emergency-item">
-                    <div class="emergency-icon">🔧</div>
-                    <h4>設備維修</h4>
-                    <p>總務：分機 506</p>
-                </div>
-                <div class="emergency-item">
-                    <div class="emergency-icon">💻</div>
-                    <h4>資訊故障</h4>
-                    <p>資訊部：分機 701</p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -799,6 +641,110 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
 .extension-item.hidden {
     display: none;
 }
+
+/* Extension Directory Tabs */
+.extension-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(107, 70, 193, 0.2);
+}
+
+.ext-tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.ext-tab.active, .ext-tab:hover {
+    color: #6b46c1;
+    border-bottom-color: #6b46c1;
+}
+
+.ext-panel {
+    display: none;
+}
+
+.ext-panel.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+.floor-plan-container {
+    margin-top: 1rem;
+}
+
+.floor-plan-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.floor-plan-tab {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.floor-plan-tab.active, .floor-plan-tab:hover {
+    background-color: #6b46c1;
+    color: white;
+    border-color: #6b46c1;
+}
+
+.floor-plan-display {
+    text-align: center;
+}
+
+.floor-plan-display img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.mobile-plan-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.mobile-plan-tab {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-plan-tab.active, .mobile-plan-tab:hover {
+    background-color: #6b46c1;
+    color: white;
+    border-color: #6b46c1;
+}
+
+.mobile-plan-display {
+    text-align: center;
+}
+
+.mobile-plan-display img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 </style>
 
 <div id="imageModal" class="image-modal">
@@ -809,72 +755,15 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 部門搜尋功能
-    const departmentSearch = document.getElementById('departmentSearch');
-    const clearDepartmentSearch = document.getElementById('clearDepartmentSearch');
-    const departmentItems = document.querySelectorAll('.department-item');
-
-    if (departmentSearch) {
-        departmentSearch.addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase().trim();
-            if(clearDepartmentSearch) clearDepartmentSearch.style.display = searchValue ? 'block' : 'none';
-
-            departmentItems.forEach(item => {
-                const departmentName = item.getAttribute('data-department');
-                if (departmentName.includes(searchValue)) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-        });
-    }
-    
-    if (clearDepartmentSearch) {
-        clearDepartmentSearch.addEventListener('click', function() {
-            departmentSearch.value = '';
-            departmentSearch.dispatchEvent(new Event('input'));
-        });
-    }
-
-    // 分機搜尋功能
-    const extensionSearch = document.getElementById('extensionSearch');
-    const clearExtensionSearch = document.getElementById('clearExtensionSearch');
-    const extensionItems = document.querySelectorAll('.extension-item');
-
-    if (extensionSearch) {
-        extensionSearch.addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase().trim();
-            if(clearExtensionSearch) clearExtensionSearch.style.display = searchValue ? 'block' : 'none';
-
-            extensionItems.forEach(item => {
-                const name = item.getAttribute('data-name');
-                const number = item.getAttribute('data-number');
-                if (name.includes(searchValue) || number.includes(searchValue)) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-        });
-    }
-
-    if (clearExtensionSearch) {
-        clearExtensionSearch.addEventListener('click', function() {
-            extensionSearch.value = '';
-            extensionSearch.dispatchEvent(new Event('input'));
-        });
-    }
-
-    // 圖片 Modal 功能
-    const modal = document.getElementById("imageModal");
+    // Modal for image zoom
+    const imageModal = document.getElementById('imageModal');
     const modalImg = document.getElementById("modalImage");
     const captionText = document.getElementById("modalCaption");
     const imageToOpen = document.querySelector('.extension-table-image');
     
     if (imageToOpen) {
         imageToOpen.onclick = function() {
-            if(modal) modal.style.display = "block";
+            if(imageModal) imageModal.style.display = "block";
             modalImg.src = this.src;
             captionText.innerHTML = this.alt;
             document.body.style.overflow = 'hidden'; // 禁止背景滾動
@@ -884,26 +773,73 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtn = document.querySelector(".modal-close-btn");
     if (closeBtn) {
         closeBtn.onclick = function() {
-            if(modal) modal.style.display = "none";
+            if(imageModal) imageModal.style.display = "none";
             document.body.style.overflow = ''; // 恢復背景滾動
         }
     }
     
-    if (modal) {
-        modal.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+    if (imageModal) {
+        imageModal.onclick = function(event) {
+            if (event.target == imageModal) {
+                imageModal.style.display = "none";
                 document.body.style.overflow = ''; // 恢復背景滾動
             }
         }
     }
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape" && modal && modal.style.display === "block") {
-            modal.style.display = "none";
+        if (event.key === "Escape" && imageModal && imageModal.style.display === "block") {
+            imageModal.style.display = "none";
             document.body.style.overflow = ''; // 恢復背景滾動
         }
     });
+
+    // Extension Directory Tabs
+    const extTabs = document.querySelectorAll('.ext-tab');
+    const extPanels = document.querySelectorAll('.ext-panel');
+
+    extTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            extTabs.forEach(t => t.classList.remove('active'));
+            extPanels.forEach(p => p.classList.remove('active'));
+            
+            tab.classList.add('active');
+            document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+        });
+    });
+
+    // Floor Plan Tabs
+    const floorPlanTabs = document.querySelectorAll('.floor-plan-tab');
+    const floorPlanImage = document.getElementById('floorPlanImage');
+    const baseUrl = '<?php echo $baseUrl; ?>';
+
+    if (floorPlanTabs.length > 0 && floorPlanImage) {
+        floorPlanTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                floorPlanTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const newImage = tab.dataset.image;
+                floorPlanImage.src = `${baseUrl}/assets/images/${newImage}`;
+                floorPlanImage.alt = `樓層分機圖 - ${tab.textContent}`;
+            });
+        });
+    }
+
+    // Mobile Floor Plan Tabs
+    const mobilePlanTabs = document.querySelectorAll('.mobile-plan-tab');
+    const mobilePlanImage = document.getElementById('mobilePlanImage');
+
+    if (mobilePlanTabs.length > 0 && mobilePlanImage) {
+        mobilePlanTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                mobilePlanTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const newImage = tab.dataset.image;
+                mobilePlanImage.src = `${baseUrl}/assets/images/${newImage}`;
+                mobilePlanImage.alt = `手機版聯絡資訊 - ${tab.textContent}`;
+            });
+        });
+    }
 });
 
 // 顯示文字版分機目錄

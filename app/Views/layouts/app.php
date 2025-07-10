@@ -909,10 +909,9 @@
                             <span class="arrow">▼</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo $baseUrl; ?>/company">公司簡介</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/company/contacts">聯絡資訊</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/company/floor">樓層資訊</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/company/nas">NAS資源</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/company" class="<?php echo ($pageId === 'company_index') ? 'active' : ''; ?>">公司簡介</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/company/floor" class="<?php echo ($pageId === 'company_floor') ? 'active' : ''; ?>">樓層資訊平面圖</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/company/contacts" class="<?php echo ($pageId === 'company_contacts') ? 'active' : ''; ?>">集團暨各社聯絡資訊</a></li>
                         </ul>
                     </li>
                     
