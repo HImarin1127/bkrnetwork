@@ -525,25 +525,49 @@ function filterAnnouncements() {
 }
 
 function refreshAnnouncements() {
-    window.location.reload();
+    window.location.href = '<?php echo $baseUrl; ?>/admin/announcements';
+}
+
+function handleApiResponse(response) {
+    if (response.success) {
+        alert(response.message || '操作成功！');
+        window.location.reload();
+    } else {
+        alert('操作失敗：' + (response.message || '未知錯誤'));
+    }
+}
+
+function sendPostRequest(url, id) {
+    const formData = new FormData();
+    formData.append('id', id);
+
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(handleApiResponse)
+    .catch(error => {
+        console.error('請求錯誤:', error);
+        alert('請求發送失敗，請查看主控台以獲取更多資訊。');
+    });
+}
+
+function deleteAnnouncement(id) {
+    if (confirm('您確定要永久刪除此公告嗎？此操作無法復原。')) {
+        sendPostRequest('<?php echo $baseUrl; ?>/admin/announcements/delete', id);
+    }
 }
 
 function publishAnnouncement(id) {
-    if (confirm('確定要發布這個公告嗎？\n\n⚠️ 發布後全公司都看得到！')) {
-        // 這裡可以通過AJAX發送請求，或者直接跳轉
-        window.location.href = `<?php echo $baseUrl; ?>/admin/announcements/publish?id=${id}`;
+    if (confirm('您確定要發布此公告嗎？')) {
+        sendPostRequest('<?php echo $baseUrl; ?>/admin/announcements/publish', id);
     }
 }
 
 function unpublishAnnouncement(id) {
-    if (confirm('確定要取消發布這個公告嗎？')) {
-        window.location.href = `<?php echo $baseUrl; ?>/admin/announcements/unpublish?id=${id}`;
-    }
-}
-
-function deleteAnnouncement(id) {
-    if (confirm('⚠️ 警告：您即將刪除這個公告！\n\n這個操作無法復原，確定要繼續嗎？')) {
-        window.location.href = `<?php echo $baseUrl; ?>/admin/announcements/delete?id=${id}`;
+    if (confirm('您確定要將此公告取消發布（轉為草稿）嗎？')) {
+        sendPostRequest('<?php echo $baseUrl; ?>/admin/announcements/unpublish', id);
     }
 }
 </script> 

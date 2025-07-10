@@ -15,32 +15,6 @@
     </div>
 </div>
 
-<div class="announcement-stats content-card">
-    <div class="stats-grid">
-        <div class="stat-item">
-            <div class="stat-icon">📊</div>
-            <div class="stat-info">
-                <span class="stat-number"><?php echo count($announcements); ?></span>
-                <span class="stat-label">則公告</span>
-            </div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon">⏰</div>
-            <div class="stat-info">
-                <span class="stat-number"><?php echo !empty($announcements) ? date('m/d', strtotime($announcements[0]['created_at'])) : '--'; ?></span>
-                <span class="stat-label">最新更新</span>
-            </div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-info">
-                <span class="stat-number"><?php echo array_filter($announcements, function($a) { return $a['type'] === 'general'; }) ? count(array_filter($announcements, function($a) { return $a['type'] === 'general'; })) : 0; ?></span>
-                <span class="stat-label">重要公告</span>
-            </div>
-        </div>
-    </div>
-</div>
-
 <?php if (!empty($announcements)): ?>
     <div class="announcements-grid">
         <?php foreach ($announcements as $index => $announcement): ?>
@@ -66,7 +40,6 @@
                     </span>
                 </div>
             </div>
-            
             <div class="card-body">
                 <h3 class="announcement-title">
                     <?php if ($index === 0): ?>

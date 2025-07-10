@@ -31,10 +31,12 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
                         if (file_exists($imagePath)): 
                         ?>
                             <div class="extension-image-wrapper">
-                                <img src="<?php echo $imageUrl; ?>" alt="讀書共和國分機表" class="extension-table-image">
+                                <a href="<?php echo $imageUrl; ?>" target="_blank" title="點擊在新分頁中開啟大圖">
+                                    <img src="<?php echo $imageUrl; ?>" alt="讀書共和國分機表" class="extension-table-image">
+                                </a>
                                 <div class="image-overlay">
                                     <div class="image-info">
-                                        <h4>📞 分機表 (點擊圖片可放大檢視)</h4>
+                                        <h4>📞 分機表 (點擊圖片可開新分頁檢視)</h4>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +84,6 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -463,69 +464,6 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
     opacity: 0.9;
 }
 
-/* 圖片放大 Modal 樣式 */
-.image-modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1000; 
-    padding-top: 50px; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.9);
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 1200px;
-    animation-name: zoom;
-    animation-duration: 0.6s;
-}
-
-#modalCaption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
-}
-
-@keyframes zoom {
-    from {transform:scale(0)} 
-    to {transform:scale(1)}
-}
-
-.modal-close-btn {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.modal-close-btn:hover,
-.modal-close-btn:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-@media only screen and (max-width: 700px){
-    .modal-content {
-        width: 100%;
-    }
-}
-
 /* 分機表缺失時的備用顯示樣式 */
 .no-image-fallback {
     background: rgba(255, 249, 196, 0.3);
@@ -747,53 +685,8 @@ $baseUrl = isset($baseUrl) ? $baseUrl : '';
 }
 </style>
 
-<div id="imageModal" class="image-modal">
-    <span class="modal-close-btn">&times;</span>
-    <img class="modal-content" id="modalImage">
-    <div id="modalCaption"></div>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Modal for image zoom
-    const imageModal = document.getElementById('imageModal');
-    const modalImg = document.getElementById("modalImage");
-    const captionText = document.getElementById("modalCaption");
-    const imageToOpen = document.querySelector('.extension-table-image');
-    
-    if (imageToOpen) {
-        imageToOpen.onclick = function() {
-            if(imageModal) imageModal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
-            document.body.style.overflow = 'hidden'; // 禁止背景滾動
-        }
-    }
-
-    const closeBtn = document.querySelector(".modal-close-btn");
-    if (closeBtn) {
-        closeBtn.onclick = function() {
-            if(imageModal) imageModal.style.display = "none";
-            document.body.style.overflow = ''; // 恢復背景滾動
-        }
-    }
-    
-    if (imageModal) {
-        imageModal.onclick = function(event) {
-            if (event.target == imageModal) {
-                imageModal.style.display = "none";
-                document.body.style.overflow = ''; // 恢復背景滾動
-            }
-        }
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape" && imageModal && imageModal.style.display === "block") {
-            imageModal.style.display = "none";
-            document.body.style.overflow = ''; // 恢復背景滾動
-        }
-    });
-
     // Extension Directory Tabs
     const extTabs = document.querySelectorAll('.ext-tab');
     const extPanels = document.querySelectorAll('.ext-panel');
@@ -841,20 +734,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-// 顯示文字版分機目錄
-function showTextDirectory() {
-    const fallbackMessage = document.getElementById('fallback-message');
-    const textDirectory = document.querySelector('.text-extension-list');
-    
-    if (fallbackMessage && textDirectory) {
-        fallbackMessage.style.display = 'none';
-        textDirectory.style.display = 'block';
-        
-        textDirectory.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-        });
-    }
-}
 </script> 

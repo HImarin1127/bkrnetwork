@@ -269,9 +269,37 @@ class Announcement extends Model {
         
         return false;
     }
+
+    /**
+     * 發布公告 (簡化版)
+     */
+    public function publish($id) {
+        return $this->update($id, [
+            'status' => 'published', 
+            'published_at' => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    /**
+     * 取消發布公告 (簡化版)
+     */
+    public function unpublish($id) {
+        return $this->update($id, [
+            'status' => 'draft',
+            'published_at' => null
+        ]);
+    }
+
+    /**
+     * 刪除公告
+     */
+    public function delete($id) {
+        $this->removeAttachment($id);
+        return parent::delete($id);
+    }
     
     /**
-     * 記錄公告操作日誌
+     * 記錄操作日誌
      * 
      * @param int $announcementId 公告ID
      * @param string $action 操作類型 (e.g., 'create', 'update', 'publish', 'unpublish')

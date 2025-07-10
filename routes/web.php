@@ -128,4 +128,7 @@ return [
     '/admin/announcements' => ['AdminController', 'announcements'],             // 公告列表
     '/admin/announcements/create' => ['AdminController', 'createAnnouncement'], // 新增公告
     '/admin/announcements/edit' => ['AdminController', 'editAnnouncement'],     // 編輯公告
+    '/admin/announcements/delete' => ['AdminController', 'deleteAnnouncement'], // 刪除公告 (POST)
+    '/admin/announcements/publish' => ['AdminController', 'publishAnnouncement'], // 發布公告 (POST)
+    '/admin/announcements/unpublish' => ['AdminController', 'unpublishAnnouncement'], // 取消發布 (POST)
 ]; 
