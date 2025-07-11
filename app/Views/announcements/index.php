@@ -25,7 +25,7 @@
                     $typeConfig = [
                         'general' => ['icon' => '📌', 'label' => '一般公告', 'class' => 'type-general'],
                         'holiday' => ['icon' => '🎉', 'label' => '假日公告', 'class' => 'type-holiday'],
-                        'handbook' => ['icon' => '📚', 'label' => '員工手冊', 'class' => 'type-handbook']
+                        //'handbook' => ['icon' => '📚', 'label' => '員工手冊', 'class' => 'type-handbook']
                     ];
                     $config = $typeConfig[$announcement['type']] ?? $typeConfig['general'];
                     ?>
@@ -128,14 +128,14 @@
                 <div class="nav-arrow">→</div>
             </a>
             
-            <a href="<?php echo $baseUrl; ?>announcements/handbook" class="nav-card">
+            <!-- <a href="<?php echo $baseUrl; ?>announcements/handbook" class="nav-card">
                 <div class="nav-icon">📚</div>
                 <div class="nav-content">
                     <h4>員工手冊</h4>
                     <p>重要規章制度與操作指南</p>
                 </div>
                 <div class="nav-arrow">→</div>
-            </a>
+            </a>-->
             
             <a href="<?php echo $baseUrl; ?>/" class="nav-card">
                 <div class="nav-icon">🏠</div>

@@ -824,7 +824,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo $baseUrl; ?>/announcements">最新公告</a></li>
                             <li><a href="<?php echo $baseUrl; ?>/announcements/holidays">假日資訊</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/announcements/handbook">員工手冊</a></li>
+                            <!--<li><a href="<?php echo $baseUrl; ?>/announcements/handbook">員工手冊</a></li>-->
                             <li><a href="<?php echo $baseUrl; ?>/group-announcements">集團公告</a></li>
                         </ul>
                     </li>
@@ -1003,7 +1003,7 @@
             <p>&copy; <?php echo $appName; ?>. 版權所有.</p>
             <p>為讀書共和國出版集團員工提供便利的內部服務平台</p>
         </div>
-    </footer>
+    </footer>   `
 
     <script>
         // 檢測子選單是否需要左側顯示

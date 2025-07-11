@@ -63,7 +63,7 @@
             <?php endforeach; ?>
         </div>
         
-        <div class="announcements-actions">
+        <!--<div class="announcements-actions">
             <a href="<?php echo $baseUrl; ?>/announcements" class="btn btn-primary">
                 <span>📰</span> 查看所有公告
             </a>
@@ -73,7 +73,7 @@
             <a href="<?php echo $baseUrl; ?>/announcements/handbook" class="btn btn-outline">
                 <span>📖</span> 員工手冊
             </a>
-        </div>
+        </div>-->
     <?php else: ?>
         <div class="content-card">
             <div class="empty-announcements">
@@ -97,7 +97,7 @@
     
     <div class="features-grid">
         <!-- 公告查詢 -->
-        <div class="feature-module">
+        <!--<div class="feature-module">
             <div class="module-header">
                 <div class="module-icon">📢</div>
                 <div class="module-info">
@@ -119,7 +119,7 @@
                     <span class="link-arrow">→</span>
                 </a>
             </div>
-        </div>
+        </div>-->
         
         <?php if ($isLoggedIn): ?>
         <!-- 表單申請 -->
@@ -214,7 +214,7 @@
                     <span class="feature-tag">📖 公司簡介</span>
                     <span class="feature-tag">🗺️ 樓層圖</span>
                     <span class="feature-tag">📞 聯絡資訊</span>
-                    <span class="feature-tag">💾 NAS資源</span>
+                    <!--<span class="feature-tag">💾 NAS資源</span>-->
                 </div>
             </div>
             <div class="module-footer">
