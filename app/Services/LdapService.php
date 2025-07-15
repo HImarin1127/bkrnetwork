@@ -1,6 +1,9 @@
 <?php
 // app/Services/LdapService.php
-// LDAP 認證服務類
+
+namespace App\Services;
+
+use Exception;
 
 /**
  * LDAP 認證服務
@@ -143,7 +146,7 @@ class LdapService {
             }
             
             // 嘗試使用使用者憑證進行綁定
-            if (!ldap_bind($userConnection, $userDn, $password)) {
+            if (!@ldap_bind($userConnection, $userDn, $password)) {
                 ldap_unbind($userConnection);
                 $this->log("使用者認證失敗：{$username}");
                 return false;

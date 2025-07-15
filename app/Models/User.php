@@ -3,8 +3,10 @@
 // PHP 開始標籤，表示這是一個 PHP 檔案
 // 檔案路徑註解，說明此檔案位置
 
-require_once __DIR__ . '/Model.php';
-// 引入父類別 Model.php，使用 require_once 確保只載入一次
+namespace App\Models;
+
+use App\Services\LdapService;
+use Exception;
 
 /**
  * 使用者模型
@@ -80,11 +82,6 @@ class User extends Model {
      */
     private function authenticateWithLdap($username, $password) {
         try {
-            // 檢查 LDAP 服務是否可用
-            if (!class_exists('LdapService')) {
-                require_once __DIR__ . '/../Services/LdapService.php';
-            }
-            
             $ldapService = new LdapService();
             return $ldapService->authenticate($username, $password);
             
@@ -377,40 +374,59 @@ class User extends Model {
      * @return bool
      */
     public function userExists($username) {
-        return (bool) $this->find($username);
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE username = ?";
+        return $this->db->fetchColumn($sql, [$username]) > 0;
     }
 
     /**
-     * 檢查使用者是否有權限管理公告
-     *
-     * 權限邏輯：
-     * 1. 系統管理員 (`role` = 'admin')
-     * 2. 被授權的部門主管或人員 (`permission_manage_announcements` = 1)
-     *
+     * 檢查使用者是否可以管理公告
+     * 
+     * 根據使用者'name'欄位的部門名稱（格式：部門-姓名）進行判斷
+     * 只要部門名稱包含 '總務', '財務', '資訊' 關鍵字，即擁有權限
+     * 超級管理員 'admin' 始終擁有權限
+     * 
      * @param string $username 使用者名稱
      * @return bool
      */
     public function canManageAnnouncements($username) {
-        // 根據使用者名稱查詢使用者資料
-        $user = $this->find($username);
-
-        // 如果找不到使用者，直接回傳 false
-        if (!$user) {
+        if (!$username) {
             return false;
         }
 
-        // 檢查是否為系統管理員 (先檢查 role 是否存在)
-        if (isset($user['role']) && $user['role'] === 'admin') {
+        // 超級管理員 admin 永遠有權限
+        if ($username === 'admin') {
             return true;
         }
 
-        // 檢查是否有公告管理權限欄位
-        // 假設 `permission_manage_announcements` 是一個 INT 或 BOOLEAN 欄位
-        if (isset($user['permission_manage_announcements']) && $user['permission_manage_announcements'] == 1) {
-            return true;
+        // 根據 username 找到使用者
+        $user = $this->find($username);
+
+        // 如果找不到使用者或 name 欄位不存在，則無權限
+        if (!$user || empty($user['name'])) {
+            return false;
         }
 
-        // 如果以上條件都不符合，回傳 false
+        // 允許管理公告的部門關鍵字
+        $allowed_departments = ['總務', '財務', '資訊'];
+
+        // 從 name 欄位中解析部門，格式為 "部門-姓名"
+        $name_parts = explode('-', $user['name'], 2);
+        
+        // 確保 name 欄位格式正確
+        if (count($name_parts) < 2) {
+            return false;
+        }
+        
+        $department_name = trim($name_parts[0]);
+
+        // 檢查部門是否在允許列表中（包含關鍵字即可）
+        foreach ($allowed_departments as $allowed_dept) {
+            if (strpos($department_name, $allowed_dept) !== false) {
+                return true; // 只要部門名稱包含關鍵字就給予權限
+            }
+        }
+
+        // 預設沒有權限
         return false;
     }
     

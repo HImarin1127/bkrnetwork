@@ -1,6 +1,14 @@
 <?php
 // app/Models/Database.php
 
+namespace App\Models;
+
+use PDO;
+use PDOException;
+
+// 引入資料庫設定
+require_once __DIR__ . '/../../config/database.php';
+
 /**
  * 資料庫連接類別
  * 

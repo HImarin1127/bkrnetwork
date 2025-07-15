@@ -4,9 +4,9 @@
         <div class="hero-logo">
             <div class="logo-main">
                 <span class="logo-icon">📚</span>
-                <span class="logo-text">讀書共和國</span>
+                <span class="logo-text">讀書共和國<br>員工服務平台</span>
             </div>
-            <div class="logo-subtitle">員工服務平台</div>
+            <!--<div class="logo-subtitle">員工服務平台</div>-->
         </div>
     </div>
 </div>
@@ -17,7 +17,7 @@
 <div class="announcements-showcase">
     <div class="section-header" style="margin-bottom: 1.5rem;">
         <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 0.3rem;">📢 最新公告</h2>
-        <p class="section-subtitle" style="font-size: 0.9rem;">掌握第一手重要資訊</p>
+        <!--<p class="section-subtitle" style="font-size: 0.9rem;">掌握第一手重要資訊</p>-->
     </div>
     
     <?php if (!empty($announcements)): ?>
@@ -63,7 +63,7 @@
             <?php endforeach; ?>
         </div>
         
-        <div class="announcements-actions">
+        <!--<div class="announcements-actions">
             <a href="<?php echo $baseUrl; ?>/announcements" class="btn btn-primary">
                 <span>📰</span> 查看所有公告
             </a>
@@ -73,13 +73,13 @@
             <a href="<?php echo $baseUrl; ?>/announcements/handbook" class="btn btn-outline">
                 <span>📖</span> 員工手冊
             </a>
-        </div>
+        </div>-->
     <?php else: ?>
         <div class="content-card">
             <div class="empty-announcements">
                 <div class="empty-icon">📭</div>
                 <h3 class="empty-title">目前暫無最新公告</h3>
-                <p class="empty-message">我們會定期發布重要資訊，請稍後再來查看</p>
+                <!--<p class="empty-message">我們會定期發布重要資訊，請稍後再來查看</p>-->
                 <button class="btn btn-outline" onclick="location.reload()">
                     <span>🔄</span> 重新整理
                 </button>
@@ -89,15 +89,16 @@
 </div>
 
 <!-- 系統功能展示 -->
+
 <div class="features-showcase">
     <div class="section-header">
         <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 0.3rem;">🚀 介面總覽</h2>
-        <p class="section-subtitle" style="font-size: 0.9rem;">完整的企業服務解決方案</p>
+        <!--<p class="section-subtitle" style="font-size: 0.9rem;">完整的企業服務解決方案</p>-->
     </div>
     
     <div class="features-grid">
         <!-- 公告查詢 -->
-        <div class="feature-module">
+        <!--<div class="feature-module">
             <div class="module-header">
                 <div class="module-icon">📢</div>
                 <div class="module-info">
@@ -119,7 +120,7 @@
                     <span class="link-arrow">→</span>
                 </a>
             </div>
-        </div>
+        </div>-->
         
         <?php if ($isLoggedIn): ?>
         <!-- 表單申請 -->
@@ -132,7 +133,7 @@
                 </div>
             </div>
             <div class="module-content">
-                <p class="module-description">線上處理各類表單申請，包含郵務、請假、出差、採購等服務</p>
+                <!--<p class="module-description">線上處理各類表單申請，包含郵務、請假、出差、採購等服務</p>-->
                 <div class="module-features">
                     <span class="feature-tag">📮 郵務系統</span>
                     <span class="feature-tag">🏖️ 請假申請</span>
@@ -158,7 +159,7 @@
                 </div>
             </div>
             <div class="module-content">
-                <p class="module-description">便利的會議室、設備預約系統，智慧排程避免衝突</p>
+                <!--<p class="module-description">便利的會議室、設備預約系統，智慧排程避免衝突</p>-->
                 <div class="module-features">
                     <span class="feature-tag">🏢 會議室</span>
                     <span class="feature-tag">💻 設備借用</span>
@@ -184,7 +185,7 @@
             <div class="module-content">
                 <p class="module-description">詳細的系統操作說明，助您快速上手各項功能</p>
                 <div class="module-features">
-                    <span class="feature-tag">🖥️ Windows</span>
+                    <span class="feature-tag">🪟 Windows</span>
                     <span class="feature-tag">🍎 Mac</span>
                     <span class="feature-tag">📧 Email</span>
                     <span class="feature-tag">🖨️ 印表機</span>
@@ -209,18 +210,18 @@
                 </div>
             </div>
             <div class="module-content">
-                <p class="module-description">查看讀書共和國簡介、樓層圖及相關聯絡資訊</p>
+                <!--<p class="module-description">查看讀書共和國簡介、樓層圖及相關聯絡資訊</p>-->
                 <div class="module-features">
-                    <span class="feature-tag">📖 公司簡介</span>
+                    <!--<span class="feature-tag">📖 公司簡介</span>-->
                     <span class="feature-tag">🗺️ 樓層圖</span>
                     <span class="feature-tag">📞 聯絡資訊</span>
-                    <span class="feature-tag">💾 NAS資源</span>
+                    <!--<span class="feature-tag">💾 NAS資源</span>-->
                 </div>
             </div>
             <div class="module-footer">
                 <a href="<?php echo $baseUrl; ?>/company" class="module-link">
-                    <span>了解更多</span>
-                    <span class="link-arrow">→</span>
+                    <!--<span>了解更多</span>
+                    <span class="link-arrow">→</span>-->
                 </a>
             </div>
         </div>

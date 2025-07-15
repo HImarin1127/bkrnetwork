@@ -90,6 +90,7 @@ return [
     '/forms/vpn' => ['FormsController', 'vpn'],                                 // VPN 申請
     '/forms/it-training' => ['FormsController', 'itTraining'],                  // 資訊教育訓練
     '/forms/qrcode' => ['FormsController', 'qrcode'],                           // QR Code 生成
+    '/forms/education-training' => ['FormsController', 'educationTraining'],      // 教育訓練
     
     // 資源預約系統 - 會議室、設備預約
     '/booking/meeting-room' => ['BookingController', 'meetingRoom'],            // 會議室預約
@@ -97,7 +98,7 @@ return [
     
     // 操作指引系統 - 各種系統使用說明
     // '/guides/windows/remote' => ['GuidesController', 'windowsRemote'],          // Windows 遠端連線 - 已移至公開路由
-    '/guides/windows/audio' => ['GuidesController', 'windowsAudio'],            // Windows 音效設定
+    '/guides/windows/update' => ['GuidesController', 'windowsUpdate'],            // Windows 自動更新
     // '/guides/printer/basic' => ['GuidesController', 'printerBasic'],            // 印表機基本操作 - 已移至公開路由
     // '/guides/printer/troubleshoot' => ['GuidesController', 'printerTroubleshoot'], // 印表機故障排除 - 已移至公開路由
     '/guides/mac/web-print' => ['GuidesController', 'macWebPrint'],             // Mac 網頁列印
@@ -105,6 +106,9 @@ return [
     '/guides/pos' => ['GuidesController', 'pos'],                               // POS 系統
     '/guides/nas/password' => ['GuidesController', 'nasPassword'],              // NAS 密碼管理
     '/guides/nas/web-auth' => ['GuidesController', 'nasWebAuth'],               // NAS 網頁認證
+    '/guides/mf2000/workflow' => ['GuidesController', 'mf2000Workflow'],      // MF2000 公文流程
+    '/guides/mf2000/attendance' => ['GuidesController', 'mf2000Attendance'],  // MF2000 出缺勤管理
+    '/guides/mf2000/connection' => ['GuidesController', 'mf2000Connection'],  // MF2000 連線說明
     // '/guides/tax-exempt/system' => ['GuidesController', 'taxExemptSystem'],     // 免稅系統 - 已移至公開路由
     
     // ========================================
@@ -124,4 +128,7 @@ return [
     '/admin/announcements' => ['AdminController', 'announcements'],             // 公告列表
     '/admin/announcements/create' => ['AdminController', 'createAnnouncement'], // 新增公告
     '/admin/announcements/edit' => ['AdminController', 'editAnnouncement'],     // 編輯公告
+    '/admin/announcements/delete' => ['AdminController', 'deleteAnnouncement'], // 刪除公告 (POST)
+    '/admin/announcements/publish' => ['AdminController', 'publishAnnouncement'], // 發布公告 (POST)
+    '/admin/announcements/unpublish' => ['AdminController', 'unpublishAnnouncement'], // 取消發布 (POST)
 ]; 

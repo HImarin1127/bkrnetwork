@@ -1,10 +1,7 @@
 <?php
 // app/Models/Announcement.php
-// PHP 開始標籤，表示這是一個 PHP 檔案
-// 檔案路徑註解，說明此檔案位置
 
-require_once __DIR__ . '/Model.php';
-// 引入父類別 Model.php，使用 require_once 確保只載入一次
+namespace App\Models;
 
 /**
  * 公告模型
@@ -272,9 +269,37 @@ class Announcement extends Model {
         
         return false;
     }
+
+    /**
+     * 發布公告 (簡化版)
+     */
+    public function publish($id) {
+        return $this->update($id, [
+            'status' => 'published', 
+            'published_at' => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    /**
+     * 取消發布公告 (簡化版)
+     */
+    public function unpublish($id) {
+        return $this->update($id, [
+            'status' => 'draft',
+            'published_at' => null
+        ]);
+    }
+
+    /**
+     * 刪除公告
+     */
+    public function delete($id) {
+        $this->removeAttachment($id);
+        return parent::delete($id);
+    }
     
     /**
-     * 記錄公告操作日誌
+     * 記錄操作日誌
      * 
      * @param int $announcementId 公告ID
      * @param string $action 操作類型 (e.g., 'create', 'update', 'publish', 'unpublish')

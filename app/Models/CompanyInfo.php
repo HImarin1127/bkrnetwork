@@ -1,7 +1,7 @@
 <?php
 // app/Models/CompanyInfo.php
 
-require_once __DIR__ . '/Model.php';
+namespace App\Models;
 
 /**
  * 公司資訊模型
@@ -16,7 +16,7 @@ class CompanyInfo extends Model {
      */
     public function getFloorInfo() {
         $sql = "SELECT * FROM floor_info ORDER BY floor_number DESC";
-        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -26,7 +26,7 @@ class CompanyInfo extends Model {
      */
     public function getDepartmentContacts() {
         $sql = "SELECT * FROM department_contacts ORDER BY floor_number DESC, department_name";
-        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -36,7 +36,7 @@ class CompanyInfo extends Model {
      */
     public function getEmployeeSeats() {
         $sql = "SELECT * FROM employee_seats ORDER BY floor_number DESC, seat_number";
-        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -46,6 +46,6 @@ class CompanyInfo extends Model {
      */
     public function getExtensionNumbers() {
         $sql = "SELECT * FROM extension_numbers ORDER BY extension_number";
-        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 } 

@@ -35,7 +35,7 @@ function formatBytes($bytes, $precision = 2) {
             <!-- 顯示資料夾 -->
             <?php if (!empty($directories)): ?>
                 <?php foreach ($directories as $dir): ?>
-                    <a href="?route=/group-announcements&path=<?php echo urlencode($dir['path']); ?>" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;" target="_blank">
+                    <a href="?route=/group-announcements&path=<?php echo urlencode($dir['path']); ?>" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;">
                         <i class="fas fa-folder fa-fw me-3" style="color: #FFD700; font-size: 1.2rem;"></i>
                         <span><?php echo htmlspecialchars($dir['name']); ?></span>
                     </a>
@@ -45,7 +45,7 @@ function formatBytes($bytes, $precision = 2) {
             <!-- 顯示檔案 -->
             <?php if (!empty($files)): ?>
                 <?php foreach ($files as $file): ?>
-                    <a href="?route=/group-announcements/download&path=<?php echo urlencode($file['path']); ?>" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;" target="_blank">
+                    <a href="?route=/group-announcements/download&path=<?php echo urlencode($file['path']); ?>" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;">
                         <i class="fas <?php 
                             switch ($file['type']) {
                                 case 'pdf': echo 'fa-file-pdf'; break;

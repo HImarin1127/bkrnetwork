@@ -1,76 +1,102 @@
 <?php
-// app/Controllers/MailController.php
-
+/**
+ * MailController.php
+ *
+ * @author     B. R. Network
+ * @copyright  2024 B. R. Network
+ * @license    MIT License
+ * @version    1.0.0
+ * @link       https://www.brnetwork.com
+ * @description 處理所有郵務相關功能的控制器。
+ */
 namespace App\Controllers;
 
-require_once __DIR__ . '/Controller.php';
-require_once __DIR__ . '/../Models/MailRecord.php';
-require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
+use App\Models\MailRecord;
+use App\Middleware\AuthMiddleware;
+use App\Models\User;
 
 /**
- * 郵務控制器
+ * Class MailController
+ *
+ * 處理所有與郵務相關的 HTTP 請求，包括寄件、收件、記錄查詢等。
  * 
- * 處理郵務系統的所有功能，包括：
- * - 寄件登記與管理
- * - 收件登記與管理
- * - 郵資查詢計算
- * - CSV 匯入匯出
- * - 記錄查詢與編輯
- * 
- * 所有方法都需要使用者登入，部分功能需要管理員權限
+ * @package App\Controllers
  */
 class MailController extends Controller {
-    /** @var MailRecord 郵務記錄模型實例 */
+    
+    /**
+     * @var MailRecord 郵件記錄模型的實例。
+     */
     private $mailRecordModel;
     
     /**
-     * 建構函式
+     * MailController 的建構函式。
      * 
-     * 初始化郵務記錄模型
+     * 初始化 MailRecord 模型並設定全域視圖資料。
      */
     public function __construct() {
-        $this->mailRecordModel = new \MailRecord();
+        $this->mailRecordModel = new MailRecord();
         $this->setGlobalViewData();
     }
     
     /**
-     * 寄件登記頁面
+     * 顯示寄件登記表單 (GET) 或處理表單提交 (POST)。
+     *
+     * - GET: 顯示一個空白的寄件登記表單。
+     * - POST: 驗證並儲存新的寄件記錄到資料庫。
      * 
-     * GET：顯示寄件登記表單
-     * POST：處理寄件登記邏輯
-     * 
-     * 功能：
-     * - 表單資料驗證
-     * - 自動生成郵件編號
-     * - 記錄寄件資訊
-     * - 預填寄件者資訊（來自登入使用者）
+     * @return void
      */
     public function request() {
-        // 檢查登入狀態
         AuthMiddleware::requireLogin();
-        
         $this->setGlobalViewData();
-        
         $user = AuthMiddleware::getCurrentUser();
         $errors = [];
         $success = '';
-        
-        // 初始化表單資料，預填使用者資訊
-        $formData = [
-            'mail_type' => '',
-            'receiver_name' => '',
-            'receiver_address' => '',
-            'receiver_phone' => '',
-            // 'declare_department' => $user['department'] ?? '',
-            'sender_name' => $user['name'] ?? $user['username'],
-            'sender_ext' => ''
-        ];
-        
+    
+        // 處理表單提交
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 功能已停用，因為 mail_records 資料表不存在
-            $errors[] = "登記失敗：SQLSTATE[42S02]: 資料表 'bkrnetwork.mail_records' 不存在。此功能已被管理員停用。";
+            $formData = [
+                'mail_type' => $_POST['mail_type'] ?? '',
+                'receiver_name' => $_POST['receiver_name'] ?? '',
+                'receiver_address' => $_POST['receiver_address'] ?? '',
+                'receiver_phone' => $_POST['receiver_phone'] ?? '',
+                'declare_department' => $_POST['declare_department'] ?? '',
+                'sender_name' => $_POST['sender_name'] ?? '',
+                'sender_ext' => $_POST['sender_ext'] ?? '',
+                'item_count' => $_POST['item_count'] ?? 1,
+                'postage' => $_POST['postage'] ?? 0,
+                'tracking_number' => $_POST['tracking_number'] ?? '',
+                'notes' => $_POST['notes'] ?? ''
+            ];
+    
+            // 基本的後端驗證
+            if (empty($formData['mail_type']) || empty($formData['receiver_name']) || empty($formData['receiver_address']) || empty($formData['sender_name'])) {
+                $errors[] = '寄件方式、收件者姓名、收件地址和寄件者姓名為必填欄位。';
+            } else {
+                // 呼叫模型建立記錄
+                $newMailCode = $this->mailRecordModel->createMailRecord($formData, $user['username']);
+                if ($newMailCode) {
+                    $success = "寄件登記成功！您的郵件編號是： " . htmlspecialchars($newMailCode);
+                    // 成功後清空表單數據
+                    $formData = [
+                        'mail_type' => '', 'receiver_name' => '', 'receiver_address' => '', 'receiver_phone' => '',
+                        'declare_department' => '', 'sender_name' => '', 'sender_ext' => '',
+                        'item_count' => 1, 'postage' => 0, 'tracking_number' => '', 'notes' => ''
+                    ];
+                } else {
+                    $errors[] = '登記失敗，無法寫入資料庫。請稍後再試或聯繫管理員。';
+                }
+            }
+        } else {
+            // GET 請求時，準備一個空的表單數據陣列
+            $formData = [
+                'mail_type' => '', 'receiver_name' => '', 'receiver_address' => '', 'receiver_phone' => '',
+                'declare_department' => $user['department'] ?? '', 'sender_name' => '', 'sender_ext' => ''
+            ];
         }
         
+        // 渲染視圖並傳遞所需變數
         $this->view('mail/request', [
             'title' => '寄件登記',
             'formData' => $formData,
@@ -81,342 +107,37 @@ class MailController extends Controller {
     }
     
     /**
-     * 寄件記錄頁面
+     * 顯示寄件記錄列表，支援搜尋和匯出功能。
+     *
+     * - 管理員可以查看所有記錄，一般使用者只能查看自己的記錄。
+     * - 支援關鍵字搜尋。
+     * - 管理員可以將當前結果匯出為 CSV 檔案。
      * 
-     * 顯示寄件記錄列表，支援搜尋和 CSV 匯出
-     * 
-     * 功能：
-     * - 根據使用者權限顯示記錄（管理員看全部，一般使用者看自己的）
-     * - 關鍵字搜尋功能
-     * - CSV 匯出功能（限管理員）
+     * @return void
      */
     public function records() {
         AuthMiddleware::requireLogin();
-        
         $this->setGlobalViewData();
-        
-        // $user = AuthMiddleware::getCurrentUser();
-        // $isAdmin = $user['role'] === 'admin';
-        
-        // // 處理 CSV 匯出請求（僅限管理員）
-        // if ($isAdmin && isset($_GET['export'])) {
-        //     $this->mailModel->exportToCsv();
-        //     return;
-        // }
-        
-        // // 處理搜尋請求
-        // $keyword = trim($_GET['search'] ?? '');
-        // if (!empty($keyword)) {
-        //     // 執行關鍵字搜尋
-        //     $records = $this->mailModel->search($keyword, $user['id'], $isAdmin);
-        // } else {
-        //     // 顯示所有記錄（根據權限過濾）
-        //     $records = $this->mailModel->getByUserId($user['id'], $isAdmin);
-        // }
+        $user = AuthMiddleware::getCurrentUser();
+        $userModel = new User();
+        $isAdmin = $userModel->isAdmin($user['username']);
+    
+        // 如果是管理員且 URL 中有 'export' 參數，則執行匯出
+        if ($isAdmin && isset($_GET['export'])) {
+            $this->mailRecordModel->exportToCsv();
+            return; // 匯出後結束執行
+        }
+    
+        // 根據關鍵字搜尋或獲取列表
+        $keyword = trim($_GET['search'] ?? '');
+        if (!empty($keyword)) {
+            $records = $this->mailRecordModel->search($keyword, $user['username'], $isAdmin);
+        } else {
+            $records = $this->mailRecordModel->getByUsername($user['username'], $isAdmin);
+        }
         
         $this->view('mail/records', [
             'title' => '寄件記錄',
-            'records' => [], // 功能已停用，回傳空陣列
-            'isAdmin' => false,
-            'keyword' => ''
-        ]);
-    }
-    
-    /**
-     * 寄件匯入頁面
-     * 
-     * 提供 CSV 檔案批次匯入功能
-     * 
-     * GET：顯示匯入表單
-     * POST：處理 CSV 檔案匯入
-     * 
-     * 功能：
-     * - 支援 CSV 格式檔案上傳
-     * - 批次驗證和匯入
-     * - 詳細的錯誤報告
-     * - 匯入統計資訊
-     */
-    public function import() {
-        AuthMiddleware::requireLogin();
-        
-        $this->setGlobalViewData();
-        
-        // $user = AuthMiddleware::getCurrentUser();
-        $message = "錯誤：資料表 'bkrnetwork.mail_records' 不存在。此功能已被管理員停用。";
-        $messageType = 'error';
-        
-        $this->view('mail/import', [
-            'title' => '批次匯入寄件資料',
-            'message' => $message,
-            'messageType' => $messageType
-        ]);
-    }
-    
-    /**
-     * 郵資查詢頁面
-     * 
-     * 提供郵資計算功能
-     * 
-     * GET：顯示郵資查詢表單
-     * POST：計算郵資費用
-     * 
-     * 功能：
-     * - 支援多種寄件方式的費率查詢
-     * - 根據重量和目的地計算郵資
-     * - 提供常用郵資費率表
-     */
-    public function postage() {
-        // 定義郵資查詢頁面方法
-        AuthMiddleware::requireLogin();
-        // 確保使用者已登入
-        
-        $this->setGlobalViewData();
-        // 設定全域視圖資料
-        
-        // 預設郵資費率表（可擴充為從資料庫或 API 取得）
-        $postageRates = [
-            // 郵資費率設定，依寄件方式和目的地分類
-            '掛號' => [
-                '本島' => 33,      // 台灣本島掛號郵資
-                '離島' => 38       // 離島地區掛號郵資
-            ],
-            '黑貓' => [
-                '常溫' => 65,      // 黑貓宅急便常溫配送
-                '冷藏' => 90,      // 黑貓宅急便冷藏配送
-                '冷凍' => 120      // 黑貓宅急便冷凍配送
-            ],
-            '新竹貨運' => [
-                '一般' => 80,      // 新竹貨運一般配送
-                '快遞' => 120      // 新竹貨運快遞服務
-            ]
-        ];
-        // 郵資費率表設定結束
-        
-        $result = null;
-        // 初始化查詢結果
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 處理 POST 請求（郵資計算）
-            // 取得查詢參數
-            $mailType = $_POST['mail_type'] ?? '';
-            // 寄件方式
-            $destination = $_POST['destination'] ?? '';
-            // 目的地類型
-            $weight = floatval($_POST['weight'] ?? 0);
-            // 包裹重量（公斤）
-            
-            if ($mailType && $destination) {
-                // 檢查寄件方式和目的地是否都有輸入
-                $baseRate = $postageRates[$mailType][$destination] ?? 0;
-                // 取得基本費率
-                if ($baseRate > 0) {
-                    // 如果找到有效的費率
-                    $result = [
-                        // 建立查詢結果陣列
-                        'mail_type' => $mailType,
-                        'destination' => $destination,
-                        'weight' => $weight,
-                        'base_rate' => $baseRate,
-                        'total_rate' => $this->calculatePostage($baseRate, $weight, $mailType)
-                        // 呼叫郵資計算方法
-                    ];
-                    // 查詢結果陣列結束
-                }
-                // 費率檢查結束
-            }
-            // 參數檢查結束
-        }
-        // POST 請求處理結束
-        
-        $this->view('mail/postage', [
-            // 載入郵資查詢頁面視圖
-            'title' => '郵資查詢',
-            'postageRates' => $postageRates,
-            'result' => $result
-        ]);
-        // 視圖載入結束
-    }
-    
-    /**
-     * 編輯寄件記錄
-     */
-    public function edit() {
-        // 定義編輯寄件記錄頁面方法
-        AuthMiddleware::requireLogin();
-        // 確保使用者已登入
-        
-        $id = $_GET['id'] ?? 0;
-        // 取得要編輯的記錄 ID
-        $user = AuthMiddleware::getCurrentUser();
-        // 取得當前登入使用者資訊
-        $isAdmin = $user['role'] === 'admin';
-        // 檢查是否為管理員
-        
-        // 檢查權限
-        if (!$this->mailRecordModel->checkPermission($id, $user['id'], $isAdmin)) {
-            // 使用郵務模型檢查使用者是否有權限編輯此記錄
-            $this->redirect(BASE_URL . 'mail/records?error=權限不足');
-            // 無權限時重新導向到記錄列表頁面
-            return;
-        }
-        // 權限檢查結束
-        
-        $record = $this->mailRecordModel->find($id);
-        // 從資料庫取得要編輯的記錄
-        if (!$record) {
-            // 檢查記錄是否存在
-            $this->redirect(BASE_URL . 'mail/records?error=記錄不存在');
-            // 記錄不存在時重新導向
-            return;
-        }
-        // 記錄存在性檢查結束
-        
-        // 只有草稿狀態才能編輯
-        if ($record['status'] !== '草稿' && !$isAdmin) {
-            // 非管理員只能編輯草稿狀態的記錄
-            $this->redirect(BASE_URL . 'mail/records?error=只有草稿狀態的記錄才能編輯');
-            return;
-        }
-        // 狀態檢查結束
-        
-        $this->setGlobalViewData();
-        // 設定全域視圖資料
-        
-        $errors = [];
-        // 初始化錯誤訊息陣列
-        $success = '';
-        // 初始化成功訊息
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 處理 POST 請求（表單提交）
-            $updateData = [
-                // 準備要更新的資料陣列
-                'mail_type' => trim($_POST['mail_type'] ?? ''),
-                'receiver_name' => trim($_POST['receiver_name'] ?? ''),
-                'receiver_address' => trim($_POST['receiver_address'] ?? ''),
-                'receiver_phone' => trim($_POST['receiver_phone'] ?? ''),
-                'declare_department' => trim($_POST['declare_department'] ?? ''),
-                'sender_name' => trim($_POST['sender_name'] ?? ''),
-                'sender_ext' => trim($_POST['sender_ext'] ?? ''),
-                'notes' => trim($_POST['notes'] ?? '')
-            ];
-            // 更新資料陣列結束
-            
-            // 驗證資料
-            if (empty($updateData['mail_type'])) $errors[] = '請選擇寄件方式';
-            if (empty($updateData['receiver_name'])) $errors[] = '請填寫收件者姓名';
-            if (empty($updateData['receiver_address'])) $errors[] = '請填寫收件地址';
-            // 基本必填欄位驗證
-            
-            if (empty($errors)) {
-                // 如果沒有驗證錯誤
-                try {
-                    $this->mailRecordModel->update($id, $updateData);
-                    // 呼叫郵務模型更新記錄
-                    $success = '記錄更新成功！';
-                    // 設定成功訊息
-                    
-                    // 重新載入記錄
-                    $record = $this->mailRecordModel->find($id);
-                    // 取得更新後的記錄資料
-                } catch (Exception $e) {
-                    // 捕獲更新過程中的例外
-                    $errors[] = '更新失敗：' . $e->getMessage();
-                    // 加入錯誤訊息
-                }
-                // 例外處理結束
-            }
-            // 錯誤檢查結束
-        }
-        // POST 請求處理結束
-        
-        $this->view('mail/edit', [
-            // 載入編輯頁面視圖
-            'title' => '編輯寄件記錄',
-            'record' => $record,
-            'errors' => $errors,
-            'success' => $success,
-            'isAdmin' => $isAdmin
-        ]);
-        // 視圖載入結束
-    }
-    
-    /**
-     * 刪除寄件記錄
-     */
-    public function delete() {
-        // 定義刪除寄件記錄方法
-        AuthMiddleware::requireLogin();
-        // 確保使用者已登入
-        
-        $id = $_POST['id'] ?? 0;
-        // 取得要刪除的記錄 ID（來自 POST 請求）
-        $user = AuthMiddleware::getCurrentUser();
-        // 取得當前登入使用者資訊
-        $isAdmin = $user['role'] === 'admin';
-        // 檢查是否為管理員
-        
-        // 檢查權限
-        if (!$this->mailRecordModel->checkPermission($id, $user['id'], $isAdmin)) {
-            // 使用郵務模型檢查刪除權限
-            $this->json(['success' => false, 'message' => '權限不足']);
-            // 回傳 JSON 錯誤回應
-            return;
-        }
-        // 權限檢查結束
-        
-        $record = $this->mailRecordModel->find($id);
-        // 從資料庫取得要刪除的記錄
-        if (!$record) {
-            // 檢查記錄是否存在
-            $this->json(['success' => false, 'message' => '記錄不存在']);
-            // 回傳 JSON 錯誤回應
-            return;
-        }
-        // 記錄存在性檢查結束
-        
-        // 只有草稿狀態才能刪除
-        if ($record['status'] !== '草稿' && !$isAdmin) {
-            // 非管理員只能刪除草稿狀態的記錄
-            $this->json(['success' => false, 'message' => '只有草稿狀態的記錄才能刪除']);
-            return;
-        }
-        // 狀態檢查結束
-        
-        try {
-            $this->mailRecordModel->delete($id);
-            $this->json(['success' => true, 'message' => '記錄已刪除']);
-        } catch (Exception $e) {
-            $this->json(['success' => false, 'message' => '刪除失敗：' . $e->getMessage()]);
-        }
-    }
-    
-    /**
-     * 寄件查詢頁面（只顯示寄件記錄）
-     */
-    public function outgoingRecords() {
-        AuthMiddleware::requireLogin();
-        
-        $this->setGlobalViewData();
-        
-        $user = AuthMiddleware::getCurrentUser();
-        $isAdmin = $user['role'] === 'admin';
-        
-        // 處理 CSV 匯出
-        if ($isAdmin && isset($_GET['export'])) {
-            $this->mailRecordModel->exportToCsv();
-            return;
-        }
-        
-        // 處理搜尋
-        $keyword = trim($_GET['search'] ?? '');
-        if (!empty($keyword)) {
-            $records = $this->mailRecordModel->search($keyword, $user['id'], $isAdmin);
-        } else {
-            $records = $this->mailRecordModel->getByUserId($user['id'], $isAdmin);
-        }
-        
-        $this->view('mail/outgoing-records', [
-            'title' => '寄件查詢',
             'records' => $records,
             'isAdmin' => $isAdmin,
             'keyword' => $keyword
@@ -424,156 +145,293 @@ class MailController extends Controller {
     }
     
     /**
-     * 收件登記頁面
+     * 顯示批次匯入頁面 (GET) 或處理 CSV 檔案上傳 (POST)。
+     *
+     * - POST: 處理上傳的 CSV 檔案，並將資料批次寫入資料庫。
+     * 
+     * @return void
      */
-    public function incomingRegister() {
+    public function import() {
         AuthMiddleware::requireLogin();
-        
         $this->setGlobalViewData();
-        
         $user = AuthMiddleware::getCurrentUser();
+        $message = '';
+        $messageType = '';
+    
+        // 處理檔案上傳
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csv_file'])) {
+            $file = $_FILES['csv_file'];
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                // 呼叫模型處理批次匯入
+                $result = $this->mailRecordModel->batchImport($file['tmp_name'], $user['username']);
+                $message = "匯入完成！成功匯入 {$result['imported']} 筆記錄。";
+                $messageType = 'success';
+                // 如果有錯誤，附加錯誤資訊
+                if (!empty($result['errors'])) {
+                    $message .= " 但有以下錯誤發生：<br>" . implode('<br>', $result['errors']);
+                    $messageType = 'warning';
+                }
+            } else {
+                $message = '檔案上傳失敗，請檢查檔案或伺服器設定。';
+                $messageType = 'error';
+            }
+        }
+        
+        $this->view('mail/import', [
+            'title' => '批次匯入寄件資料',
+            'message' => $message,
+            'messageType' => $messageType
+        ]);
+    }
+
+    /**
+     * 顯示編輯寄件記錄表單 (GET) 或處理更新 (POST)。
+     *
+     * - 驗證使用者是否有權限編輯該筆記錄。
+     * - POST: 根據提交的資料更新資料庫中的記錄。
+     * 
+     * @return void
+     */
+    public function edit() {
+        AuthMiddleware::requireLogin();
+        $this->setGlobalViewData();
+        $user = AuthMiddleware::getCurrentUser();
+        $userModel = new User();
+        $isAdmin = $userModel->isAdmin($user['username']);
+        $mailCode = $_GET['mail_code'] ?? null;
+
+        // 必須提供郵件編號
+        if (!$mailCode) {
+            $this->redirect('/mail/records');
+            return;
+        }
+
+        // 權限檢查
+        if (!$this->mailRecordModel->checkPermission($mailCode, $user['username'], $isAdmin)) {
+            $_SESSION['error_message'] = '找不到該筆記錄或您沒有權限編輯。';
+            $this->redirect('/mail/records');
+            return;
+        }
+
+        $record = $this->mailRecordModel->find($mailCode);
         $errors = [];
         $success = '';
+
+        // 處理表單提交
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $updatedData = $_POST;
+            unset($updatedData['mail_code']); // 防止郵件編號被修改
+
+            if ($this->mailRecordModel->updateByMailCode($mailCode, $updatedData)) {
+                $success = '紀錄更新成功！';
+                $record = $this->mailRecordModel->find($mailCode); // 重新獲取更新後的資料
+            } else {
+                $errors[] = '更新失敗，請再試一次。';
+            }
+        }
+
+        $this->view('mail/edit', [
+            'title' => '編輯寄件記錄',
+            'record' => $record,
+            'errors' => $errors,
+            'success' => $success
+        ]);
+    }
+    
+    /**
+     * 處理刪除寄件記錄的請求 (POST)。
+     *
+     * - 驗證使用者權限。
+     * - 根據提供的郵件編號刪除記錄。
+     * 
+     * @return void
+     */
+    public function delete() {
+        AuthMiddleware::requireLogin();
+        $user = AuthMiddleware::getCurrentUser();
+        $userModel = new User();
+        $isAdmin = $userModel->isAdmin($user['username']);
+        $mailCode = $_POST['mail_code'] ?? null;
+
+        // 必須提供郵件編號
+        if (!$mailCode) {
+            $_SESSION['error_message'] = '未指定要刪除的紀錄。';
+            $this->redirect('/mail/records');
+            return;
+        }
+
+        // 權限檢查
+        if ($this->mailRecordModel->checkPermission($mailCode, $user['username'], $isAdmin)) {
+            if ($this->mailRecordModel->deleteByMailCode($mailCode)) {
+                $_SESSION['success_message'] = '紀錄 ' . htmlspecialchars($mailCode) . ' 已成功刪除。';
+            } else {
+                $_SESSION['error_message'] = '刪除失敗。';
+            }
+        } else {
+            $_SESSION['error_message'] = '您沒有權限刪除此記錄。';
+        }
+
+        $this->redirect('/mail/records');
+    }
+    
+    /**
+     * 顯示郵資查詢頁面 (GET) 或處理查詢計算 (POST)。
+     *
+     * @return void
+     */
+    public function postage() {
+        AuthMiddleware::requireLogin();
+        $this->setGlobalViewData();
         
-        // 初始化表單資料
-        $formData = [
-            'tracking_number' => '',
-            'mail_type' => '',
-            'sender_name' => '',
-            'sender_company' => '',
-            'recipient_name' => '',
-            'recipient_department' => '',
-            'received_date' => date('Y-m-d'),
-            'received_time' => date('H:i'),
-            'content_description' => '',
-            'urgent' => 0,
-            'notes' => ''
+        // 定義郵資費率表
+        $postageRates = [
+            '掛號' => ['本島' => 33, '離島' => 38],
+            '黑貓' => ['常溫' => 65, '冷藏' => 90, '冷凍' => 120],
+            '新竹貨運' => ['一般' => 80, '快遞' => 120]
         ];
         
+        $result = null;
+        // 處理查詢請求
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // 取得表單資料
-            $formData = [
-                'tracking_number' => trim($_POST['tracking_number'] ?? ''),
-                'mail_type' => trim($_POST['mail_type'] ?? ''),
-                'sender_name' => trim($_POST['sender_name'] ?? ''),
-                'sender_company' => trim($_POST['sender_company'] ?? ''),
-                'recipient_name' => trim($_POST['recipient_name'] ?? ''),
-                'recipient_department' => trim($_POST['recipient_department'] ?? ''),
-                'received_date' => trim($_POST['received_date'] ?? ''),
-                'received_time' => trim($_POST['received_time'] ?? ''),
-                'content_description' => trim($_POST['content_description'] ?? ''),
-                'urgent' => intval($_POST['urgent'] ?? 0),
-                'notes' => trim($_POST['notes'] ?? '')
-            ];
+            $mailType = $_POST['mail_type'] ?? '';
+            $destination = $_POST['destination'] ?? '';
+            $weight = floatval($_POST['weight'] ?? 0);
             
-            // 驗證資料
-            if (empty($formData['mail_type'])) $errors[] = '請選擇郵件類型';
-            if (empty($formData['sender_name'])) $errors[] = '請填寫寄件者姓名';
-            if (empty($formData['recipient_name'])) $errors[] = '請填寫收件者姓名';
-            if (empty($formData['received_date'])) $errors[] = '請選擇收件日期';
-            
-            if (empty($errors)) {
-                try {
-                    $formData['registrar_id'] = $user['id'];
-                    $formData['status'] = '已收件';
-                    $recordId = $this->mailRecordModel->createIncomingRecord($formData);
-                    
-                    if ($recordId) {
-                        $success = "收件已登記成功！登記編號：<strong>IN-{$recordId}</strong>";
-                        
-                        // 重置表單
-                        $formData = [
-                            'tracking_number' => '',
-                            'mail_type' => '',
-                            'sender_name' => '',
-                            'sender_company' => '',
-                            'recipient_name' => '',
-                            'recipient_department' => '',
-                            'received_date' => date('Y-m-d'),
-                            'received_time' => date('H:i'),
-                            'content_description' => '',
-                            'urgent' => 0,
-                            'notes' => ''
-                        ];
-                    }
-                } catch (Exception $e) {
-                    $errors[] = '登記失敗：' . $e->getMessage();
+            if ($mailType && $destination) {
+                $baseRate = $postageRates[$mailType][$destination] ?? 0;
+                if ($baseRate > 0) {
+                    $result = [
+                        'mail_type' => $mailType,
+                        'destination' => $destination,
+                        'weight' => $weight,
+                        'base_rate' => $baseRate,
+                        'total_rate' => $this->calculatePostage($baseRate, $weight, $mailType)
+                    ];
                 }
             }
         }
         
-        $this->view('mail/incoming-register', [
-            'title' => '收件登記',
-            'formData' => $formData,
-            'errors' => $errors,
-            'success' => $success,
-            'registrarName' => $user['name'] ?? $user['username']
+        $this->view('mail/postage', [
+            'title' => '郵資查詢',
+            'postageRates' => $postageRates,
+            'result' => $result
         ]);
     }
     
     /**
-     * 收件查詢頁面
+     * 顯示外寄郵件記錄 (功能與 records() 相似)。
+     * 
+     * @todo 可考慮與 records() 合併以減少重複程式碼。
+     * @return void
+     */
+    public function outgoingRecords() {
+        AuthMiddleware::requireLogin();
+        $user = AuthMiddleware::getCurrentUser();
+        $userModel = new User();
+        $isAdmin = $userModel->isAdmin($user['username']);
+        $this->setGlobalViewData();
+        
+        $keyword = trim($_GET['search'] ?? '');
+        if (!empty($keyword)) {
+            $records = $this->mailRecordModel->search($keyword, $user['username'], $isAdmin);
+        } else {
+            $records = $this->mailRecordModel->getByUsername($user['username'], $isAdmin);
+        }
+        
+        $this->view('mail/outgoing-records', [
+            'title' => '外寄郵件記錄',
+            'records' => $records,
+            'isAdmin' => $isAdmin,
+            'keyword' => $keyword
+        ]);
+    }
+    
+    /**
+     * 顯示收件登記表單 (GET) 或處理登記 (POST)。
+     * 
+     * @return void
+     */
+    public function incomingRegister() {
+        AuthMiddleware::requireLogin();
+        $user = AuthMiddleware::getCurrentUser();
+        $this->setGlobalViewData();
+        $errors = [];
+        $success = '';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'recipient_id' => $_POST['recipient_id'],
+                'sender_info' => $_POST['sender_info'],
+                'mail_type' => $_POST['mail_type'],
+                'notes' => $_POST['notes'],
+                'registered_by' => $user['id']
+            ];
+
+            if ($this->mailRecordModel->createIncomingRecord($data)) {
+                $success = '收件登記成功！';
+            } else {
+                $errors[] = '登記失敗。';
+            }
+        }
+
+        // TODO: 需實作 User 模型來獲取使用者列表，以供前端選擇收件人
+        // $userModel = new \App\Models\User();
+        // $users = $userModel->findAll();
+
+        $this->view('mail/incoming-register', [
+            'title' => '收件登記',
+            'errors' => $errors,
+            'success' => $success,
+            'users' => [] // 暫時傳遞空陣列
+        ]);
+    }
+
+    /**
+     * 顯示收件記錄列表，並支援篩選。
+     * 
+     * @return void
      */
     public function incomingRecords() {
         AuthMiddleware::requireLogin();
-        
+        $user = AuthMiddleware::getCurrentUser();
+        $userModel = new User();
+        $isAdmin = $userModel->isAdmin($user['username']);
         $this->setGlobalViewData();
         
-        $user = AuthMiddleware::getCurrentUser();
-        $isAdmin = $user['role'] === 'admin';
+        $filters = [
+            'startDate' => $_GET['start_date'] ?? '',
+            'endDate' => $_GET['end_date'] ?? '',
+            'status' => $_GET['status'] ?? '',
+            'keyword' => $_GET['keyword'] ?? ''
+        ];
         
-        // 處理搜尋
-        $keyword = trim($_GET['search'] ?? '');
-        $dateFrom = trim($_GET['date_from'] ?? '');
-        $dateTo = trim($_GET['date_to'] ?? '');
-        $status = trim($_GET['status'] ?? '');
-        
-        $filters = compact('keyword', 'dateFrom', 'dateTo', 'status');
-        
-        if (!empty($keyword) || !empty($dateFrom) || !empty($dateTo) || !empty($status)) {
-            $records = $this->mailRecordModel->searchIncomingRecords($filters, $user['id'], $isAdmin);
-        } else {
-            $records = $this->mailRecordModel->getIncomingRecords($user['id'], $isAdmin);
-        }
+        $records = $this->mailRecordModel->searchIncomingRecords($filters, $user['username'], $isAdmin);
         
         $this->view('mail/incoming-records', [
-            'title' => '收件查詢',
+            'title' => '收件記錄',
             'records' => $records,
-            'isAdmin' => $isAdmin,
             'filters' => $filters
         ]);
     }
-    
+
     /**
-     * 計算郵資費用
+     * 根據基本費率、重量和郵件類型計算總郵資。
+     *
+     * @param float $baseRate 基本費率
+     * @param float $weight 重量
+     * @param string $mailType 郵件類型
+     * @return float 計算後的總郵資
      */
     private function calculatePostage($baseRate, $weight, $mailType) {
-        // 基本郵資計算邏輯
-        $totalRate = $baseRate;
-        
-        // 根據重量計算額外費用
-        if ($weight > 1) {
-            switch ($mailType) {
-                case '掛號':
-                    // 每超過 100g 加收 5 元
-                    $extraWeight = ceil(($weight - 1) * 10); // 假設輸入的是公斤，轉換為 100g 單位
-                    $totalRate += $extraWeight * 5;
-                    break;
-                    
-                case '黑貓':
-                    // 每公斤加收 20 元
-                    $extraWeight = ceil($weight - 1);
-                    $totalRate += $extraWeight * 20;
-                    break;
-                    
-                case '新竹貨運':
-                    // 每公斤加收 15 元
-                    $extraWeight = ceil($weight - 1);
-                    $totalRate += $extraWeight * 15;
-                    break;
-            }
+        // 1公斤內以基本費率計算
+        if ($weight <= 1) return $baseRate;
+
+        // 黑貓：續重每公斤加 20 元
+        if ($mailType === '黑貓') {
+            return $baseRate + ceil($weight - 1) * 20;
         }
-        
-        return $totalRate;
+
+        // 其他 (掛號、新竹貨運)：續重每公斤加 15 元
+        return $baseRate + ceil($weight - 1) * 15;
     }
-} 
+}

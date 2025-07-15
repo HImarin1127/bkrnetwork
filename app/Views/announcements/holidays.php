@@ -1,10 +1,12 @@
 <?php
-// 載入假日行事曆模型
-require_once __DIR__ . '/../../Models/Database.php';
-require_once __DIR__ . '/../../Models/Model.php';
-require_once __DIR__ . '/../../Models/HolidayCalendar.php';
+// 這個檔案現在只負責顯示資料，所有的業務邏輯都已移至 HomeController。
 
-$holidayCalendar = new HolidayCalendar();
+$pageTitle = "假日資訊";
+//$breadcrumb = [
+    //'首頁' => '/bkrnetwork/home',
+    //'公告區' => '/bkrnetwork/announcements',
+    //'假日資訊' => '/bkrnetwork/holidays'
+//];
 ?>
 
 <style>
@@ -263,122 +265,50 @@ $holidayCalendar = new HolidayCalendar();
     }
 </style>
 
-<!-- 麵包屑導航 -->
-<div class="breadcrumb">
-    <a href="/">首頁</a> / <a href="/announcements">公告區</a> / 假日資訊
-</div>
-
-<!-- 頁面標題 -->
-<div class="page-header">
-    <h1>🗓️ 假日資訊</h1>
-    <p>中華民國114年（西元2025年）政府行政機關辦公日曆表</p>
-</div>
-
-<!-- 顯示完整行事曆 -->
-<div class="calendar-container">
-    <?php
-    $holidays = $holidayCalendar->getHolidayCalendar(2025);
-    
-    // 建立假日對照表
-    $holidayMap = [];
-    foreach ($holidays as $holiday) {
-        $key = sprintf('%02d-%02d', $holiday['month'], $holiday['day']);
-        $holidayMap[$key] = $holiday['name'];
-    }
-    ?>
-
-    <div class="holiday-calendar">
-        <h3>中華民國114年（西元2025年）政府行政機關辦公日曆表</h3>
+<div class="main-layout">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <!--<li class="breadcrumb-item"><a href="/bkrnetwork/home">首頁</a></li>
+                <li class="breadcrumb-item"><a href="/bkrnetwork/announcements">公告區</a></li>-->
+                <!--<li class="breadcrumb-item active" aria-current="page">假日資訊</li>-->
+            </ol>
+        </nav>
         
-        <div class="calendar-grid">
-            <?php
-            $monthNames = [
-                1 => '一', 2 => '二', 3 => '三', 4 => '四', 5 => '五', 6 => '六',
-                7 => '七', 8 => '八', 9 => '九', 10 => '十', 11 => '十一', 12 => '十二'
-            ];
-            
-            for ($month = 1; $month <= 12; $month++) {
-                $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, 2025);
-                $firstDayOfWeek = date('w', mktime(0, 0, 0, $month, 1, 2025));
-                ?>
-                <div class="month-calendar">
-                    <h4><?php echo $monthNames[$month]; ?>月</h4>
-                    <table class="calendar-table">
-                        <tr>
-                            <th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th>
-                        </tr>
-                        <?php
-                        $day = 1;
-                        for ($week = 0; $week < 6; $week++) {
-                            echo '<tr>';
-                            for ($dayOfWeek = 0; $dayOfWeek < 7; $dayOfWeek++) {
-                                if (($week == 0 && $dayOfWeek < $firstDayOfWeek) || $day > $daysInMonth) {
-                                    echo '<td class="empty-day"></td>';
-                                } else {
-                                    $dateKey = sprintf('%02d-%02d', $month, $day);
-                                    $isHoliday = isset($holidayMap[$dateKey]);
-                                    $isWeekend = ($dayOfWeek == 0 || $dayOfWeek == 6);
-                                    
-                                    $class = 'calendar-day';
-                                    if ($isHoliday || $isWeekend) {
-                                        $class .= ' holiday';
-                                    }
-                                    
-                                    echo '<td class="' . $class . '">';
-                                    echo '<div class="day-number">' . $day . '</div>';
-                                    if ($isHoliday) {
-                                        echo '<div class="holiday-name">' . htmlspecialchars($holidayMap[$dateKey]) . '</div>';
-                                    } elseif ($isWeekend) {
-                                        echo '<div class="holiday-name">休假</div>';
-                                    }
-                                    echo '</td>';
-                                    $day++;
-                                }
-                            }
-                            echo '</tr>';
-                            
-                            if ($day > $daysInMonth) break;
-                        }
-                        ?>
-                    </table>
-                </div>
-                <?php
-            }
-            ?>
+        <div class="page-header">
+            <h1><?= isset($title) ? htmlspecialchars($title) : '假日資訊' ?></h1>
+            <p>人事行政總處政府行政機關辦公日曆表</p>
         </div>
 
-        <div class="calendar-legend">
-            <div class="legend-item">
-                <span class="holiday-color"></span>
-                <span>放假日</span>
-            </div>
-            <div class="legend-item">
-                <span class="workday-color"></span>
-                <span>上班日</span>
+        <div class="holiday-calendar">
+            <?php if (isset($calendarHtml) && !empty($calendarHtml)): ?>
+                <?= $calendarHtml ?>
+            <?php else: ?>
+                <p>無法載入年度行事曆。</p>
+            <?php endif; ?>
+        </div>
+        
+        <div class="update-info">
+            <p>資料來源：行政院人事行政總處。最後更新時間：<?= date('Y-m-d') ?></p>
+        </div>
+        
+        <?php if (isset($holidays) && !empty($holidays)): ?>
+        <div class="holiday-list">
+            <h4><?= date('Y') ?>年 國定假日列表</h4>
+            <div class="holiday-items">
+                <?php if (!empty($holidays)): ?>
+                    <?php foreach ($holidays as $holiday): ?>
+                        <?php if (isset($holiday['type']) && $holiday['type'] === 'holiday'): ?>
+                            <div class="holiday-item">
+                                <div class="holiday-date"><?php echo date('n月j日', strtotime($holiday['date'])); ?></div>
+                                <div class="holiday-desc"><?php echo htmlspecialchars($holiday['name']); ?></div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
-    </div>
-
-    <!-- 假日清單 -->
-    <div class="holiday-list">
-        <h4>📅 2025年國定假日一覽表</h4>
-        <div class="holiday-items">
-            <?php foreach ($holidays as $holiday): ?>
-                <div class="holiday-item">
-                    <div class="holiday-date">
-                        <?php echo $holiday['month']; ?>月<?php echo $holiday['day']; ?>日
-                    </div>
-                    <div class="holiday-desc">
-                        <?php echo htmlspecialchars($holiday['name']); ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-
-    <div class="update-info">
-        <p>📌 資料來源：行政院人事行政總處</p>
-        <p>🔄 最後更新：<?php echo date('Y年m月d日 H:i'); ?></p>
-        <p>⚠️ 實際放假日期請以政府最新公告為準</p>
+        <?php endif; ?>
+        
     </div>
 </div> 

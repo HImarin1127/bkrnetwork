@@ -1,7 +1,7 @@
 <div class="guide-container">
     <div class="page-header">
-        <h1>Windows 操作指引</h1>
-        <p class="page-subtitle">Windows 系統基本操作與常見問題解決方案</p>
+        <h1>�� Windows 操作指引</h1>
+        <p class="page-subtitle">🪟 Windows 系統基本操作與常見問題解決方案</p>
     </div>
 
     <div class="guide-content">

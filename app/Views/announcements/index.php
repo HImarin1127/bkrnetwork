@@ -2,7 +2,7 @@
     <div class="header-content">
         <div class="header-info">
             <h1 class="page-title">📢 最新公告中心</h1>
-            <p class="page-subtitle">掌握讀書共和國第一手資訊與重要通知</p>
+            <!--<p class="page-subtitle">掌握讀書共和國第一手資訊與重要通知</p>-->
         </div>
         <?php if ($canManageAnnouncements): ?>
         <div class="header-actions">
@@ -12,32 +12,6 @@
             </a>
         </div>
         <?php endif; ?>
-    </div>
-</div>
-
-<div class="announcement-stats content-card">
-    <div class="stats-grid">
-        <div class="stat-item">
-            <div class="stat-icon">📊</div>
-            <div class="stat-info">
-                <span class="stat-number"><?php echo count($announcements); ?></span>
-                <span class="stat-label">則公告</span>
-            </div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon">⏰</div>
-            <div class="stat-info">
-                <span class="stat-number"><?php echo !empty($announcements) ? date('m/d', strtotime($announcements[0]['created_at'])) : '--'; ?></span>
-                <span class="stat-label">最新更新</span>
-            </div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-info">
-                <span class="stat-number"><?php echo array_filter($announcements, function($a) { return $a['type'] === 'general'; }) ? count(array_filter($announcements, function($a) { return $a['type'] === 'general'; })) : 0; ?></span>
-                <span class="stat-label">重要公告</span>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -51,7 +25,7 @@
                     $typeConfig = [
                         'general' => ['icon' => '📌', 'label' => '一般公告', 'class' => 'type-general'],
                         'holiday' => ['icon' => '🎉', 'label' => '假日公告', 'class' => 'type-holiday'],
-                        'handbook' => ['icon' => '📚', 'label' => '員工手冊', 'class' => 'type-handbook']
+                        //'handbook' => ['icon' => '📚', 'label' => '員工手冊', 'class' => 'type-handbook']
                     ];
                     $config = $typeConfig[$announcement['type']] ?? $typeConfig['general'];
                     ?>
@@ -66,7 +40,6 @@
                     </span>
                 </div>
             </div>
-            
             <div class="card-body">
                 <h3 class="announcement-title">
                     <?php if ($index === 0): ?>
@@ -139,13 +112,13 @@
     </div>
 <?php endif; ?>
 
-<div class="content-card">
+<!--<div class="content-card">
     <div class="quick-nav">
         <div class="nav-header">
-            <h3>🚀 快速導航</h3>
-            <p>探索更多公告類型與資源</p>
+            <!--<h3>🚀 快速導航</h3>-->
+            <!--<p>探索更多公告類型與資源</p>-->
         </div>
-        <div class="nav-grid">
+        <!--<div class="nav-grid">
             <a href="<?php echo $baseUrl; ?>announcements/holidays" class="nav-card">
                 <div class="nav-icon">🎉</div>
                 <div class="nav-content">
@@ -154,17 +127,17 @@
                 </div>
                 <div class="nav-arrow">→</div>
             </a>
-            
-            <a href="<?php echo $baseUrl; ?>announcements/handbook" class="nav-card">
+        -->
+            <!-- <a href="<?php echo $baseUrl; ?>announcements/handbook" class="nav-card">
                 <div class="nav-icon">📚</div>
                 <div class="nav-content">
                     <h4>員工手冊</h4>
                     <p>重要規章制度與操作指南</p>
                 </div>
                 <div class="nav-arrow">→</div>
-            </a>
+            </a>-->
             
-            <a href="<?php echo $baseUrl; ?>/" class="nav-card">
+        <!--    <a href="<?php echo $baseUrl; ?>/" class="nav-card">
                 <div class="nav-icon">🏠</div>
                 <div class="nav-content">
                     <h4>返回首頁</h4>
@@ -172,9 +145,9 @@
                 </div>
                 <div class="nav-arrow">→</div>
             </a>
-        </div>
+        </div>-->
     </div>
-</div>
+</div>-->
 
 <style>
 /* 頁面標題區域 */

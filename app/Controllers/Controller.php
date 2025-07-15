@@ -1,23 +1,39 @@
 <?php
-// app/Controllers/Controller.php
-
+/**
+ * Controller.php
+ *
+ * @author     B. R. Network
+ * @copyright  2024 B. R. Network
+ * @license    MIT License
+ * @version    1.0.0
+ * @link       https://www.brnetwork.com
+ * @description 所有控制器的基礎類別，提供共用的輔助函式。
+ */
 namespace App\Controllers;
 
+use App\Middleware\AuthMiddleware;
+use App\Models\User;
+use Exception;
+
 /**
- * 基礎控制器類別
+ * Class Controller
  * 
- * 處理所有控制器的共用邏輯，例如視圖載入、重新導向和使用者驗證
- * 透過提供一組通用的工具方法，簡化子控制器的開發
+ * 作為應用程式中所有控制器的父類別。
+ * 它提供了視圖載入、HTTP 重新導向、JSON 回應以及使用者狀態檢查等常用功能。
+ *
+ * @package App\Controllers
  */
 abstract class Controller {
-    /** @var array 儲存傳遞給視圖的資料 */
+    /** 
+     * @var array 用於儲存將傳遞給視圖的資料。
+     */
     protected $viewData = [];
     
     /**
-     * 建構函式
-     * 
-     * 初始化控制器，設定全域視圖資料
-     * 自動設定所有頁面都需要的共用變數，例如使用者資訊、登入狀態等
+     * Controller 的建構函式。
+     *
+     * - 確保 session 已啟動。
+     * - 呼叫 setGlobalViewData() 來設定所有視圖都需要的共用變數。
      */
     public function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
@@ -27,58 +43,52 @@ abstract class Controller {
     }
     
     /**
-     * 載入視圖
+     * 載入並渲染一個視圖檔案，可選擇性地使用佈局。
      * 
-     * 載入指定的視圖檔案並使用佈局包裝輸出
-     * 支援資料傳遞和佈局系統
-     * 
-     * @param string $view 視圖檔案路徑（相對於 Views/ 目錄）
-     * @param array $data 要傳遞給視圖的資料陣列
-     * @param string|null $layout 佈局檔案路徑，null 表示不使用佈局
-     * @throws Exception 當視圖或佈局檔案不存在時拋出例外
+     * @param string $view   視圖檔案的路徑 (相對於 /app/Views)。
+     * @param array  $data   要傳遞給視圖的鍵值對陣列。
+     * @param string $layout 要使用的佈局檔案路徑 (預設為 'layouts/app')。傳入 null 則不使用佈局。
+     * @return void
+     * @throws Exception 如果視圖或佈局檔案不存在，則拋出例外。
      */
     protected function view($view, $data = [], $layout = 'layouts/app') {
-        // 合併新資料到現有視圖資料中
         $this->viewData = array_merge($this->viewData, $data);
         
-        // 提取變數到視圖中，讓視圖可以直接使用變數名稱
+        // 使用 extract 將 $viewData 中的鍵轉換為可在視圖中直接使用的變數。
         extract($this->viewData);
         
-        // 建構視圖檔案完整路徑
         $viewFile = __DIR__ . "/../Views/{$view}.php";
         
-        // 檢查視圖檔案是否存在
         if (!file_exists($viewFile)) {
-            throw new \Exception("視圖檔案不存在: {$view}");
+            throw new \Exception("視圖檔案不存在: {$viewFile}");
         }
         
-        // 使用輸出緩衝捕獲視圖內容
+        // 使用輸出緩衝來捕獲視圖的 HTML 內容。
         ob_start();
         require $viewFile;
         $content = ob_get_clean();
         
-        // 如果指定了佈局，使用佈局包裝內容
+        // 如果指定了佈局檔案，則載入佈局並將視圖內容注入其中。
         if ($layout) {
             $layoutFile = __DIR__ . "/../Views/{$layout}.php";
             
             if (!file_exists($layoutFile)) {
-                throw new \Exception("佈局檔案不存在: {$layout}");
+                throw new \Exception("佈局檔案不存在: {$layoutFile}");
             }
             
-            // 在佈局中，$content 變數包含視圖內容
+            // 在佈局檔案中，可以透過 $content 變數來存取視圖內容。
             require $layoutFile;
         } else {
-            // 直接輸出內容（不使用佈局）
+            // 如果沒有指定佈局，則直接輸出視圖內容。
             echo $content;
         }
     }
     
     /**
-     * HTTP 重新導向
+     * 執行 HTTP 重新導向。
      * 
-     * 設定 Location 標頭並結束腳本執行
-     * 
-     * @param string $url 要重新導向的 URL
+     * @param string $url 要重導向的目標 URL。
+     * @return void
      */
     protected function redirect($url) {
         header("Location: {$url}");
@@ -86,10 +96,11 @@ abstract class Controller {
     }
     
     /**
-     * 帶成功訊息的重新導向
+     * 帶有成功訊息的重新導向 (使用 session flash message)。
      * 
-     * @param string $url 目標 URL
-     * @param string $message 成功訊息
+     * @param string $url     目標 URL。
+     * @param string $message 要顯示的成功訊息。
+     * @return void
      */
     protected function redirectWithSuccess($url, $message) {
         $_SESSION['flash_message'] = [
@@ -100,10 +111,11 @@ abstract class Controller {
     }
 
     /**
-     * 帶錯誤訊息的重新導向
+     * 帶有錯誤訊息的重新導向 (使用 session flash message)。
      * 
-     * @param string $url 目標 URL
-     * @param string $message 錯誤訊息
+     * @param string $url     目標 URL。
+     * @param string $message 要顯示的錯誤訊息。
+     * @return void
      */
     protected function redirectWithError($url, $message) {
         $_SESSION['flash_message'] = [
@@ -114,79 +126,63 @@ abstract class Controller {
     }
     
     /**
-     * 回傳 JSON 回應
+     * 將資料以 JSON 格式回應給客戶端。
      * 
-     * 設定適當的 HTTP 狀態碼和 Content-Type 標頭，
-     * 將資料轉換為 JSON 格式並輸出
-     * 
-     * @param mixed $data 要轉換為 JSON 的資料
-     * @param int $statusCode HTTP 狀態碼，預設為 200
+     * @param mixed $data       要編碼為 JSON 的資料。
+     * @param int   $statusCode HTTP 狀態碼 (預設為 200)。
+     * @return void
      */
     protected function json($data, $statusCode = 200) {
         http_response_code($statusCode);
-        header('Content-Type: application/json');
-        // 使用 JSON_UNESCAPED_UNICODE 確保中文字元正確顯示
+        header('Content-Type: application/json; charset=utf-8');
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         exit();
     }
     
     /**
-     * 取得目前登入的使用者資訊
+     * 獲取目前已登入的使用者資訊。
      * 
-     * 透過 AuthMiddleware 取得目前已登入使用者的完整資訊
-     * 
-     * @return array|null 使用者資訊陣列，未登入時回傳 null
+     * @return array|null 成功時返回使用者資訊陣列，若未登入則返回 null。
      */
     protected function getCurrentUser() {
-        require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
-        return \AuthMiddleware::getCurrentUser();
+        return AuthMiddleware::getCurrentUser();
     }
     
     /**
-     * 檢查使用者是否已登入
+     * 檢查目前使用者是否已登入。
      * 
-     * 檢查 session 中是否存在 username，判斷使用者登入狀態
-     * 
-     * @return bool 已登入回傳 true，未登入回傳 false
+     * @return bool 如果已登入則返回 true，否則返回 false。
      */
     protected function isLoggedIn() {
         return isset($_SESSION['username']);
     }
     
     /**
-     * 檢查使用者是否為管理員
+     * 檢查目前使用者是否為管理員。
      * 
-     * 檢查 session 中的使用者角色是否為 admin
-     * 
-     * @return bool 是管理員回傳 true，否則回傳 false
+     * @return bool 如果是管理員則返回 true，否則返回 false。
      */
     protected function isAdmin() {
         return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
     }
     
     /**
-     * 取得應用程式基礎 URL
-     * 
-     * 根據目前請求自動偵測並建構基礎 URL，
-     * 包含協定、主機名稱和路徑
-     * 
-     * @return string 完整的基礎 URL
+     * 獲取應用程式的基礎 URL。
+     *
+     * @return string 應用程式的完整基礎 URL (例如 http://localhost/bkrnetwork)。
      */
     protected function getBaseUrl() {
-        // 偵測協定（HTTP 或 HTTPS）
         $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
         $host = $_SERVER['HTTP_HOST'];
         $script = $_SERVER['SCRIPT_NAME'];
         $path = dirname($script);
         
-        // 正規化路徑分隔符號（Windows 和 Unix 相容）
         $path = str_replace('\\', '/', $path);
         
-        // 如果路徑是根目錄，不要包含路徑
+        // 如果專案在根目錄，路徑為空字串
         if ($path === '/' || $path === '') {
             $path = '';
         } else {
-            // 確保路徑以斜線結尾
             $path = rtrim($path, '/');
         }
         
@@ -194,15 +190,11 @@ abstract class Controller {
     }
     
     /**
-     * 設定全域視圖資料
-     * 
-     * 設定所有視圖都需要的共用資料，包括：
-     * - 目前使用者資訊
-     * - 登入狀態
-     * - 管理員權限
-     * - 基礎 URL
-     * - 應用程式名稱
-     * - 公告管理權限
+     * 設定所有視圖共用的全域變數。
+     *
+     * 這些變數會被自動注入到所有透過 `view()` 方法渲染的視圖中。
+     *
+     * @return void
      */
     protected function setGlobalViewData() {
         $this->viewData['currentUser'] = $this->getCurrentUser();
@@ -210,20 +202,19 @@ abstract class Controller {
         $this->viewData['isAdmin'] = $this->isAdmin();
         $this->viewData['baseUrl'] = $this->getBaseUrl();
         
-        // 檢查公告管理權限
+        // 檢查使用者是否擁有管理公告的權限
         $this->viewData['canManageAnnouncements'] = false;
         if ($this->isLoggedIn() && isset($_SESSION['username'])) {
             try {
-                require_once __DIR__ . '/../Models/User.php';
-                $userModel = new \User();
+                $userModel = new User();
                 $this->viewData['canManageAnnouncements'] = $userModel->canManageAnnouncements($_SESSION['username']);
             } catch (Exception $e) {
-                // 如果出現錯誤，預設為無權限
+                // 如果在檢查權限時發生錯誤 (例如資料庫連線失敗)，則預設為無權限
+                error_log("設定全域權限時發生錯誤: " . $e->getMessage());
                 $this->viewData['canManageAnnouncements'] = false;
             }
         }
         
-        // 載入應用程式設定
         $config = require __DIR__ . '/../../config/app.php';
         $this->viewData['appName'] = $config['name'];
     }

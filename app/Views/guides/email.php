@@ -31,4 +31,16 @@ $pageType = "guides"; // For sidebar highlighting
             </a>
         </div>
     </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>更改由gmail收發公司郵件設定</h3>
+        </div>
+        <div class="card-body">
+            <p>如果您希望透過 Gmail 來收發公司的電子郵件，請參考以下由資訊部提供的完整設定教學：</p>
+            <a href="https://sites.google.com/view/bkrep-g/gmail%E8%A8%AD%E5%AE%9A%E5%85%AC%E5%8F%B8%E4%BF%A1" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <i class="fab fa-google"></i> 前往 Gmail 設定教學
+            </a>
+        </div>
+    </div>
 </div>

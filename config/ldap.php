@@ -23,6 +23,7 @@ return [
     'port' => 389,
     // LDAP 連接埠，標準 LDAP 使用 389，LDAPS (SSL) 使用 636
     
+    
     'use_ssl' => false,
     // 是否使用 SSL 加密連接，生產環境建議設為 true
     

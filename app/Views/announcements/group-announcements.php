@@ -6,7 +6,9 @@
 
     <div class="file-browser-card glass-card">
         <nav class="breadcrumbs">
-            <?php foreach ($breadcrumbs as $index => $crumb): ?>
+            <a href="<?php echo $baseUrl; ?>/group-announcements" class="breadcrumb-back">返回</a>
+            <?php foreach (
+                $breadcrumbs as $index => $crumb): ?>
                 <?php if ($index < count($breadcrumbs) - 1): ?>
                     <a href="<?php echo $baseUrl . '/group-announcements?path=' . urlencode($crumb['path']); ?>"><?php echo htmlspecialchars($crumb['name']); ?></a>
                     <span class="separator">/</span>
@@ -25,7 +27,7 @@
                 <ul>
                 <?php foreach ($items as $item): ?>
                     <li>
-                        <a href="<?php echo $item['url']; ?>" <?php if ($item['type'] === 'file') echo 'target="_blank"'; ?>>
+                        <a href="<?php echo $item['url']; ?>">
                             <span class="icon"><?php echo ($item['type'] === 'dir' ? '📁' : '📄'); ?></span>
                             <span class="name"><?php echo $item['name']; ?></span>
                         </a>

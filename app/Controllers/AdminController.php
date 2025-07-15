@@ -5,15 +5,20 @@
 
 namespace App\Controllers;
 
+use App\Middleware\AuthMiddleware;
+use App\Models\User;
+use App\Models\Announcement;
+use App\Models\HolidayCalendar;
+
 require_once __DIR__ . '/Controller.php';
 // 引入父類別 Controller.php，使用 require_once 確保只載入一次
 require_once __DIR__ . '/../Middleware/AuthMiddleware.php';
 // 引入認證中介軟體，用於驗證使用者權限
-require_once __DIR__ . '/../Models/User.php';
+// require_once __DIR__ . '/../Models/User.php';
 // 引入使用者模型
-require_once __DIR__ . '/../Models/Announcement.php';
+// require_once __DIR__ . '/../Models/Announcement.php';
 // 引入公告模型
-require_once __DIR__ . '/../Models/HolidayCalendar.php';
+// require_once __DIR__ . '/../Models/HolidayCalendar.php';
 
 /**
  * 管理員控制器
@@ -56,9 +61,9 @@ class AdminController extends Controller {
         // 呼叫認證中介軟體的 requireLogin 方法，檢查使用者是否已登入
         
         // 初始化模型
-        $this->userModel = new \User();
-        $this->announcementModel = new \Announcement();
-        $this->holidayCalendarModel = new \HolidayCalendar();
+        $this->userModel = new User();
+        $this->announcementModel = new Announcement();
+        $this->holidayCalendarModel = new HolidayCalendar();
         $this->setGlobalViewData();
     }
     
@@ -80,7 +85,14 @@ class AdminController extends Controller {
         }
         
         // 公告相關方法：有公告管理權限的使用者可以訪問
-        $announcementMethods = ['announcements', 'createAnnouncement', 'editAnnouncement'];
+        $announcementMethods = [
+            'announcements', 
+            'createAnnouncement', 
+            'editAnnouncement',
+            'deleteAnnouncement',
+            'publishAnnouncement',
+            'unpublishAnnouncement'
+        ];
         if (in_array($method, $announcementMethods)) {
             if ($this->userModel->canManageAnnouncements($currentUsername)) {
                 return true;
@@ -338,14 +350,93 @@ class AdminController extends Controller {
         // 定義編輯公告頁面方法
         $this->setGlobalViewData();
         // 設定全域視圖資料
-        $announcement = $this->announcementModel->getAnnouncementById($id);
+        $announcement = $this->announcementModel->find($id);
+        if (!$announcement) {
+            $this->redirect($this->baseUrl . '/admin/announcements?error=找不到公告');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->handleUpdateAnnouncement($id);
+            return;
+        }
+
         $this->view('admin/edit-announcement', [
             // 呼叫視圖方法，載入編輯公告頁面模板
             'title' => '編輯公告',
-            'announcement' => $announcement
+            'announcement' => $announcement,
+            'canUploadPDF' => $this->userModel->canUploadPDF($_SESSION['username'])
         ]);
         // 視圖參數陣列結束
     }
     // editAnnouncement 方法結束
+
+    /**
+     * 刪除公告
+     */
+    public function deleteAnnouncement() {
+        if (!$this->checkMethodPermission(__FUNCTION__)) {
+            $this->jsonResponse(['success' => false, 'message' => '權限不足']);
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            if ($id && $this->announcementModel->delete($id)) {
+                $this->jsonResponse(['success' => true, 'message' => '公告已成功刪除']);
+            } else {
+                $this->jsonResponse(['success' => false, 'message' => '刪除失敗或找不到公告']);
+            }
+        } else {
+            $this->jsonResponse(['success' => false, 'message' => '無效的請求方法']);
+        }
+    }
+
+    /**
+     * 發布公告
+     */
+    public function publishAnnouncement() {
+        if (!$this->checkMethodPermission(__FUNCTION__)) {
+            $this->jsonResponse(['success' => false, 'message' => '權限不足']);
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            if ($id && $this->announcementModel->publish($id)) {
+                $this->jsonResponse(['success' => true, 'message' => '公告已發布']);
+            } else {
+                $this->jsonResponse(['success' => false, 'message' => '發布失敗或找不到公告']);
+            }
+        } else {
+            $this->jsonResponse(['success' => false, 'message' => '無效的請求方法']);
+        }
+    }
+
+    /**
+     * 取消發布公告
+     */
+    public function unpublishAnnouncement() {
+        if (!$this->checkMethodPermission(__FUNCTION__)) {
+            $this->jsonResponse(['success' => false, 'message' => '權限不足']);
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            if ($id && $this->announcementModel->unpublish($id)) {
+                $this->jsonResponse(['success' => true, 'message' => '公告已取消發布']);
+            } else {
+                $this->jsonResponse(['success' => false, 'message' => '操作失敗或找不到公告']);
+            }
+        } else {
+            $this->jsonResponse(['success' => false, 'message' => '無效的請求方法']);
+        }
+    }
+
+    private function jsonResponse($data) {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 } 
 // AdminController 類別結束 

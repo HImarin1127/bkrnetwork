@@ -446,6 +446,45 @@
             font-size: 0.9rem !important;
         }
 
+        /* 圖片連結樣式 */
+        .clickable-image {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .clickable-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .clickable-image img {
+            transition: all 0.3s ease;
+        }
+        
+        .clickable-image:hover img {
+            filter: brightness(1.05);
+        }
+        
+        /* 圖片連結提示 */
+        .image-link-hint {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .clickable-image:hover .image-link-hint {
+            opacity: 1;
+        }
+
         /* 主要內容區域 */
         .main-layout {
             flex: 1;
@@ -789,7 +828,7 @@
             <?php else: ?>
                 <div class="user-info">
                     <a href="<?php echo $baseUrl; ?>/login" class="login-btn">登入</a>
-                    <a href="<?php echo $baseUrl; ?>/register" class="register-btn">註冊</a>
+                    <!--<a href="<?php echo $baseUrl; ?>/register" class="register-btn">註冊</a>-->
                 </div>
             <?php endif; ?>
         </div>
@@ -816,7 +855,7 @@
                     </li>
                     
                     <li class="nav-item dropdown">
-                        <a href="<?php echo $baseUrl; ?>/announcements" class="nav-link">
+                        <a href="#" class="nav-link">
                             <span class="icon">📢</span>
                             <span>公告區</span>
                             <span class="arrow">▼</span>
@@ -824,7 +863,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo $baseUrl; ?>/announcements">最新公告</a></li>
                             <li><a href="<?php echo $baseUrl; ?>/announcements/holidays">假日資訊</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/announcements/handbook">員工手冊</a></li>
+                            <!--<li><a href="<?php echo $baseUrl; ?>/announcements/handbook">員工手冊</a></li>-->
                             <li><a href="<?php echo $baseUrl; ?>/group-announcements">集團公告</a></li>
                         </ul>
                     </li>
@@ -878,8 +917,8 @@
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/mf2000">MF2000系統</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/nas">NAS公區權限</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/forms/mf2000">erp系統</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/forms/nas">公區權限</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/forms/email">公司EMAIL</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/forms/vpn">VPN權限申請</a></li>
                                 </ul>
@@ -909,10 +948,9 @@
                             <span class="arrow">▼</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?php echo $baseUrl; ?>/company">公司簡介</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/company/contacts">聯絡資訊</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/company/floor">樓層資訊</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/company/nas">NAS資源</a></li>
+                            <!--<li><a href="<?php echo $baseUrl; ?>/company" class="<?php echo ($pageId === 'company_index') ? 'active' : ''; ?>">公司簡介</a></li>-->
+                            <li><a href="<?php echo $baseUrl; ?>/company/floor" class="<?php echo ($pageId === 'company_floor') ? 'active' : ''; ?>">樓層資訊平面圖</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/company/contacts" class="<?php echo ($pageId === 'company_contacts') ? 'active' : ''; ?>">集團暨各社聯絡資訊</a></li>
                         </ul>
                     </li>
                     
@@ -924,13 +962,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-submenu">
-                                <a href="#">
-                                    Windows相關
+                                <a href="#"><i class="fab fa-windows"></i>|<i class="fab fa-apple"></i> 相關
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote">Windows遠端連線</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/audio">Windows音訊更新</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote"><i class="fab fa-windows"></i>|<i class="fab fa-apple"></i> 遠端連線</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/update"><i class="fab fa-windows"></i> 取消自動更新手冊</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
@@ -943,7 +980,7 @@
                                     <li><a href="<?php echo $baseUrl; ?>/guides/printer/troubleshoot">印表機疑難處理</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<?php echo $baseUrl; ?>/guides/pos">POS收銀機操作手冊</a></li>
+                            
                             <li class="dropdown-submenu">
                                 <a href="#">
                                     文化部免稅相關
@@ -960,15 +997,14 @@
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/document">MF2000公文簽核</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/workflow">公文簽核</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/attendance">MF2000出缺勤管理</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/connection">MF2000連線說明</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/mf2000/edoc">MF2000電子公文</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
                                 <a href="#">
-                                    NAS公區相關
+                                    雲端公區相關
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
@@ -977,6 +1013,7 @@
                                 </ul>
                             </li>
                             <li><a href="<?php echo $baseUrl; ?>/guides/email">電子郵件完整設定指引</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/guides/pos">POS收銀機操作手冊</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -1005,7 +1042,7 @@
             <p>&copy; <?php echo $appName; ?>. 版權所有.</p>
             <p>為讀書共和國出版集團員工提供便利的內部服務平台</p>
         </div>
-    </footer>
+    </footer>   `
 
     <script>
         // 檢測子選單是否需要左側顯示
