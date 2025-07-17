@@ -250,7 +250,7 @@
         /* 主導覽選單 */
         .main-nav {
             position: absolute;
-            left: 25%;
+            left: 30%;
             top: 50%;
             transform: translateY(-50%);
             z-index: 1001;
@@ -848,10 +848,10 @@
             <nav class="main-nav">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="<?php echo $baseUrl; ?>/" class="nav-link">
+                        <!--<a href="<?php echo $baseUrl; ?>/" class="nav-link">
                             <span class="icon">🏠</span>
                             <span>首頁</span>
-                        </a>
+                        </a>-->
                     </li>
                     
                     <li class="nav-item dropdown">
@@ -962,11 +962,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-submenu">
-                                <a href="#"><i class="fab fa-windows"></i>|<i class="fab fa-apple"></i> 相關
+                                <a href="#">
+                                    <span class="icon-group"> <i class="fab fa-windows"></i> / <i class="fab fa-apple"></i>相關 </span>
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote"><i class="fab fa-windows"></i>|<i class="fab fa-apple"></i> 遠端連線</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote"><i class="fab fa-windows"></i> / <i class="fab fa-apple"></i> 遠端連線</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/guides/windows/update"><i class="fab fa-windows"></i> 取消自動更新手冊</a></li>
                                 </ul>
                             </li>

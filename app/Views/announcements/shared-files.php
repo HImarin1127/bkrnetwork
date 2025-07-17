@@ -45,8 +45,7 @@ function formatBytes($bytes, $precision = 2) {
             <!-- 顯示檔案 -->
             <?php if (!empty($files)): ?>
                 <?php foreach ($files as $file): ?>
-                    <a href="?route=/group-announcements/download&path=<?php echo urlencode($file['path']); ?>" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;">
-                        <i class="fas <?php 
+                    <a href="?route=/group-announcements/download&path=<?php echo urlencode($file['path']); ?>" target="_blank" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;">                        <i class="fas <?php 
                             switch ($file['type']) {
                                 case 'pdf': echo 'fa-file-pdf'; break;
                                 case 'doc': case 'docx': echo 'fa-file-word'; break;

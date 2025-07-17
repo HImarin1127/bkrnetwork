@@ -20,7 +20,7 @@ return [
     // 資料庫連接基本資訊
     // ========================================
     
-    'host' => '127.0.0.1',
+    'host' => 'localhost',
     // MySQL 資料庫主機位址，localhost 的 IP 形式
     
     'username' => 'root',
