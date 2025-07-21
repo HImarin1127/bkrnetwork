@@ -152,7 +152,7 @@ class User extends Model {
      * @param array $ldapUser LDAP 使用者資料
      * @return array 本地使用者資料
      */
-    private function syncLdapUser($ldapUser) {
+    public function syncLdapUser($ldapUser) {
         // 檢查本地是否已存在該使用者
         $localUser = $this->findBy('username', $ldapUser['username']);
         

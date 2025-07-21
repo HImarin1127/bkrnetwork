@@ -138,24 +138,22 @@ class MailRecord extends Model {
     public function getByUsername($username, $isAdmin = false) {
         $db = Database::getInstance();
         $conn = $db->getConnection();
-        
         if ($isAdmin) {
-            // 管理員可以查看所有記錄
-            $stmt = $conn->prepare("
-                SELECT * FROM {$this->table} 
-                ORDER BY created_at DESC
-            ");
+            $stmt = $conn->prepare("SELECT * FROM {$this->table} ORDER BY created_at DESC");
             $stmt->execute();
         } else {
-            // 一般使用者只能查看自己相關的記錄
+            // 只取 - 後的名字
+            $name = $username;
+            if (strpos($name, '-') !== false) {
+                $name = explode('-', $name, 2)[1];
+            }
             $stmt = $conn->prepare("
-                SELECT * FROM {$this->table} 
-                WHERE registrar_username = ?
+                SELECT * FROM {$this->table}
+                WHERE receiver_name = ? OR sender_name = ? OR registrar_username = ?
                 ORDER BY created_at DESC
             ");
-            $stmt->execute([$username]);
+            $stmt->execute([$name, $name, $name]);
         }
-        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -213,58 +211,55 @@ class MailRecord extends Model {
     /**
      * 匯出郵件記錄為 CSV 檔案
      * 
-     * 功能特色：
-     * - 支援中文字元正確顯示（UTF-8 BOM）
-     * - 自動處理 CSV 特殊字元轉義
-     * - 包含完整的郵件記錄欄位
-     * - 檔名包含匯出日期
+     * @param string|null $username 使用者名稱（一般用戶只匯出自己的資料）
+     * @param bool $isAdmin 是否為管理員
      */
-    public function exportToCsv() {
+    public function exportToCsv($username = null, $isAdmin = false, $keyword = '', $startDate = '', $endDate = '') {
         $db = Database::getInstance();
         $conn = $db->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM {$this->table} ORDER BY created_at DESC");
-        $stmt->execute();
-        
-        // 設定 CSV 檔案的 HTTP 標頭
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1";
+        $params = [];
+        if ($isAdmin) {
+            // 匯出全部
+        } else {
+            $sql .= " AND registrar_username = ?";
+            $params[] = $username;
+        }
+        if ($keyword) {
+            $sql .= " AND (mail_code LIKE ? OR sender_name LIKE ? OR receiver_name LIKE ? OR tracking_number LIKE ? OR notes LIKE ?)";
+            for ($i=0; $i<5; $i++) $params[] = "%$keyword%";
+        }
+        if ($startDate) {
+            $sql .= " AND created_at >= ?";
+            $params[] = $startDate . ' 00:00:00';
+        }
+        if ($endDate) {
+            $sql .= " AND created_at <= ?";
+            $params[] = $endDate . ' 23:59:59';
+        }
+        $sql .= " ORDER BY created_at DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
         header('Content-Type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename="mail_records_' . date('Y-m-d') . '.csv"');
-        
-        // 輸出 UTF-8 BOM，確保 Excel 正確顯示中文
         echo "\xEF\xBB\xBF";
-        
-        // 輸出 CSV 標題行
-        echo "寄件編號,寄件方式,寄件者,寄件者分機,收件者,收件地址,收件者電話,申報部門,件數,郵資,追蹤號碼,狀態,備註,登記時間\n";
-        
-        // 逐行輸出資料
+        echo "姓名,地址,電話, ,分帳\n";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $line = [
-                $row['mail_code'] ?? '',
-                $row['mail_type'] ?? '',
-                $row['sender_name'] ?? '',
-                $row['sender_ext'] ?? '',
                 $row['receiver_name'] ?? '',
                 $row['receiver_address'] ?? '',
                 $row['receiver_phone'] ?? '',
-                $row['declare_department'] ?? '',
-                $row['item_count'] ?? 1,
-                $row['postage'] ?? 0,
-                $row['tracking_number'] ?? '',
-                $row['status'] ?? '',
-                $row['notes'] ?? '',
-                $row['created_at'] ?? ''
+                '',
+                $row['declare_department'] ?? ''
             ];
-            
-            // 處理 CSV 特殊字元（逗號、換行、雙引號）
             $escapedLine = array_map(function($field) {
                 if (strpos($field, ',') !== false || strpos($field, "\n") !== false || strpos($field, '"') !== false) {
                     return '"' . str_replace('"', '""', $field) . '"';
                 }
                 return $field;
             }, $line);
-            
             echo implode(',', $escapedLine) . "\n";
         }
-        
         exit;
     }
     
@@ -287,6 +282,17 @@ class MailRecord extends Model {
         $importedCount = 0; // 新增成功計數器
         $db = Database::getInstance();
         $conn = $db->getConnection();
+
+        // 查出 name 欄位
+        $userModel = new \App\Models\User();
+        $user = $userModel->find($registrarUsername);
+        $name = $registrarUsername;
+        if ($user && !empty($user['name'])) {
+            $name = $user['name'];
+            if (strpos($name, '-') !== false) {
+                $name = explode('-', $name, 2)[1];
+            }
+        }
 
         if (($handle = fopen($csvFile, "r")) !== FALSE) {
             try {
@@ -323,7 +329,7 @@ class MailRecord extends Model {
 
                     // 呼叫我們之前建立的 createMailRecord 方法
                     // 它會自動處理 mail_code 和 registrar_username
-                    $this->createMailRecord($record, $registrarUsername);
+                    $this->createMailRecord($record, $name);
                     $importedCount++; // 成功處理一筆，計數器加一
                 }
                 
@@ -385,43 +391,37 @@ class MailRecord extends Model {
      * @param bool $isAdmin 是否為管理員
      * @return array
      */
-    public function search($keyword, $username = null, $isAdmin = false) {
-        // 定義搜尋郵件記錄方法
+    public function search($keyword, $username = null, $isAdmin = false, $startDate = '', $endDate = '') {
         $db = Database::getInstance();
-        // 取得資料庫實例
         $conn = $db->getConnection();
-        // 取得資料庫連接
-        
-        $sql = "SELECT * FROM {$this->table} WHERE 
-                (mail_code LIKE :keyword OR
-                 sender_name LIKE :keyword OR
-                 receiver_name LIKE :keyword OR
-                 tracking_number LIKE :keyword OR
-                 notes LIKE :keyword)";
-        // 準備 SQL 查詢語句，使用 LIKE 進行模糊搜尋
-        
-        // 加入權限控制
-        if (!$isAdmin && $username) {
-            $sql .= " AND registrar_username = :username";
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1";
+        $params = [];
+        if ($keyword) {
+            $sql .= " AND (mail_code LIKE ? OR sender_name LIKE ? OR receiver_name LIKE ? OR tracking_number LIKE ? OR notes LIKE ?)";
+            for ($i=0; $i<5; $i++) $params[] = "%$keyword%";
         }
-        // 如果不是管理員，則只搜尋該使用者的記錄
-        
+        if (!$isAdmin && $username) {
+            $name = $username;
+            if (strpos($name, '-') !== false) {
+                $name = explode('-', $name, 2)[1];
+            }
+            $sql .= " AND (receiver_name = ? OR sender_name = ? OR registrar_username = ?)";
+            $params[] = $name;
+            $params[] = $name;
+            $params[] = $name;
+        }
+        if ($startDate) {
+            $sql .= " AND created_at >= ?";
+            $params[] = $startDate . ' 00:00:00';
+        }
+        if ($endDate) {
+            $sql .= " AND created_at <= ?";
+            $params[] = $endDate . ' 23:59:59';
+        }
         $sql .= " ORDER BY created_at DESC";
-        // 加入排序條件
-        
         $stmt = $conn->prepare($sql);
-        // 準備 SQL 陳述式
-        $stmt->bindValue(':keyword', "%{$keyword}%", PDO::PARAM_STR);
-        // 綁定關鍵字參數
-        if (!$isAdmin && $username) {
-            $stmt->bindValue(':username', $username, PDO::PARAM_STR);
-        }
-        // 綁定使用者 ID 參數
-        
-        $stmt->execute();
-        // 執行查詢
+        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // 回傳所有結果
     }
     
     /**

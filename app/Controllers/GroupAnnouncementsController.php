@@ -25,7 +25,7 @@ require_once __DIR__ . '/Controller.php';
 class GroupAnnouncementsController extends Controller
 {
     /** @var string 本地掛載的目錄路徑。 */
-    private const BASE_PATH = '/mnt/共和國公告區';
+    private const BASE_PATH = '/mnt/';
 
     /**
      * 建構函式

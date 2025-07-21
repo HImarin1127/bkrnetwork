@@ -36,9 +36,9 @@
                 <span>📁</span> 批次匯入
             </a>
             <?php if ($isAdmin): ?>
-                <a href="<?php echo $baseUrl; ?>mail/records&export=1" class="btn btn-success">
-                    <span>📊</span> 匯出 CSV
-                </a>
+            <a href="<?php echo $baseUrl; ?>mail/records&export=1" class="btn btn-success">
+                <span>📊</span> 匯出 CSV
+            </a>
             <?php endif; ?>
         </div>
     </div>
@@ -156,7 +156,7 @@
                         <td>
                             <div class="action-buttons-cell">
                                 <?php if ($record['status'] === '草稿' || $isAdmin): ?>
-                                    <a href="<?php echo $baseUrl; ?>mail/edit&id=<?php echo $record['id']; ?>" 
+                                    <a href="<?php echo $baseUrl; ?>mail/edit?mail_code=<?php echo urlencode($record['mail_code']); ?>" 
                                        class="btn btn-sm btn-outline" title="編輯記錄">
                                         <span>✏️</span> 編輯
                                     </a>

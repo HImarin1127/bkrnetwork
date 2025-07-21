@@ -885,8 +885,8 @@
                                     <li><a href="<?php echo $baseUrl; ?>/mail/request">寄件登記</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/import">寄件匯入</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/outgoing-records">寄件記錄</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/mail/incoming-register">收件登記</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/mail/incoming-records">收件記錄</a></li>
+                                    <!--<li><a href="<?php echo $baseUrl; ?>/mail/incoming-register">收件登記</a></li>-->
+                                    <!--<li><a href="<?php echo $baseUrl; ?>/mail/incoming-records">收件記錄</a></li>-->
                                     <li><a href="<?php echo $baseUrl; ?>/mail/postage">郵資查詢</a></li>
                                 </ul>
                             </li>

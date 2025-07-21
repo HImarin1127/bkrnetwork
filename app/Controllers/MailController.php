@@ -53,7 +53,7 @@ class MailController extends Controller {
         $user = AuthMiddleware::getCurrentUser();
         $errors = [];
         $success = '';
-    
+
         // 處理表單提交
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $formData = [
@@ -69,13 +69,19 @@ class MailController extends Controller {
                 'tracking_number' => $_POST['tracking_number'] ?? '',
                 'notes' => $_POST['notes'] ?? ''
             ];
-    
+
+            // 只取姓名部分
+            $registrarName = $user['name'] ?? $user['username'];
+            if (strpos($registrarName, '-') !== false) {
+                $registrarName = explode('-', $registrarName, 2)[1];
+            }
+
             // 基本的後端驗證
             if (empty($formData['mail_type']) || empty($formData['receiver_name']) || empty($formData['receiver_address']) || empty($formData['sender_name'])) {
                 $errors[] = '寄件方式、收件者姓名、收件地址和寄件者姓名為必填欄位。';
             } else {
                 // 呼叫模型建立記錄
-                $newMailCode = $this->mailRecordModel->createMailRecord($formData, $user['username']);
+                $newMailCode = $this->mailRecordModel->createMailRecord($formData, $registrarName);
                 if ($newMailCode) {
                     $success = "寄件登記成功！您的郵件編號是： " . htmlspecialchars($newMailCode);
                     // 成功後清空表單數據
@@ -95,14 +101,17 @@ class MailController extends Controller {
                 'declare_department' => $user['department'] ?? '', 'sender_name' => '', 'sender_ext' => ''
             ];
         }
-        
-        // 渲染視圖並傳遞所需變數
+        // 顯示時也只顯示姓名
+        $registrarName = $user['name'] ?? $user['username'];
+        if (strpos($registrarName, '-') !== false) {
+            $registrarName = explode('-', $registrarName, 2)[1];
+        }
         $this->view('mail/request', [
             'title' => '寄件登記',
             'formData' => $formData,
             'errors' => $errors,
             'success' => $success,
-            'registrarName' => $user['name'] ?? $user['username']
+            'registrarName' => $registrarName
         ]);
     }
     
@@ -121,25 +130,27 @@ class MailController extends Controller {
         $user = AuthMiddleware::getCurrentUser();
         $userModel = new User();
         $isAdmin = $userModel->isAdmin($user['username']);
-    
-        // 如果是管理員且 URL 中有 'export' 參數，則執行匯出
-        if ($isAdmin && isset($_GET['export'])) {
-            $this->mailRecordModel->exportToCsv();
-            return; // 匯出後結束執行
+        $isGeneralAffair = $userModel->canManageAnnouncements($user['username']);
+
+        // Debug log
+        error_log('[DEBUG] username=' . $user['username'] . ', name=' . ($user['name'] ?? '') . ', isAdmin=' . ($isAdmin ? '1' : '0') . ', isGeneralAffair=' . ($isGeneralAffair ? '1' : '0'));
+
+        // 管理員或總務都能匯出全部，其餘用戶只能匯出自己
+        if (isset($_GET['export'])) {
+            $this->mailRecordModel->exportToCsv($user['username'], ($isAdmin || $isGeneralAffair));
+            return;
         }
-    
-        // 根據關鍵字搜尋或獲取列表
+
         $keyword = trim($_GET['search'] ?? '');
         if (!empty($keyword)) {
-            $records = $this->mailRecordModel->search($keyword, $user['username'], $isAdmin);
+            $records = $this->mailRecordModel->search($keyword, $user['username'], ($isAdmin || $isGeneralAffair));
         } else {
-            $records = $this->mailRecordModel->getByUsername($user['username'], $isAdmin);
+            $records = $this->mailRecordModel->getByUsername($user['username'], ($isAdmin || $isGeneralAffair));
         }
-        
         $this->view('mail/records', [
             'title' => '寄件記錄',
             'records' => $records,
-            'isAdmin' => $isAdmin,
+            'isAdmin' => ($isAdmin || $isGeneralAffair),
             'keyword' => $keyword
         ]);
     }
@@ -251,7 +262,7 @@ class MailController extends Controller {
         $user = AuthMiddleware::getCurrentUser();
         $userModel = new User();
         $isAdmin = $userModel->isAdmin($user['username']);
-        $mailCode = $_POST['mail_code'] ?? null;
+        $mailCode = $_POST['mail_code'] ?? $_GET['mail_code'] ?? null;
 
         // 必須提供郵件編號
         if (!$mailCode) {
@@ -271,7 +282,9 @@ class MailController extends Controller {
             $_SESSION['error_message'] = '您沒有權限刪除此記錄。';
         }
 
-        $this->redirect('/mail/records');
+        $baseUrl = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+        if ($baseUrl === '' || $baseUrl === '/') $baseUrl = '';
+        $this->redirect($baseUrl . '/mail/outgoing-records');
     }
     
     /**
@@ -329,20 +342,32 @@ class MailController extends Controller {
         $user = AuthMiddleware::getCurrentUser();
         $userModel = new User();
         $isAdmin = $userModel->isAdmin($user['username']);
+        $isGeneralAffair = $userModel->canManageAnnouncements($user['username']);
         $this->setGlobalViewData();
-        
+
         $keyword = trim($_GET['search'] ?? '');
-        if (!empty($keyword)) {
-            $records = $this->mailRecordModel->search($keyword, $user['username'], $isAdmin);
-        } else {
-            $records = $this->mailRecordModel->getByUsername($user['username'], $isAdmin);
+        $startDate = $_GET['start_date'] ?? '';
+        $endDate = $_GET['end_date'] ?? '';
+
+        // 匯出功能
+        if (isset($_GET['export'])) {
+            $this->mailRecordModel->exportToCsv($user['name'], ($isAdmin || $isGeneralAffair), $keyword, $startDate, $endDate);
+            return;
         }
-        
+
+        if (!empty($keyword) || !empty($startDate) || !empty($endDate)) {
+            $records = $this->mailRecordModel->search($keyword, $user['name'], ($isAdmin || $isGeneralAffair), $startDate, $endDate);
+        } else {
+            $records = $this->mailRecordModel->getByUsername($user['name'], ($isAdmin || $isGeneralAffair));
+        }
+
         $this->view('mail/outgoing-records', [
             'title' => '外寄郵件記錄',
             'records' => $records,
-            'isAdmin' => $isAdmin,
-            'keyword' => $keyword
+            'isAdmin' => ($isAdmin || $isGeneralAffair),
+            'keyword' => $keyword,
+            'startDate' => $startDate,
+            'endDate' => $endDate
         ]);
     }
     

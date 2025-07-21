@@ -10,10 +10,13 @@
             <div class="search-input-group">
                 <input type="text" name="search" placeholder="搜尋收件者、地址、寄件者..." 
                        value="<?php echo htmlspecialchars($keyword); ?>" class="search-input">
+                <input type="date" name="start_date" value="<?php echo htmlspecialchars($startDate ?? ''); ?>" class="search-input" style="max-width:160px;">
+                <span style="font-weight:bold;">～</span>
+                <input type="date" name="end_date" value="<?php echo htmlspecialchars($endDate ?? ''); ?>" class="search-input" style="max-width:160px;">
                 <button type="submit" class="search-btn">
                     <i class="icon">🔍</i> 搜尋
                 </button>
-                <?php if (!empty($keyword)): ?>
+                <?php if (!empty($keyword) || !empty($startDate) || !empty($endDate)): ?>
                     <a href="<?php echo $baseUrl; ?>/mail/outgoing-records" class="clear-btn">
                         <i class="icon">✖</i> 清除
                     </a>
@@ -31,8 +34,16 @@
             <a href="<?php echo $baseUrl; ?>/mail/import" class="btn btn-secondary">
                 <i class="icon">📥</i> 批次匯入
             </a>
+            <?php
+                // 匯出按鈕參數組合
+                $exportParams = [];
+                if (!empty($keyword)) $exportParams[] = 'search=' . urlencode($keyword);
+                if (!empty($startDate)) $exportParams[] = 'start_date=' . urlencode($startDate);
+                if (!empty($endDate)) $exportParams[] = 'end_date=' . urlencode($endDate);
+                $exportQuery = $exportParams ? ('&' . implode('&', $exportParams)) : '';
+            ?>
             <?php if ($isAdmin): ?>
-                <a href="<?php echo $baseUrl; ?>/mail/outgoing-records?export=1" class="btn btn-success">
+                <a href="<?php echo $baseUrl; ?>/mail/outgoing-records?export=1<?php echo $exportQuery; ?>" class="btn btn-success">
                     <i class="icon">📊</i> 匯出 CSV
                 </a>
             <?php endif; ?>
@@ -121,11 +132,11 @@
                                 <?php if ($isAdmin): ?>
                                     <td class="actions-cell">
                                         <div class="action-buttons-inline">
-                                            <a href="<?php echo $baseUrl; ?>/mail/edit?id=<?php echo $record['id']; ?>" 
+                                            <a href="<?php echo $baseUrl; ?>/mail/edit?mail_code=<?php echo urlencode($record['mail_code']); ?>" 
                                                class="btn-icon btn-edit" title="編輯">
                                                 ✏️
                                             </a>
-                                            <button onclick="deleteRecord(<?php echo $record['id']; ?>)" 
+                                            <button onclick="deleteRecord('<?php echo htmlspecialchars($record['mail_code']); ?>')" 
                                                     class="btn-icon btn-delete" title="刪除">
                                                 🗑️
                                             </button>
@@ -141,6 +152,9 @@
     </div>
 </div>
 
+<form id="deleteForm" method="POST" style="display:none;">
+    <input type="hidden" name="mail_code" id="deleteMailCode">
+</form>
 <style>
 .mail-records-container {
     max-width: 1400px;
@@ -481,9 +495,11 @@
 </style>
 
 <script>
-function deleteRecord(id) {
+function deleteRecord(mailCode) {
     if (confirm('確定要刪除這筆寄件記錄嗎？')) {
-        window.location.href = '<?php echo $baseUrl; ?>/mail/delete?id=' + id;
+        document.getElementById('deleteMailCode').value = mailCode;
+        document.getElementById('deleteForm').action = '<?php echo $baseUrl; ?>/mail/delete';
+        document.getElementById('deleteForm').submit();
     }
 }
 </script> 

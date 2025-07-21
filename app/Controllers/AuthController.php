@@ -85,9 +85,9 @@ class AuthController extends Controller {
                 
                 // 如果本地不存在此 LDAP 使用者，則從 LDAP 獲取資訊並在本地建立一筆記錄
                 if (!$user) {
-                    $userInfo = $this->ldapService->getUserInfo($username);
+                    $userInfo = $this->ldapService->getUserData($username);
                     if ($userInfo) {
-                        $this->userModel->createOrUpdateFromLdap($userInfo);
+                        $user = $this->userModel->syncLdapUser($userInfo);
                          // 注意：此處未重新獲取 $user，若後續操作依賴新建的 user 會有問題
                     }
                 }
