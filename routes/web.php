@@ -75,6 +75,8 @@ return [
     '/mail/incoming-register' => ['MailController', 'incomingRegister'], // 收件登記
     '/mail/incoming-records' => ['MailController', 'incomingRecords'], // 收件記錄
     '/mail/postage' => ['MailController', 'postage'],                 // 郵資查詢
+    '/mail/postage-import' => ['MailController', 'postageImport'],
+    '/mail/postage-query' => ['MailController', 'postageQuery'],
     '/mail/edit' => ['MailController', 'edit'],                       // 編輯記錄
     '/mail/delete' => ['MailController', 'delete'],                   // 刪除記錄
     

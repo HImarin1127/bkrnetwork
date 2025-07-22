@@ -15,15 +15,15 @@ function formatBytes($bytes, $precision = 2) {
 
     <!-- 麵包屑導航 -->
     <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
-        <ol class="breadcrumb">
+        <div class="breadcrumb">
             <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
                 <?php if ($index < count($breadcrumbs) - 1): ?>
-                    <li class="breadcrumb-item"><a href="?route=/group-announcements&path=<?php echo urlencode($breadcrumb['path']); ?>"><?php echo htmlspecialchars($breadcrumb['name']); ?></a></li>
+                    <span class="breadcrumb-item"><a href="?route=/group-announcements&path=<?php echo urlencode($breadcrumb['path']); ?>"><?php echo htmlspecialchars($breadcrumb['name']); ?></a></span>
                 <?php else: ?>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($breadcrumb['name']); ?></li>
+                    <span class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($breadcrumb['name']); ?></span>
                 <?php endif; ?>
             <?php endforeach; ?>
-        </ol>
+        </div>
     </nav>
 
     <?php if (isset($error)): ?>
@@ -69,4 +69,4 @@ function formatBytes($bytes, $precision = 2) {
             </div>
         <?php endif; ?>
     <?php endif; ?>
-</div> 
+</div>

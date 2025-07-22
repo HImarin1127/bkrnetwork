@@ -88,42 +88,14 @@
     <?php endif; ?>
 </div>
 
-<!-- 系統功能展示 -->
-
+<!--
 <div class="features-showcase">
     <div class="section-header">
         <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 0.3rem;">🚀 介面總覽</h2>
-        <!--<p class="section-subtitle" style="font-size: 0.9rem;">完整的企業服務解決方案</p>-->
+        <?php /* <p class="section-subtitle" style="font-size: 0.9rem;">完整的企業服務解決方案</p> */ ?>
     </div>
-    
     <div class="features-grid">
-        <!-- 公告查詢 -->
-        <!--<div class="feature-module">
-            <div class="module-header">
-                <div class="module-icon">📢</div>
-                <div class="module-info">
-                    <h3 class="module-title">公告查詢</h3>
-                    <span class="module-badge public">公開存取</span>
-                </div>
-            </div>
-            <div class="module-content">
-                <p class="module-description">即時查看讀書共和國最新公告、假日資訊及員工手冊</p>
-                <div class="module-features">
-                    <span class="feature-tag">📰 最新公告</span>
-                    <span class="feature-tag">🎉 假日資訊</span>
-                    <span class="feature-tag">📚 員工手冊</span>
-                </div>
-            </div>
-            <div class="module-footer">
-                <a href="<?php echo $baseUrl; ?>/announcements" class="module-link">
-                    <span>立即查看</span>
-                    <span class="link-arrow">→</span>
-                </a>
-            </div>
-        </div>-->
-        
-        <?php if ($isLoggedIn): ?>
-        <!-- 表單申請 -->
+        <?php if (  $isLoggedIn): ?>
         <div class="feature-module">
             <div class="module-header">
                 <div class="module-icon">📝</div>
@@ -133,7 +105,6 @@
                 </div>
             </div>
             <div class="module-content">
-                <!--<p class="module-description">線上處理各類表單申請，包含郵務、請假、出差、採購等服務</p>-->
                 <div class="module-features">
                     <span class="feature-tag">📮 郵務系統</span>
                     <span class="feature-tag">🏖️ 請假申請</span>
@@ -148,8 +119,6 @@
                 </a>
             </div>
         </div>
-        
-        <!-- 資源預約 -->
         <div class="feature-module">
             <div class="module-header">
                 <div class="module-icon">📅</div>
@@ -159,7 +128,6 @@
                 </div>
             </div>
             <div class="module-content">
-                <!--<p class="module-description">便利的會議室、設備預約系統，智慧排程避免衝突</p>-->
                 <div class="module-features">
                     <span class="feature-tag">🏢 會議室</span>
                     <span class="feature-tag">💻 設備借用</span>
@@ -172,8 +140,6 @@
                 </a>
             </div>
         </div>
-        
-        <!-- 操作指引 -->
         <div class="feature-module">
             <div class="module-header">
                 <div class="module-icon">💡</div>
@@ -187,46 +153,19 @@
                 <div class="module-features">
                     <span class="feature-tag">🪟 Windows</span>
                     <span class="feature-tag">🍎 Mac</span>
-                    <span class="feature-tag">📧 Email</span>
-                    <span class="feature-tag">🖨️ 印表機</span>
                 </div>
             </div>
             <div class="module-footer">
-                <a href="<?php echo $baseUrl; ?>/guides/email" class="module-link">
+                <a href="<?php echo $baseUrl; ?>/guides" class="module-link">
                     <span>查看指引</span>
                     <span class="link-arrow">→</span>
                 </a>
             </div>
         </div>
         <?php endif; ?>
-        
-        <!-- 公司資訊 -->
-        <div class="feature-module">
-            <div class="module-header">
-                <div class="module-icon">🏢</div>
-                <div class="module-info">
-                    <h3 class="module-title">公司資訊</h3>
-                    <span class="module-badge public">公開存取</span>
-                </div>
-            </div>
-            <div class="module-content">
-                <!--<p class="module-description">查看讀書共和國簡介、樓層圖及相關聯絡資訊</p>-->
-                <div class="module-features">
-                    <!--<span class="feature-tag">📖 公司簡介</span>-->
-                    <span class="feature-tag">🗺️ 樓層圖</span>
-                    <span class="feature-tag">📞 聯絡資訊</span>
-                    <!--<span class="feature-tag">💾 NAS資源</span>-->
-                </div>
-            </div>
-            <div class="module-footer">
-                <a href="<?php echo $baseUrl; ?>/company" class="module-link">
-                    <!--<span>了解更多</span>
-                    <span class="link-arrow">→</span>-->
-                </a>
-            </div>
-        </div>
     </div>
 </div>
+-->
 
 <style>
 /* 英雄橫幅區塊 */
@@ -333,7 +272,6 @@
 .logo-icon {
     font-size: 2.2rem;
     display: inline-block;
-    animation: bookFloating 3s ease-in-out infinite;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -342,18 +280,6 @@
     animation-play-state: paused;
     transform: scale(1.1) translateY(-5px);
     filter: drop-shadow(0 5px 15px rgba(200,16,46,0.3));
-}
-
-@keyframes bookFloating {
-    0% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
 }
 
 .logo-text {

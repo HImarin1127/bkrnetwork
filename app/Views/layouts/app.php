@@ -1,3 +1,10 @@
+<?php
+// 確保 $baseUrl 一定有值
+if (!isset($baseUrl) || !$baseUrl) {
+    $baseUrl = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+    if ($baseUrl === '' || $baseUrl === '/') $baseUrl = '/bkrnetwork';
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -224,19 +231,6 @@
             background: rgba(244, 244, 244, 0.95);
             padding: 8px;
             transition: all 0.3s ease;
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
         }
 
         .logo-text {
@@ -814,9 +808,9 @@
             <?php if ($isLoggedIn): ?>
                 <div class="user-info">
                     <span><?php echo htmlspecialchars($currentUser['username']); ?>，歡迎您！<?php echo htmlspecialchars($currentUser['name'] ?? $currentUser['username']); ?></span>
-                    <?php if ($isAdmin): ?>
+                    <!--<?php if ($isAdmin): ?>
                         <a href="<?php echo $baseUrl; ?>/admin" class="admin-link">管理後台</a>
-                    <?php endif; ?>
+                    <?php endif; ?>-->
                     <?php 
                     // 檢查是否有公告管理權限（使用已載入的變數）
                     if ($isLoggedIn && isset($canManageAnnouncements) && $canManageAnnouncements): 
@@ -885,8 +879,20 @@
                                     <li><a href="<?php echo $baseUrl; ?>/mail/request">寄件登記</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/import">寄件匯入</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/outgoing-records">寄件記錄</a></li>
-                                    <!--<li><a href="<?php echo $baseUrl; ?>/mail/incoming-register">收件登記</a></li>-->
-                                    <!--<li><a href="<?php echo $baseUrl; ?>/mail/incoming-records">收件記錄</a></li>-->
+                                    <?php 
+                                    $isGeneralAffairMenu = false;
+                                    if (isset($currentUser['name'])) {
+                                        $name = trim(mb_strtolower($currentUser['name'], 'UTF-8'));
+                                        $name = str_replace(['　', ' '], '', $name); // 全形空白、半形空白
+                                        $parts = explode('-', $name, 2);
+                                        $department = $parts[0];
+                                        if (strpos($department, '總務') !== false) {
+                                            $isGeneralAffairMenu = true;
+                                        }
+                                    }
+                                    if ($isGeneralAffairMenu): ?>
+                                        <li><a href="<?php echo $baseUrl; ?>/mail/postage-import">國揚匯入</a></li>
+                                    <?php endif; ?>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/postage">郵資查詢</a></li>
                                 </ul>
                             </li>

@@ -76,6 +76,10 @@ class GroupAnnouncementsController extends Controller
                 if ($item === '.' || $item === '..') {
                     continue;
                 }
+                // 跳過 #recycle 目錄（不論大小寫或空白）
+                if (trim(strtolower($item)) === '#recycle') {
+                    continue;
+                }
                 
                 $item_path = $full_path . '/' . $item;
                 
@@ -99,7 +103,7 @@ class GroupAnnouncementsController extends Controller
         }
         
         // 準備麵包屑導航資料
-        $breadcrumbs = [['name' => '集團公告', 'path' => '']];
+        $breadcrumbs = [['name' => '返回', 'path' => '']];
         if (!empty($relative_path)) {
             $parts = explode('/', $relative_path);
             $current_path_for_breadcrumb = '';
