@@ -1,420 +1,178 @@
-<div class="postage-container">
-    <div class="page-header">
-        <h1>郵資查詢</h1>
-        <p>查詢各種寄件方式的郵資費用</p>
-    </div>
-
-    <div class="postage-form-container">
-        <form method="POST" action="<?php echo $baseUrl; ?>mail/postage" class="postage-form">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="mail_type" class="form-label">寄件方式</label>
-                    <select name="mail_type" id="mail_type" class="form-input" required>
-                        <option value="">請選擇</option>
-                        <option value="掛號" <?php echo ($_POST['mail_type'] ?? '') === '掛號' ? 'selected' : ''; ?>>掛號</option>
-                        <option value="黑貓" <?php echo ($_POST['mail_type'] ?? '') === '黑貓' ? 'selected' : ''; ?>>黑貓</option>
-                        <option value="新竹貨運" <?php echo ($_POST['mail_type'] ?? '') === '新竹貨運' ? 'selected' : ''; ?>>新竹貨運</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="destination" class="form-label">目的地/服務類型</label>
-                    <select name="destination" id="destination" class="form-input" required>
-                        <option value="">請選擇</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="weight" class="form-label">重量 (公斤)</label>
-                    <input type="number" name="weight" id="weight" class="form-input" 
-                           min="0" step="0.1" value="<?php echo $_POST['weight'] ?? '1'; ?>" required>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">
-                    <i class="icon">🔍</i> 查詢郵資
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <?php if ($result): ?>
-        <div class="result-container">
-            <h3>📋 查詢結果</h3>
-            <div class="result-card">
-                <div class="result-header">
-                    <span class="mail-type"><?php echo htmlspecialchars($result['mail_type']); ?></span>
-                    <span class="destination"><?php echo htmlspecialchars($result['destination']); ?></span>
-                </div>
-                
-                <div class="result-details">
-                    <div class="detail-item">
-                        <span class="label">重量:</span>
-                        <span class="value"><?php echo $result['weight']; ?> 公斤</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">基本費率:</span>
-                        <span class="value">NT$ <?php echo $result['base_rate']; ?></span>
-                    </div>
-                    <?php if ($result['weight_fee'] > 0): ?>
-                        <div class="detail-item">
-                            <span class="label">超重費用:</span>
-                            <span class="value">NT$ <?php echo $result['weight_fee']; ?></span>
-                        </div>
-                    <?php endif; ?>
-                    <div class="detail-item total">
-                        <span class="label">總計費用:</span>
-                        <span class="value">NT$ <?php echo $result['total_fee']; ?></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
-    <div class="rate-table-container">
-        <h3>📊 郵資費率表</h3>
-        
-        <div class="rate-tables">
-            <?php foreach ($postageRates as $mailType => $rates): ?>
-                <div class="rate-table">
-                    <h4><?php echo htmlspecialchars($mailType); ?></h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>類型/地區</th>
-                                <th>費用 (NT$)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($rates as $type => $price): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($type); ?></td>
-                                    <td>NT$ <?php echo $price; ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <?php if ($mailType !== '掛號'): ?>
-                        <small class="rate-note">* 超過1公斤每公斤加收 NT$ 10</small>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-
-    <div class="usage-tips">
-        <h3>💡 使用說明</h3>
-        <ul>
-            <li><strong>掛號：</strong>中華郵政掛號信件，安全可靠，適用於重要文件</li>
-            <li><strong>黑貓：</strong>黑貓宅急便，快速便利，提供常溫、冷藏、冷凍服務</li>
-            <li><strong>新竹貨運：</strong>新竹物流，適合大型物品，提供一般及快遞服務</li>
-            <li><strong>費用計算：</strong>基本費率 + 超重費用（超過1公斤部分）</li>
-        </ul>
-    </div>
+<div class="page-header">
+    <h1 class="page-title">📦 郵資查詢</h1>
+    <p class="page-subtitle">可依物流編號、收件人等條件查詢國揚匯入的郵資資料。</p>
 </div>
 
+<div class="content-card">
+    <form method="POST" class="search-form">
+        <div class="search-section">
+            <div class="search-group">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" name="receiver_name" placeholder="收件人姓名" value="<?php echo htmlspecialchars($filters['receiver_name'] ?? ''); ?>" class="search-input">
+                </div>
+                <div class="search-input-wrapper">
+                    <input type="text" name="tracking_number" placeholder="物流編號" value="<?php echo htmlspecialchars($filters['tracking_number'] ?? ''); ?>" class="search-input">
+                </div>
+                <div class="search-input-wrapper">
+                    <input type="text" name="original_tracking" placeholder="原物流編號" value="<?php echo htmlspecialchars($filters['original_tracking'] ?? ''); ?>" class="search-input">
+                </div>
+                <div class="search-input-wrapper">
+                    <input type="text" name="order_id" placeholder="訂單編號" value="<?php echo htmlspecialchars($filters['order_id'] ?? ''); ?>" class="search-input">
+                </div>
+                <input type="date" name="start_date" value="<?php echo htmlspecialchars($filters['start_date'] ?? ''); ?>" class="search-input" style="width:140px;">
+                <input type="date" name="end_date" value="<?php echo htmlspecialchars($filters['end_date'] ?? ''); ?>" class="search-input" style="width:140px;">
+                <button type="submit" class="btn btn-primary"><span>🔍</span> 查詢</button>
+                <?php if (!empty($filters['receiver_name']) || !empty($filters['tracking_number']) || !empty($filters['original_tracking']) || !empty($filters['order_id']) || !empty($filters['start_date']) || !empty($filters['end_date'])): ?>
+                    <a href="<?php echo $baseUrl; ?>/mail/postage" class="btn btn-outline"><span>🗑️</span> 清除</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </form>
+</div>
+
+<?php if (empty($records)): ?>
+    <div class="content-card">
+        <div class="empty-state">
+            <div class="empty-illustration">
+                <div class="empty-icon">📭</div>
+                <div class="empty-pattern"></div>
+            </div>
+            <h3 class="empty-title">🔍 找不到符合條件的郵資資料</h3>
+            <p class="empty-message">請嘗試調整搜尋條件或關鍵字</p>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="content-card">
+        <div class="table-header">
+            <h3>📦 郵資資料總覽</h3>
+            <div class="table-stats">
+                <span class="stat-item">
+                    <span class="stat-number"><?php echo count($records); ?></span>
+                    <span class="stat-label">筆資料</span>
+                </span>
+            </div>
+        </div>
+        <div class="records-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>物流編號</th>
+                        <th>原物流編號</th>
+                        <th>批號</th>
+                        <th>入件日</th>
+                        <th>收件人</th>
+                        <th>地址</th>
+                        <th>電話</th>
+                        <th>代收金額</th>
+                        <th>訂單編號</th>
+                        <th>商品名稱</th>
+                        <th>數量</th>
+                        <th>處理進度</th>
+                        <th>尺寸/重量</th>
+                        <th>郵資</th>
+                        <th>支付狀態</th>
+                        <th>代收入帳狀態</th>
+                        <th>匯入時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($records as $row): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['tracking_number']); ?></td>
+                        <td><?php echo $row['original_tracking'] !== null && $row['original_tracking'] !== '' ? htmlspecialchars($row['original_tracking']) : '無'; ?></td>
+                        <td><?php echo htmlspecialchars($row['batch_no']); ?></td>
+                        <td><?php echo htmlspecialchars($row['received_date']); ?></td>
+                        <td><?php echo htmlspecialchars($row['receiver_name']); ?></td>
+                        <td><?php echo htmlspecialchars($row['address']); ?></td>
+                        <td><?php echo htmlspecialchars($row['phone']); ?></td>
+                        <td><?php echo htmlspecialchars($row['cod_amount']); ?></td>
+                        <td><?php echo htmlspecialchars($row['order_id']); ?></td>
+                        <td><?php echo $row['product_name'] !== null && $row['product_name'] !== '' ? htmlspecialchars($row['product_name']) : '無'; ?></td>
+                        <td><?php echo htmlspecialchars($row['quantity']); ?></td>
+                        <td><?php echo htmlspecialchars($row['status']); ?></td>
+                        <td><?php echo htmlspecialchars($row['size_weight']); ?></td>
+                        <td><?php echo htmlspecialchars($row['postage']); ?></td>
+                        <td><?php echo htmlspecialchars($row['payment_status']); ?></td>
+                        <td><?php echo htmlspecialchars($row['cod_status']); ?></td>
+                        <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php endif; ?>
+
 <style>
-.postage-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem;
+.search-form { margin-bottom: 1.5rem; }
+.search-group { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.search-input-wrapper { position: relative; flex: 1; min-width: 180px; }
+.search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1rem; color: #666; pointer-events: none; }
+.search-input { width: 100%; padding: 0.8rem 1rem 0.8rem 2.2rem; border: 2px solid rgba(200,16,46,0.15); border-radius: 12px; font-size: 0.95rem; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); transition: all 0.3s ease; }
+.search-input:focus { outline: none; border-color: #C8102E; box-shadow: 0 0 0 3px rgba(200,16,46,0.1); background: rgba(255,255,255,0.95); }
+.btn-primary { background: linear-gradient(135deg, #7b61ff, #4caaff); color: white; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
+.btn-primary:hover { background: #4caaff; }
+.btn-outline { background: #fff; color: #7b61ff; border: 2px solid #7b61ff; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; }
+.btn-outline:hover { background: #f1f5f9; }
+.content-card { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem; box-shadow: 0 15px 35px rgba(0,0,0,0.08); border: 1px solid rgba(200,16,46,0.1); transition: all 0.3s ease; }
+.table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid rgba(200,16,46,0.1); }
+.table-header h3 { font-size: 1.3rem; color: #C8102E; margin: 0; font-weight: 700; }
+.table-stats { display: flex; gap: 1.5rem; }
+.stat-item { text-align: center; }
+.stat-number { display: block; font-size: 1.5rem; font-weight: 700; color: #C8102E; line-height: 1; }
+.stat-label { font-size: 0.85rem; color: #666; margin-top: 0.25rem; }
+.records-table-container {
+    overflow-x: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.95);
+    margin-top: 2rem;
 }
-
-.page-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.page-header h1 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.page-header p {
-    color: #666;
-    font-size: 1.1rem;
-}
-
-.postage-form-container {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-label {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #333;
-}
-
-.form-input {
-    padding: 0.75rem;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-input:focus {
-    outline: none;
-    border-color: #7b61ff;
-    box-shadow: 0 0 0 3px rgba(123, 97, 255, 0.1);
-}
-
-.form-actions {
-    text-align: center;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #7b61ff, #4caaff);
-    color: white;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(123, 97, 255, 0.3);
-}
-
-.result-container {
-    margin-bottom: 2rem;
-}
-
-.result-container h3 {
-    margin-bottom: 1rem;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.result-card {
-    background: linear-gradient(135deg, #7b61ff, #4caaff);
-    color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(123, 97, 255, 0.3);
-}
-
-.result-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.mail-type {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-}
-
-.destination {
-    font-size: 1.1rem;
-    font-weight: 500;
-}
-
-.result-details {
-    display: grid;
-    gap: 1rem;
-}
-
-.detail-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.detail-item.total {
-    font-size: 1.2rem;
-    font-weight: 600;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.rate-table-container {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
-
-.rate-table-container h3 {
-    margin-bottom: 1.5rem;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.rate-tables {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.rate-table h4 {
-    margin-bottom: 1rem;
-    color: #7b61ff;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.rate-table table {
+.data-table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    background: #fff;
 }
-
-.rate-table th,
-.rate-table td {
-    padding: 0.75rem;
+.data-table th {
+    background: linear-gradient(90deg, #C8102E 0%, #a30d23 100%);
+    color: #fff;
+    font-weight: 700;
+    padding: 1.1rem 0.7rem;
+    border-bottom: 2px solid #e1e5e9;
     text-align: left;
+    letter-spacing: 0.02em;
 }
-
-.rate-table th {
-    background: #f8f9fa;
-    font-weight: 600;
-    color: #495057;
-}
-
-.rate-table td {
+.data-table td {
+    padding: 1rem 0.7rem;
     border-bottom: 1px solid #e1e5e9;
+    vertical-align: top;
+    color: #2d3748;
+    background: #fff;
 }
-
-.rate-table tr:last-child td {
-    border-bottom: none;
+.data-table tr:hover {
+    background: #f8f9fa;
 }
-
-.rate-note {
-    display: block;
-    margin-top: 0.5rem;
-    color: #666;
-    font-style: italic;
+.data-table th, .data-table td {
+    min-width: 110px;
 }
-
-.usage-tips {
+.data-table td {
+    font-size: 0.98rem;
+    line-height: 1.5;
+}
+.data-table td:last-child, .data-table th:last-child {
+    min-width: 140px;
+}
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
     background: rgba(255, 255, 255, 0.95);
-    padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
-
-.usage-tips h3 {
-    margin-bottom: 1.5rem;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.usage-tips ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.usage-tips li {
+.empty-icon {
+    font-size: 4rem;
     margin-bottom: 1rem;
-    padding: 1rem;
-    background: rgba(123, 97, 255, 0.05);
-    border-radius: 8px;
-    border-left: 4px solid #7b61ff;
-}
-
-.usage-tips strong {
-    color: #7b61ff;
-}
-
-@media (max-width: 768px) {
-    .postage-container {
-        padding: 1rem;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .rate-tables {
-        grid-template-columns: 1fr;
-    }
-    
-    .result-header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-    }
 }
 </style>
-
-<script>
-// 動態更新目的地選項
-document.getElementById('mail_type').addEventListener('change', function() {
-    const mailType = this.value;
-    const destinationSelect = document.getElementById('destination');
-    
-    // 清空目的地選項
-    destinationSelect.innerHTML = '<option value="">請選擇</option>';
-    
-    if (mailType === '掛號') {
-        destinationSelect.innerHTML += '<option value="本島">本島</option>';
-        destinationSelect.innerHTML += '<option value="離島">離島</option>';
-    } else if (mailType === '黑貓') {
-        destinationSelect.innerHTML += '<option value="常溫">常溫</option>';
-        destinationSelect.innerHTML += '<option value="冷藏">冷藏</option>';
-        destinationSelect.innerHTML += '<option value="冷凍">冷凍</option>';
-    } else if (mailType === '新竹貨運') {
-        destinationSelect.innerHTML += '<option value="一般">一般</option>';
-        destinationSelect.innerHTML += '<option value="快遞">快遞</option>';
-    }
-    
-    // 恢復之前選擇的值
-    const savedDestination = '<?php echo $_POST['destination'] ?? ''; ?>';
-    if (savedDestination) {
-        destinationSelect.value = savedDestination;
-    }
-});
-
-// 頁面載入時觸發一次
-document.addEventListener('DOMContentLoaded', function() {
-    const mailTypeSelect = document.getElementById('mail_type');
-    if (mailTypeSelect.value) {
-        mailTypeSelect.dispatchEvent(new Event('change'));
-    }
-});
-</script> 

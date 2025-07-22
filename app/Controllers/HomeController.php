@@ -140,14 +140,14 @@ class HomeController extends Controller {
      * @return void
      */
     public function companyFloor() {
-        $floorInfo = $this->companyInfoModel->getFloorInfo();
-        $employeeSeats = $this->companyInfoModel->getEmployeeSeats();
+        // $floorInfo = $this->companyInfoModel->getFloorInfo();
+        // $employeeSeats = $this->companyInfoModel->getEmployeeSeats();
         
         $this->view('company/floor', [
             'title' => '樓層圖',
             'pageType' => 'company',
-            'floorInfo' => $floorInfo,
-            'employeeSeats' => $employeeSeats
+            // 'floorInfo' => $floorInfo,
+            // 'employeeSeats' => $employeeSeats
         ]);
     }
     
@@ -159,14 +159,14 @@ class HomeController extends Controller {
      * @return void
      */
     public function companyContacts() {
-        $departmentContacts = $this->companyInfoModel->getDepartmentContacts();
-        $extensionNumbers = $this->companyInfoModel->getExtensionNumbers();
+        // $departmentContacts = $this->companyInfoModel->getDepartmentContacts();
+        // $extensionNumbers = $this->companyInfoModel->getExtensionNumbers();
         
         $this->view('company/contacts', [
             'title' => '聯絡資訊',
             'pageType' => 'company',
-            'departmentContacts' => $departmentContacts,
-            'extensionNumbers' => $extensionNumbers
+            // 'departmentContacts' => $departmentContacts,
+            // 'extensionNumbers' => $extensionNumbers
         ]);
     }
     

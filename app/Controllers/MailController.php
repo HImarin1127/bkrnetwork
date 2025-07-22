@@ -14,6 +14,7 @@ namespace App\Controllers;
 use App\Models\MailRecord;
 use App\Middleware\AuthMiddleware;
 use App\Models\User;
+use PDO;
 
 /**
  * Class MailController
@@ -292,42 +293,46 @@ class MailController extends Controller {
      *
      * @return void
      */
-    public function postage() {
+    public function postage()
+    {
         AuthMiddleware::requireLogin();
         $this->setGlobalViewData();
-        
-        // 定義郵資費率表
-        $postageRates = [
-            '掛號' => ['本島' => 33, '離島' => 38],
-            '黑貓' => ['常溫' => 65, '冷藏' => 90, '冷凍' => 120],
-            '新竹貨運' => ['一般' => 80, '快遞' => 120]
-        ];
-        
-        $result = null;
-        // 處理查詢請求
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $mailType = $_POST['mail_type'] ?? '';
-            $destination = $_POST['destination'] ?? '';
-            $weight = floatval($_POST['weight'] ?? 0);
-            
-            if ($mailType && $destination) {
-                $baseRate = $postageRates[$mailType][$destination] ?? 0;
-                if ($baseRate > 0) {
-                    $result = [
-                        'mail_type' => $mailType,
-                        'destination' => $destination,
-                        'weight' => $weight,
-                        'base_rate' => $baseRate,
-                        'total_rate' => $this->calculatePostage($baseRate, $weight, $mailType)
-                    ];
+        require_once __DIR__ . '/../Models/PostageQuery.php';
+        $user = AuthMiddleware::getCurrentUser();
+        $isGeneralAffair = false;
+        $selfName = '';
+        if ($user && isset($user['name'])) {
+            $name = $user['name'];
+            if (strpos($name, '-') !== false) {
+                $parts = explode('-', $name, 2);
+                $department = $parts[0];
+                $selfName = $parts[1];
+                if (strpos($department, '總務') !== false) {
+                    $isGeneralAffair = true;
                 }
+            } else {
+                $selfName = $name;
             }
         }
-        
+        $filters = [];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $filters['receiver_name'] = trim($_POST['receiver_name'] ?? '');
+            $filters['tracking_number'] = trim($_POST['tracking_number'] ?? '');
+            $filters['original_tracking'] = trim($_POST['original_tracking'] ?? '');
+            $filters['order_id'] = trim($_POST['order_id'] ?? '');
+            $filters['start_date'] = trim($_POST['start_date'] ?? '');
+            $filters['end_date'] = trim($_POST['end_date'] ?? '');
+        }
+        // 權限控制：非總務只能查收件人等於自己姓名的資料
+        if (!$isGeneralAffair) {
+            $filters['receiver_name'] = $selfName;
+        }
+        $model = new \App\Models\PostageQuery();
+        $records = $model->search($filters);
         $this->view('mail/postage', [
             'title' => '郵資查詢',
-            'postageRates' => $postageRates,
-            'result' => $result
+            'records' => $records,
+            'filters' => $filters
         ]);
     }
     
@@ -437,6 +442,64 @@ class MailController extends Controller {
             'records' => $records,
             'filters' => $filters
         ]);
+    }
+
+    /**
+     * 郵資匯入（僅總務可用）
+     */
+    public function postageImport()
+    {
+        $user = \App\Middleware\AuthMiddleware::getCurrentUser();
+        $isGeneralAffair = false;
+        if ($user && isset($user['name'])) {
+            $name = trim(mb_strtolower($user['name'], 'UTF-8'));
+            $name = str_replace(['　', ' '], '', $name); // 全形空白、半形空白
+            $parts = explode('-', $name, 2);
+            $department = $parts[0];
+            if (strpos($department, '總務') !== false) {
+                $isGeneralAffair = true;
+            }
+        }
+        if (!$isGeneralAffair) {
+            header('Location: /');
+            exit;
+        }
+        $result = null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csv_file'])) {
+            $file = $_FILES['csv_file'];
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                $tmpPath = $file['tmp_name'];
+                $destPath = __DIR__ . '/../../uploads/postage_import_' . time() . '.csv';
+                move_uploaded_file($tmpPath, $destPath);
+                $model = new \App\Models\PostageImport();
+                $result = $model->batchImport($destPath);
+            } else {
+                $result = ['imported' => 0, 'errors' => ['檔案上傳失敗']];
+            }
+        }
+        $this->view('mail/postage-import', [
+            'title' => '郵資匯入',
+            'result' => $result
+        ]);
+    }
+
+    /**
+     * 郵資查詢（使用 PostageQuery model，支援條件查詢）
+     */
+    public function postageQuery()
+    {
+        AuthMiddleware::requireLogin();
+        $this->setGlobalViewData();
+        require_once __DIR__ . '/../Models/PostageQuery.php';
+        $model = new \App\Models\PostageQuery();
+        $db = \App\Models\Database::getInstance();
+        $conn = $db->getConnection();
+        echo '目前 PHP 連線的資料庫：';
+        echo $conn->query('SELECT DATABASE()')->fetchColumn();
+        echo '<br>Table list: ';
+        print_r($conn->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN));
+        $records = $model->search([]);
+        echo '<pre>'; print_r($records); echo '</pre>'; die();
     }
 
     /**
