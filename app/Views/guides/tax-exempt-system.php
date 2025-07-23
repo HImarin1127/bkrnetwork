@@ -182,7 +182,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-file-earmark-bar-graph-fill me-2 text-primary"></i> 文化部圖書免稅系統操作總說明</h3>
             <div class="section-content">
                 <p>此為免稅系統的整體操作總覽說明。</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/tax-exempt/文化部圖書免稅系統操作說明.pdf" target="_blank" class="btn btn-primary">
+                <a href="http://qrcode.bookrep.com.tw/taxfree_guide" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看總說明
                 </a>
             </div>
@@ -192,7 +192,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-pencil-square me-2 text-primary"></i> 單筆 EAN 指對教學</h3>
             <div class="section-content">
                 <p>此文件說明如何在免稅系統中進行單筆 EAN 的指對操作。</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/tax-exempt/文化部免稅系統操作教學_單筆EAN指對.pdf" target="_blank" class="btn btn-primary">
+                <a href="http://qrcode.bookrep.com.tw/taxfree_single" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看單筆操作教學
                 </a>
             </div>
@@ -202,7 +202,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-journals me-2 text-primary"></i> 批次 EAN 指對教學</h3>
             <div class="section-content">
                 <p>此文件說明如何在免稅系統中進行批次的 EAN 指對操作。</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/tax-exempt/文化部免稅系統操作教學_批次EAN指對.pdf" target="_blank" class="btn btn-primary">
+                <a href="http://qrcode.bookrep.com.tw/taxfree_multiple" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看批次操作教學
                 </a>
             </div>

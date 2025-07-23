@@ -102,7 +102,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-x-circle-fill me-2 text-danger"></i> 無法列印的排除</h3>
             <div class="section-content">
                 <p>當您無法正常列印文件時，請參考此文件進行問題排除。</p>
-                <a href="https://drive.google.com/file/d/17npYigoNRPp7xJ_H-ub06g0j12oZu0Oe/view"
+                <a href="http://qrcode.bookrep.com.tw/ptinter_unable"
                    target="_blank"
                    rel="noopener noreferrer"
                    class="btn btn-primary">
@@ -115,7 +115,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-cloud-slash-fill me-2 text-warning"></i> 印表機離線的處理方式</h3>
             <div class="section-content">
                 <p>當印表機顯示為離線狀態時，請參考此文件進行處理。</p>
-                <a href="https://drive.google.com/file/d/1teewxc-3j5YpdzrppmrhfqXPQgQj4UTj/view"
+                <a href="http://qrcode.bookrep.com.tw/printer_offline"
                    target="_blank"
                    rel="noopener noreferrer"
                    class="btn btn-primary">

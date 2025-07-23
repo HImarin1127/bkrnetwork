@@ -102,7 +102,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-printer-fill me-2 text-primary"></i> 檔案列印</h3>
             <div class="section-content">
                 <p>關於如何使用印表機進行文件列印，請參考以下操作手冊：</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/printer/檔案列印.pdf" target="_blank" class="btn btn-primary">
+                <a href="http://qrcode.bookrep.com.tw/printer_print" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看列印教學
                 </a>
             </div>
@@ -112,7 +112,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-scanner-fill me-2 text-primary"></i> 檔案掃描</h3>
             <div class="section-content">
                 <p>關於如何使用印表機將實體文件掃描為電子檔，請參考以下操作手冊：</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/printer/檔案掃描.pdf" target="_blank" class="btn btn-primary">
+                <a href="http://qrcode.bookrep.com.tw/printer_scan" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看掃描教學
                 </a>
             </div>
@@ -122,7 +122,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-fax-fill me-2 text-primary"></i> 檔案傳真</h3>
             <div class="section-content">
                 <p>關於如何使用印表機發送傳真，請參考以下操作手冊：</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/printer/檔案傳真.pdf" target="_blank" class="btn btn-primary">
+                <a href="http://qrcode.bookrep.com.tw/printer_fax" target="_blank" class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看傳真教學
                 </a>
             </div>

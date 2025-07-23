@@ -94,7 +94,7 @@ $pageTitle = "取消 Windows 自動更新"; // 定義頁面標題
             
             <p class="card-text mb-4">點擊下方按鈕，開啟操作說明文件。</p>
             
-            <a href="https://drive.google.com/file/d/1hU_VjpGYNR1XOViC8V_hEigm2FJEC7sm/view?usp=sharing"
+            <a href="http://qrcode.bookrep.com.tw/windows_not_update"
                class="btn btn-primary btn-lg" target="_blank">
                 <i class="bi bi-box-arrow-up-right"></i> 開啟文件
             </a>

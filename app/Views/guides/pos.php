@@ -164,7 +164,7 @@ $pageTitle = "崧月 POS 收銀機操作手冊";
             </p>
         </div>
 
-        <div class="text-center"> <a href="<?php echo $baseUrl; ?>/assets/files/pos/收銀機操作手冊.pdf"
+        <div class="text-center"> <a href="http://qrcode.bookrep.com.tw/pos_guide"
                target="_blank"
                class="btn btn-primary">
                 <i class="bi bi-file-earmark-arrow-down-fill me-2"></i> 下載或線上檢視 PDF

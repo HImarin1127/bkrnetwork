@@ -166,7 +166,7 @@ $pageTitle = "MF2000 出缺勤管理";
                     <i class="bi bi-clock-fill me-2"></i> 加班申請
                 </h5>
                 <p class="card-text">加班申請流程的操作說明。</p>
-                <a href="https://drive.google.com/file/d/10dkgFitQWI6WPf_At4lZY-cUNRauGhqd/view?usp=sharing"
+                <a href="http://qrcode.bookrep.com.tw/mf2000_workot"
                    class="btn btn-primary" target="_blank">
                     <i class="bi bi-book-fill"></i> 閱讀文件
                 </a>
@@ -179,7 +179,7 @@ $pageTitle = "MF2000 出缺勤管理";
                     <i class="bi bi-fingerprint me-2"></i> 忘刷補登
                 </h5>
                 <p class="card-text">忘記刷卡時的補登申請流程。</p>
-                <a href="https://drive.google.com/file/d/1_0HzSaIk-sQWtlXI2-uL34eclaQJPh4O/view?usp=sharing"
+                <a href="http://qrcode.bookrep.com.tw/mf2000_regist"
                    class="btn btn-primary" target="_blank">
                     <i class="bi bi-book-fill"></i> 閱讀文件
                 </a>
@@ -192,7 +192,7 @@ $pageTitle = "MF2000 出缺勤管理";
                     <i class="bi bi-person-x-fill me-2"></i> 請假流程 (含寄信)
                 </h5>
                 <p class="card-text">完整的請假申請流程，包含系統操作與郵件通知。</p>
-                <a href="https://drive.google.com/file/d/1CW_c3sBq5O2XUlHO7JNpUtntQDCsm6t5/view?usp=sharing"
+                <a href="http://qrcode.bookrep.com.tw/mf2000_ask_for_leave"
                    class="btn btn-primary" target="_blank">
                     <i class="bi bi-book-fill"></i> 閱讀文件
                 </a>
@@ -205,7 +205,7 @@ $pageTitle = "MF2000 出缺勤管理";
                     <i class="bi bi-person-x me-2"></i> 請假流程 (純操作)
                 </h5>
                 <p class="card-text">僅包含系統操作部分的請假申請流程說明。</p>
-                <a href="https://drive.google.com/file/d/1iShvFKODW5mCzgshDhpXKKnS_hwlgjSV/view?usp=sharing"
+                <a href="http://qrcode.bookrep.com.tw/mf2000_ask_for_leave_operate"
                    class="btn btn-primary" target="_blank">
                     <i class="bi bi-book-fill"></i> 閱讀文件
                 </a>

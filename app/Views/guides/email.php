@@ -137,7 +137,7 @@ $pageType = "guides"; // For sidebar highlighting
             <h3><i class="bi bi-key-fill me-2 text-primary"></i> 變更密碼及自動回信教學</h3>
             <div class="section-content">
                 <p>如果您需要變更信箱密碼，或設定休假時的自動回覆，請參考以下教學文件：</p>
-                <a href="<?php echo BASE_URL; ?>assets/files/email/10.公司信箱變更密碼及自動回信教學.pdf"
+                <a href="http://qrcode.bookrep.com.tw/mail_change_automatic"
                    target="_blank"
                    class="btn btn-primary">
                     <i class="bi bi-file-earmark-arrow-down me-2"></i> 查看教學文件

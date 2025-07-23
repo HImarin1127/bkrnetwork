@@ -110,4 +110,15 @@ class FormsController extends Controller {
             'title' => '設備採購申請'
         ]);
     }
+
+    /**
+     * 顯示 QRcode 申請頁面。
+     *
+     * @return void
+     */
+    public function qrcode() {
+        $this->view('forms/qrcode', [
+            'title' => 'QRcode 申請'
+        ]);
+    }
 } 

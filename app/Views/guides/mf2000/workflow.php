@@ -145,7 +145,7 @@ $pageTitle = "MF2000 公文";
                     <i class="bi bi-file-earmark-check-fill me-2 text-primary"></i> MF2000 公文簽核
                 </h5>
                 <p class="card-text">MF2000 公文簽核流程與操作說明文件。</p>
-                <a href="https://drive.google.com/file/d/1ag9s8c_zjk34i5MIUq0FLl_FpdEhuQDL/view?usp=drive_link"
+                <a href="http://qrcode.bookrep.com.tw/mf2000_docm"
                    class="btn btn-primary" target="_blank">
                     <i class="bi bi-book-fill"></i> 閱讀文件
                 </a>
