@@ -216,11 +216,25 @@ class Announcement extends Model {
      * @return bool 上傳成功回傳 true
      */
     public function uploadAttachment($announcementId, $fileInfo) {
-        $uploadDir = __DIR__ . '/../../uploads/announcements/';
+        // 根據環境選擇目錄名稱（Linux 使用英文，Windows 使用中文）
+        $isLinux = (PHP_OS_FAMILY === 'Linux' || strpos(__DIR__, '/var/www') !== false);
+        $dirName = $isLinux ? 'announcements' : '最新公告區';
+        
+        $uploadDir = __DIR__ . '/../../uploads/' . $dirName . '/';
+        $webPath = 'uploads/' . $dirName . '/';
         
         // 建立上傳目錄
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+            if (!mkdir($uploadDir, 0755, true)) {
+                error_log("無法建立上傳目錄: {$uploadDir}");
+                return false;
+            }
+        }
+        
+        // 檢查目錄是否可寫入
+        if (!is_writable($uploadDir)) {
+            error_log("上傳目錄沒有寫入權限: {$uploadDir}");
+            return false;
         }
         
         // 產生唯一檔名
@@ -229,13 +243,18 @@ class Announcement extends Model {
         
         // 移動檔案
         if (move_uploaded_file($fileInfo['tmp_name'], $filePath)) {
+            // 設定檔案權限
+            chmod($filePath, 0644);
+            
             // 更新公告的附件資訊
             $updateData = [
-                'attachment_url' => 'uploads/announcements/' . $fileName,
+                'attachment_url' => $webPath . $fileName,
                 'attachment_name' => $fileInfo['name']
             ];
             
             return $this->updateAnnouncement($announcementId, $updateData);
+        } else {
+            error_log("檔案上傳失敗: 無法移動 {$fileInfo['tmp_name']} 到 {$filePath}");
         }
         
         return false;

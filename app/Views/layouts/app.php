@@ -1,3 +1,10 @@
+<?php
+// 確保 $baseUrl 一定有值
+if (!isset($baseUrl) || !$baseUrl) {
+    $baseUrl = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
+    if ($baseUrl === '' || $baseUrl === '/') $baseUrl = '/bkrnetwork';
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -224,19 +231,6 @@
             background: rgba(244, 244, 244, 0.95);
             padding: 8px;
             transition: all 0.3s ease;
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
         }
 
         .logo-text {
@@ -250,7 +244,7 @@
         /* 主導覽選單 */
         .main-nav {
             position: absolute;
-            left: 25%;
+            left: 30%;
             top: 50%;
             transform: translateY(-50%);
             z-index: 1001;
@@ -761,6 +755,12 @@
             background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: max-width 0.3s ease; /* 新增過渡效果 */
+        }
+
+        /* 寬版內容區域 */
+        .main-content-wide {
+            max-width: 95%;
         }
 
         /* Flash 訊息樣式 */
@@ -815,7 +815,6 @@
                 <div class="user-info">
                     <span><?php echo htmlspecialchars($currentUser['username']); ?>，歡迎您！<?php echo htmlspecialchars($currentUser['name'] ?? $currentUser['username']); ?></span>
                     <?php if ($isAdmin): ?>
-                        <a href="<?php echo $baseUrl; ?>/admin" class="admin-link">管理後台</a>
                     <?php endif; ?>
                     <?php 
                     // 檢查是否有公告管理權限（使用已載入的變數）
@@ -848,12 +847,12 @@
             <nav class="main-nav">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="<?php echo $baseUrl; ?>/" class="nav-link">
-                            <span class="icon">🏠</span>
-                            <span>首頁</span>
-                        </a>
-                    </li>
-                    
+                        <!--<a href="<?php echo $baseUrl; ?>/" class="nav-link"> 
+                            <span class="icon">🏠</span> 
+                            <span>首頁</span> 
+                        </a>--> 
+                    </li> 
+ 
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link">
                             <span class="icon">📢</span>
@@ -865,6 +864,7 @@
                             <li><a href="<?php echo $baseUrl; ?>/announcements/holidays">假日資訊</a></li>
                             <!--<li><a href="<?php echo $baseUrl; ?>/announcements/handbook">員工手冊</a></li>-->
                             <li><a href="<?php echo $baseUrl; ?>/group-announcements">集團公告</a></li>
+                            <li><a href="<?php echo $baseUrl; ?>/external-guides">操作指引(外部)</a></li>
                         </ul>
                     </li>
                     
@@ -885,8 +885,20 @@
                                     <li><a href="<?php echo $baseUrl; ?>/mail/request">寄件登記</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/import">寄件匯入</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/outgoing-records">寄件記錄</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/mail/incoming-register">收件登記</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/mail/incoming-records">收件記錄</a></li>
+                                    <?php 
+                                    $isGeneralAffairMenu = false;
+                                    if (isset($currentUser['name'])) {
+                                        $name = trim(mb_strtolower($currentUser['name'], 'UTF-8'));
+                                        $name = str_replace(['　', ' '], '', $name); // 全形空白、半形空白
+                                        $parts = explode('-', $name, 2);
+                                        $department = $parts[0];
+                                        if (strpos($department, '總務') !== false) {
+                                            $isGeneralAffairMenu = true;
+                                        }
+                                    }
+                                    if ($isGeneralAffairMenu): ?>
+                                        <li><a href="<?php echo $baseUrl; ?>/mail/postage-import">國揚匯入</a></li>
+                                    <?php endif; ?>
                                     <li><a href="<?php echo $baseUrl; ?>/mail/postage">郵資查詢</a></li>
                                 </ul>
                             </li>
@@ -897,11 +909,11 @@
                                 </a>
                                 <ul class="submenu">
                                     <li><a href="<?php echo $baseUrl; ?>/forms/personnel-onboard">人員到職</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/personnel-transfer">人員調動</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/personnel-resignation">離職程序</a></li>
+                                    <!--<li><a href="<?php echo $baseUrl; ?>/forms/personnel-transfer">人員調動</a></li>-->
+
                                 </ul>
                             </li>
-                            <li class="dropdown-submenu">
+                            <!--<li class="dropdown-submenu">
                                 <a href="#">
                                     設備管理
                                     <span class="submenu-arrow">▶</span>
@@ -910,20 +922,17 @@
                                     <li><a href="<?php echo $baseUrl; ?>/forms/equipment-purchase">設備採購</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/forms/equipment-disposal">設備報廢</a></li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li class="dropdown-submenu">
                                 <a href="#">
                                     系統權限申請
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/mf2000">erp系統</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/nas">公區權限</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/email">公司EMAIL</a></li>
-                                    <li><a href="<?php echo $baseUrl; ?>/forms/vpn">VPN權限申請</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/forms/songyue-ticket">崧月工單</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/forms/info-ticket">資訊工單</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<?php echo $baseUrl; ?>/forms/it-training">資訊部基礎教育</a></li>
                             <li><a href="<?php echo $baseUrl; ?>/forms/qrcode">QRcode申請</a></li>
                         </ul>
                     </li>
@@ -936,7 +945,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo $baseUrl; ?>/booking/meeting-room">會議室預約</a></li>
-                            <li><a href="<?php echo $baseUrl; ?>/booking/equipment">設備預約</a></li>
+                            <!--<li><a href="<?php echo $baseUrl; ?>/booking/equipment">設備預約</a></li>-->
                         </ul>
                     </li>
                     <?php endif; ?>
@@ -949,7 +958,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <!--<li><a href="<?php echo $baseUrl; ?>/company" class="<?php echo ($pageId === 'company_index') ? 'active' : ''; ?>">公司簡介</a></li>-->
-                            <li><a href="<?php echo $baseUrl; ?>/company/floor" class="<?php echo ($pageId === 'company_floor') ? 'active' : ''; ?>">樓層資訊平面圖</a></li>
+                            <!--<li><a href="<?php echo $baseUrl; ?>/company/floor" class="<?php echo ($pageId === 'company_floor') ? 'active' : ''; ?>">樓層資訊平面圖</a></li>-->
                             <li><a href="<?php echo $baseUrl; ?>/company/contacts" class="<?php echo ($pageId === 'company_contacts') ? 'active' : ''; ?>">集團暨各社聯絡資訊</a></li>
                         </ul>
                     </li>
@@ -962,11 +971,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-submenu">
-                                <a href="#"><i class="fab fa-windows"></i>|<i class="fab fa-apple"></i> 相關
+                                <a href="#">
+                                    <span class="icon-group"> <i class="fab fa-windows"></i> / <i class="fab fa-apple"></i>相關 </span>
                                     <span class="submenu-arrow">▶</span>
                                 </a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote"><i class="fab fa-windows"></i>|<i class="fab fa-apple"></i> 遠端連線</a></li>
+                                    <li><a href="<?php echo $baseUrl; ?>/guides/windows/remote"><i class="fab fa-windows"></i> / <i class="fab fa-apple"></i> 遠端連線</a></li>
                                     <li><a href="<?php echo $baseUrl; ?>/guides/windows/update"><i class="fab fa-windows"></i> 取消自動更新手冊</a></li>
                                 </ul>
                             </li>
@@ -1023,7 +1033,7 @@
 
     <!-- 主要內容區域 -->
     <main class="main-layout">
-        <div class="main-content">
+        <div class="main-content <?php echo $layoutClass ?? ''; ?>">
             <?php
             // 顯示 Flash 訊息
             if (isset($_SESSION['flash_message'])) {
@@ -1084,7 +1094,6 @@
             // 桌面版的智能子選單定位
             if (window.innerWidth > 768) {
                 checkSubmenuPosition();
-                
                 // 監聽視窗大小改變（使用者縮放等）
                 window.addEventListener('resize', function() {
                     setTimeout(checkSubmenuPosition, 100);
@@ -1123,4 +1132,4 @@
         });
     </script>
 </body>
-</html> 
+</html>

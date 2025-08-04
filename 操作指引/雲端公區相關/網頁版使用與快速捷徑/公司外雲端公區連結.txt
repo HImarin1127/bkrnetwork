@@ -1,0 +1,5 @@
+公司外雲端公區連結
+設定完成後，您可以透過以下專屬連結從公司外：
+
+公區BKNAS1: http://QuickConnect.to/bknas61
+公區BKNAS2: http://QuickConnect.to/bknas62

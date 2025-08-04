@@ -69,6 +69,15 @@
                             <span class="btn-text">展開全文</span>
                         </button>
                     <?php endif; ?>
+                    <?php if (!empty($announcement['attachment_url'])): ?>
+                        <a href="<?php echo $baseUrl; ?>/<?php echo $announcement['attachment_url']; ?>" 
+                           target="_blank" 
+                           class="btn btn-attachment btn-sm"
+                           title="下載附件：<?php echo htmlspecialchars($announcement['attachment_name']); ?>">
+                            <span class="btn-icon">📎</span>
+                            <span class="btn-text">下載附件</span>
+                        </a>
+                    <?php endif; ?>
                 </div>
                 
                 <div class="announcement-reading-time">
@@ -85,6 +94,23 @@
                 </div>
                 <div class="full-content-body">
                     <?php echo nl2br(htmlspecialchars($announcement['content'])); ?>
+                    
+                    <?php if (!empty($announcement['attachment_url'])): ?>
+                    <div class="attachment-section">
+                        <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid #eee;">
+                        <h5 style="color: #C8102E; margin-bottom: 1rem;">📎 相關附件</h5>
+                        <div class="attachment-download">
+                            <a href="<?php echo $baseUrl; ?>/<?php echo $announcement['attachment_url']; ?>" 
+                               target="_blank" 
+                               class="attachment-link"
+                               title="下載附件">
+                                <span class="attachment-icon">📄</span>
+                                <span class="attachment-name"><?php echo htmlspecialchars($announcement['attachment_name']); ?></span>
+                                <span class="download-hint">點擊下載</span>
+                            </a>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -203,6 +229,73 @@
 
 .btn-text {
     font-size: 0.9rem;
+}
+
+.btn-attachment {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    color: white;
+    border: 2px solid #FF6B35;
+}
+
+.btn-attachment:hover {
+    background: linear-gradient(135deg, #E55A2B 0%, #E8821A 100%);
+    border-color: #E55A2B;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.attachment-section {
+    margin-top: 1.5rem;
+}
+
+.attachment-download {
+    background: rgba(200, 16, 46, 0.02);
+    border: 1px solid rgba(200, 16, 46, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.attachment-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #2d3748;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.attachment-link:hover {
+    background: rgba(200, 16, 46, 0.05);
+    color: #C8102E;
+    transform: translateX(5px);
+}
+
+.attachment-icon {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.attachment-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.download-hint {
+    font-size: 0.85rem;
+    color: #666;
+    background: rgba(200, 16, 46, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.attachment-link:hover .download-hint {
+    background: #C8102E;
+    color: white;
 }
 
 /* 響應式設計 */

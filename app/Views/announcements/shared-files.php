@@ -15,15 +15,15 @@ function formatBytes($bytes, $precision = 2) {
 
     <!-- 麵包屑導航 -->
     <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
-        <ol class="breadcrumb">
+        <div class="breadcrumb">
             <?php foreach ($breadcrumbs as $index => $breadcrumb): ?>
                 <?php if ($index < count($breadcrumbs) - 1): ?>
-                    <li class="breadcrumb-item"><a href="?route=/group-announcements&path=<?php echo urlencode($breadcrumb['path']); ?>"><?php echo htmlspecialchars($breadcrumb['name']); ?></a></li>
+                    <span class="breadcrumb-item"><a href="?route=/group-announcements&path=<?php echo urlencode($breadcrumb['path']); ?>"><?php echo htmlspecialchars($breadcrumb['name']); ?></a></span>
                 <?php else: ?>
-                    <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($breadcrumb['name']); ?></li>
+                    <span class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($breadcrumb['name']); ?></span>
                 <?php endif; ?>
             <?php endforeach; ?>
-        </ol>
+        </div>
     </nav>
 
     <?php if (isset($error)): ?>
@@ -45,8 +45,7 @@ function formatBytes($bytes, $precision = 2) {
             <!-- 顯示檔案 -->
             <?php if (!empty($files)): ?>
                 <?php foreach ($files as $file): ?>
-                    <a href="?route=/group-announcements/download&path=<?php echo urlencode($file['path']); ?>" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;">
-                        <i class="fas <?php 
+                    <a href="?route=/group-announcements/download&path=<?php echo urlencode($file['path']); ?>" target="_blank" class="list-group-item list-group-item-action" style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid #eee;">                        <i class="fas <?php 
                             switch ($file['type']) {
                                 case 'pdf': echo 'fa-file-pdf'; break;
                                 case 'doc': case 'docx': echo 'fa-file-word'; break;

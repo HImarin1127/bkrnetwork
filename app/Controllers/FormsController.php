@@ -110,4 +110,58 @@ class FormsController extends Controller {
             'title' => '設備採購申請'
         ]);
     }
+
+    /**
+     * 顯示 QRcode 申請頁面。
+     *
+     * @return void
+     */
+    public function qrcode() {
+        $this->view('forms/qrcode', [
+            'title' => 'QRcode 申請'
+        ]);
+    }
+
+    /**
+     * 顯示人員到職表單頁面。
+     * 包含三個部門的表單：財務部、人資部、資訊部
+     *
+     * @return void
+     */
+    public function personnelOnboard() {
+        $this->view('forms/personnel-onboard', [
+            'title' => '人員到職申請'
+        ]);
+    }
+
+    public function previewOnboard()
+    {
+        $data = $_POST;
+        // 將所有 POST 資料傳給 view
+        extract($data);
+        include __DIR__ . '/../Views/forms/personnel-onboard-preview.php';
+        exit;
+    }
+
+    /**
+     * 顯示崧月工單頁面
+     *
+     * @return void
+     */
+    public function songyueTicket() {
+        $this->view('forms/songyue-ticket', [
+            'title' => '崧月工單系統'
+        ]);
+    }
+
+    /**
+     * 顯示資訊工單頁面
+     *
+     * @return void
+     */
+    public function infoTicket() {
+        $this->view('forms/info-ticket', [
+            'title' => '資訊工單系統'
+        ]);
+    }
 } 

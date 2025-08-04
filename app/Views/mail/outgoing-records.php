@@ -1,8 +1,35 @@
 <div class="mail-records-container">
     <div class="page-header">
-        <h1>寄件查詢</h1>
-        <p>查看和管理寄件記錄</p>
+        <h1>外寄郵件記錄</h1>
+        <p>在這裡您可以查看、搜尋、和管理所有外寄郵件記錄。</p>
     </div>
+
+    <?php if (isset($isGeneralAffair) && $isGeneralAffair): ?>
+    <div class="guideline-container">
+        <h3 class="guideline-title">總務人員寄件流程</h3>
+        <div class="mermaid">
+            graph LR
+                A[Step 1: 寄件紀錄匯出CSV] --> B[Step 2: 至國陽系統匯入]
+                B --> C[Step 3: 從國陽系統<br>匯出郵資CSV檔]
+                C --> D[Step 4: 將CSV檔匯入郵資匯入]
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- 顯示成功和錯誤訊息 -->
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <div class="alert alert-success">
+            <?php echo htmlspecialchars($_SESSION['success_message']); ?>
+        </div>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <div class="alert alert-error">
+            <?php echo htmlspecialchars($_SESSION['error_message']); ?>
+        </div>
+        <?php unset($_SESSION['error_message']); ?>
+    <?php endif; ?>
 
     <!-- 搜尋功能 -->
     <div class="search-section">
@@ -10,10 +37,27 @@
             <div class="search-input-group">
                 <input type="text" name="search" placeholder="搜尋收件者、地址、寄件者..." 
                        value="<?php echo htmlspecialchars($keyword); ?>" class="search-input">
+                
+                <!-- 開始日期時間 -->
+                <div class="datetime-group">
+                    <label>開始時間：</label>
+                    <input type="date" name="start_date" value="<?php echo htmlspecialchars($startDate ?? ''); ?>" class="search-input date-input">
+                    <input type="time" name="start_time" value="<?php echo htmlspecialchars($startTime ?? ''); ?>" class="search-input time-input">
+                </div>
+                
+                <span style="font-weight:bold; margin: 0 0.5rem;">～</span>
+                
+                <!-- 結束日期時間 -->
+                <div class="datetime-group">
+                    <label>結束時間：</label>
+                    <input type="date" name="end_date" value="<?php echo htmlspecialchars($endDate ?? ''); ?>" class="search-input date-input">
+                    <input type="time" name="end_time" value="<?php echo htmlspecialchars($endTime ?? ''); ?>" class="search-input time-input">
+                </div>
+                
                 <button type="submit" class="search-btn">
                     <i class="icon">🔍</i> 搜尋
                 </button>
-                <?php if (!empty($keyword)): ?>
+                <?php if (!empty($keyword) || !empty($startDate) || !empty($endDate) || !empty($startTime) || !empty($endTime)): ?>
                     <a href="<?php echo $baseUrl; ?>/mail/outgoing-records" class="clear-btn">
                         <i class="icon">✖</i> 清除
                     </a>
@@ -31,11 +75,21 @@
             <a href="<?php echo $baseUrl; ?>/mail/import" class="btn btn-secondary">
                 <i class="icon">📥</i> 批次匯入
             </a>
-            <?php if ($isAdmin): ?>
-                <a href="<?php echo $baseUrl; ?>/mail/outgoing-records?export=1" class="btn btn-success">
-                    <i class="icon">📊</i> 匯出 CSV
-                </a>
-            <?php endif; ?>
+            <?php
+                // 匯出按鈕參數組合
+                $exportParams = [];
+                if (!empty($keyword)) $exportParams[] = 'search=' . urlencode($keyword);
+                if (!empty($startDate)) $exportParams[] = 'start_date=' . urlencode($startDate);
+                if (!empty($endDate)) $exportParams[] = 'end_date=' . urlencode($endDate);
+                if (!empty($startTime)) $exportParams[] = 'start_time=' . urlencode($startTime);
+                if (!empty($endTime)) $exportParams[] = 'end_time=' . urlencode($endTime);
+                $exportQuery = $exportParams ? ('&' . implode('&', $exportParams)) : '';
+            ?>
+                         <?php if ($isAdmin): ?>
+                 <a href="<?php echo $baseUrl; ?>/mail/outgoing-records?export=1<?php echo $exportQuery; ?>" class="btn btn-success">
+                     <i class="icon">📊</i> 匯出掛號記錄 CSV
+                 </a>
+             <?php endif; ?>
         </div>
         
         <div class="stats-info">
@@ -67,7 +121,7 @@
                             <th>申報單位</th>
                             <th>登記時間</th>
                             <th>狀態</th>
-                            <?php if ($isAdmin): ?>
+                            <?php if (isset($canEdit) && $canEdit): ?>
                                 <th>操作</th>
                             <?php endif; ?>
                         </tr>
@@ -118,17 +172,19 @@
                                         <?php echo htmlspecialchars($record['status'] ?? '處理中'); ?>
                                     </span>
                                 </td>
-                                <?php if ($isAdmin): ?>
+                                <?php if (isset($canEdit) && $canEdit): ?>
                                     <td class="actions-cell">
                                         <div class="action-buttons-inline">
-                                            <a href="<?php echo $baseUrl; ?>/mail/edit?id=<?php echo $record['id']; ?>" 
+                                            <a href="<?php echo $baseUrl; ?>/mail/edit?mail_code=<?php echo urlencode($record['mail_code']); ?>" 
                                                class="btn-icon btn-edit" title="編輯">
                                                 ✏️
                                             </a>
-                                            <button onclick="deleteRecord(<?php echo $record['id']; ?>)" 
+                                            <?php if ($isAdmin): ?>
+                                            <button onclick="deleteRecord('<?php echo htmlspecialchars($record['mail_code']); ?>')" 
                                                     class="btn-icon btn-delete" title="刪除">
                                                 🗑️
                                             </button>
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 <?php endif; ?>
@@ -141,11 +197,37 @@
     </div>
 </div>
 
+<form id="deleteForm" method="POST" style="display:none;">
+    <input type="hidden" name="mail_code" id="deleteMailCode">
+</form>
 <style>
+/* 樣式優化 */
 .mail-records-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    background: #f9f9f9;
+    min-height: 100vh;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
 }
 
 .page-header {
@@ -154,7 +236,7 @@
 }
 
 .page-header h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #C8102E;
     margin-bottom: 0.5rem;
 }
@@ -165,22 +247,18 @@
 }
 
 .search-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(200, 16, 46, 0.1);
     margin-bottom: 2rem;
 }
 
-.search-form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 .search-input-group {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .search-input {
@@ -282,9 +360,9 @@
 }
 
 .records-list {
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(200, 16, 46, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
 
@@ -319,11 +397,12 @@
 }
 
 .records-table th {
-    background: linear-gradient(135deg, #C8102E, #8B0000);
-    color: white;
+    background: #f8f9fa;
+    color: #333;
     padding: 1rem 0.75rem;
     text-align: left;
     font-weight: 600;
+    border-bottom: 2px solid #e1e5e9;
     white-space: nowrap;
 }
 
@@ -435,7 +514,7 @@
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.3s ease;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .btn-edit:hover {
@@ -444,6 +523,21 @@
 
 .btn-delete:hover {
     background: rgba(220, 53, 69, 0.1);
+}
+
+.guideline-container {
+    background-color: #f0f8ff;
+    border: 1px solid #cce5ff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.guideline-title {
+    font-size: 1.5rem;
+    color: #004085;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 /* 響應式設計 */
@@ -480,10 +574,33 @@
 }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
-function deleteRecord(id) {
+    mermaid.initialize({ startOnLoad: true });
+</script>
+
+<script>
+function deleteRecord(mailCode) {
+    console.log('Delete function called with mailCode:', mailCode);
+    console.log('Base URL:', '<?php echo $baseUrl; ?>');
+    
     if (confirm('確定要刪除這筆寄件記錄嗎？')) {
-        window.location.href = '<?php echo $baseUrl; ?>/mail/delete?id=' + id;
+        const form = document.getElementById('deleteForm');
+        const mailCodeInput = document.getElementById('deleteMailCode');
+        
+        if (!form || !mailCodeInput) {
+            console.error('Form elements not found');
+            alert('錯誤：表單元素未找到');
+            return;
+        }
+        
+        mailCodeInput.value = mailCode;
+        form.action = '<?php echo $baseUrl; ?>/mail/delete';
+        
+        console.log('Form action set to:', form.action);
+        console.log('Mail code set to:', mailCodeInput.value);
+        
+        form.submit();
     }
 }
 </script> 

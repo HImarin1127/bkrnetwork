@@ -1,0 +1,6 @@
+雲端公區密碼重設
+忘記密碼或是更新密碼。
+
+忘記密碼
+雲端公區忘記密碼: qrcode.bookrep.com.tw/forgot-pwd
+NASOUT忘記密碼(外部檔案交換的ftp): qrcode.bookrep.com.tw/naspwd

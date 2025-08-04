@@ -190,6 +190,27 @@ abstract class Controller {
     }
     
     /**
+     * 獲取應用程式的基礎路徑（只包含路徑部分）。
+     *
+     * @return string 應用程式的基礎路徑 (例如 /bkrnetwork)。
+     */
+    protected function getBasePath() {
+        $script = $_SERVER['SCRIPT_NAME'];
+        $path = dirname($script);
+        
+        $path = str_replace('\\', '/', $path);
+        
+        // 如果專案在根目錄，路徑為空字串
+        if ($path === '/' || $path === '') {
+            $path = '';
+        } else {
+            $path = rtrim($path, '/');
+        }
+        
+        return $path;
+    }
+    
+    /**
      * 設定所有視圖共用的全域變數。
      *
      * 這些變數會被自動注入到所有透過 `view()` 方法渲染的視圖中。
@@ -200,7 +221,7 @@ abstract class Controller {
         $this->viewData['currentUser'] = $this->getCurrentUser();
         $this->viewData['isLoggedIn'] = $this->isLoggedIn();
         $this->viewData['isAdmin'] = $this->isAdmin();
-        $this->viewData['baseUrl'] = $this->getBaseUrl();
+        $this->viewData['baseUrl'] = $this->getBasePath(); // 只取路徑部分，不包含協議和主機名
         
         // 檢查使用者是否擁有管理公告的權限
         $this->viewData['canManageAnnouncements'] = false;

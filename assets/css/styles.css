@@ -1003,3 +1003,93 @@ tr:last-child td {
     background: rgba(200,16,46,0.2);
     color: #2d3748;
 }
+
+/* 專屬 guides 操作指引頁面樣式 */
+.guides-page {
+    font-size: 18px;
+    background: #fff;
+    color: #48494B;
+    font-family: 'Segoe UI', 'Microsoft JhengHei', Arial, sans-serif;
+}
+.guides-page h1, .guides-page h2, .guides-page h3, .guides-page h4 {
+    color: #C8102E;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.guides-page h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+}
+.guides-page h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+.guides-page h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+}
+.guides-page .card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(200,16,46,0.08), 0 1.5px 6px rgba(72,73,75,0.08);
+    border: 1.5px solid #C8102E22;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.2s;
+}
+.guides-page .card:hover {
+    box-shadow: 0 8px 32px rgba(200,16,46,0.18), 0 3px 12px rgba(72,73,75,0.12);
+}
+.guides-page .card-header {
+    background: #C8102E;
+    color: #fff;
+    border-radius: 18px 18px 0 0;
+    padding: 1rem 1.5rem;
+}
+.guides-page .card-header h3 {
+    color: #fff;
+    margin: 0;
+}
+.guides-page .card-body {
+    padding: 1.5rem;
+}
+.guides-page .btn {
+    background: #C8102E;
+    color: #fff !important;
+    border: none;
+    border-radius: 25px;
+    padding: 0.7rem 1.7rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(200,16,46,0.10);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+.guides-page .btn:hover {
+    background: #a50d24;
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 16px rgba(200,16,46,0.18);
+}
+.guides-page .btn i {
+    margin-right: 8px;
+}
+.guides-page a {
+    color: #C8102E;
+    text-decoration: underline;
+}
+.guides-page a:hover {
+    color: #a50d24;
+}
+@media (max-width: 768px) {
+    .guides-page {
+        font-size: 16px;
+    }
+    .guides-page .card-body {
+        padding: 1rem;
+    }
+    .guides-page h1 {
+        font-size: 1.5rem;
+    }
+}

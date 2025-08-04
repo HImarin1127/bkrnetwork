@@ -1,24 +1,29 @@
 <div class="guide-container">
     <div class="page-header">
-        <h1>NAS 使用指南</h1>
+        <h1>雲端公區忘記密碼</h1>
         <p class="page-subtitle">網路附加儲存 (NAS) 相關說明與資源</p>
     </div>
 
     <div class="guide-content">
         <div class="content-card">
-            <h2>NAS 公區相關</h2>
+            <h2>雲端公區密碼重設</h2>
             <div class="section-content">
-                <p>這裡提供 NAS 相關的資源與連結。</p>
+                <p>忘記密碼或是更新密碼。</p>
                 
                 <div class="link-section">
                     <h3>忘記密碼</h3>
                     <ul>
                         <li>
-                            <strong>NAS忘記密碼:</strong>
+                            <strong>雲端公區忘記密碼:</strong>
                             <a href="http://qrcode.bookrep.com.tw/forgot-pwd" target="_blank">qrcode.bookrep.com.tw/forgot-pwd</a>
                         </li>
+                    </ul>
+                </div>
+
+                               <div class="link-section">
+                    <ul>
                         <li>
-                            <strong>NASOUT忘記密碼:</strong>
+                            <strong>NASOUT忘記密碼(外部檔案交換的ftp):</strong>
                             <a href="http://qrcode.bookrep.com.tw/naspwd" target="_blank">qrcode.bookrep.com.tw/naspwd</a>
                         </li>
                     </ul>
@@ -26,6 +31,7 @@
             </div>
         </div>
     </div>
+        
 </div>
 
 <style>

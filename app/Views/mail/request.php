@@ -32,7 +32,21 @@
     </div>
 <?php endif; ?>
 
-<form method="POST" action="<?php echo $baseUrl; ?>/mail/request" class="content-card compact-form">
+<div class="main-content">
+    <div class="content-card">
+        <h2 class="form-title">寄件登記</h2>
+        
+        <div class="guideline-container">
+            <h3 class="guideline-title">一般使用者寄件流程</h3>
+            <div class="mermaid">
+                graph LR
+                    A[Step 1: 登記/匯入資料] --> B[Step 2: 將物品送至8F]
+                    B --> C[Step 3: 至寄件紀錄<br>查看是否成功]
+                    C --> D[Step 4: 至郵資查詢<br>查看郵資]
+            </div>
+        </div>
+
+        <form id="mail-request-form" action="<?php echo $baseUrl; ?>/mail/request" method="post">
     <!-- 緊湊型表單佈局 - 一次顯示所有欄位 -->
     <div class="form-container">
         <!-- 第一行：寄件方式 -->
@@ -95,7 +109,7 @@
         <!-- 第五行：費用申報單位和登記者 -->
         <div class="form-row">
             <div class="form-group">
-                <label for="declare_department" class="form-label">💰 費用申報單位 <span class="required">*</span></label>
+                <label for="declare_department" class="form-label">💰 郵資掛帳單位 <span class="required">*</span></label>
                 <input type="text" name="declare_department" id="declare_department" class="form-input"
                        value="<?php echo htmlspecialchars($formData['declare_department']); ?>" 
                        placeholder="請輸入申報單位名稱" required>
@@ -121,6 +135,8 @@
         </div>
     </div>
 </form>
+    </div>
+</div>
 
 <style>
 /* 緊湊型表單樣式 */
@@ -261,4 +277,24 @@
         padding: 1.5rem;
     }
 }
-</style> 
+
+.guideline-container {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.guideline-title {
+    font-size: 1.5rem;
+    color: #C8102E;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({ startOnLoad: true });
+</script> 

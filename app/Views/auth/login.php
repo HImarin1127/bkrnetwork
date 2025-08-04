@@ -37,13 +37,7 @@
             <form method="POST" action="<?php echo $baseUrl; ?>/login" class="auth-form">
                 <div class="login-options">
                     <div class="login-methods">
-                        <div class="method-badge ldap-badge">
-                            <span class="badge-icon">🌐</span>
-                            <span class="badge-text">LDAP 企業帳號登入</span>
-                        </div>
-                        <div class="method-info">
-                            <p>可使用公司域帳號或本地帳號登入</p>
-                        </div>
+
                     </div>
                 </div>
                 
@@ -53,11 +47,7 @@
                         <span class="input-icon">👤</span>
                         <input type="text" id="username" name="username" class="form-input" required 
                                value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>"
-                               placeholder="請輸入您的LDAP帳號或本地帳號">
-                    </div>
-                    <div class="field-hint">
-                        <span class="hint-icon">💡</span>
-                        <span class="hint-text">支援公司域帳號(LDAP)和本地帳號登入</span>
+                               placeholder="請輸入您的帳號">
                     </div>
                 </div>
                 
@@ -76,7 +66,7 @@
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary btn-full">
                         <span class="btn-icon">🚀</span>
-                        <span class="btn-text">安全登入</span>
+                        <span class="btn-text">登入</span>
                     </button>
                 </div>
             </form>
@@ -84,21 +74,9 @@
         
         <div class="auth-footer">
             <div class="auth-links">
-                <a href="<?php echo $baseUrl; ?>/register" class="auth-link">
-                    <span>➕</span> 申請新帳號
-                </a>
-                <a href="<?php echo $baseUrl; ?>/ldap-test" class="auth-link">
-                    <span>🔍</span> LDAP 測試工具
-                </a>
                 <a href="<?php echo $baseUrl; ?>/" class="auth-link">
                     <span>🏠</span> 返回首頁
                 </a>
-            </div>
-            <div class="auth-info">
-                <p class="info-text">
-                    <span class="info-icon">ℹ️</span>
-                    如有帳號問題，請聯繫資訊部門
-                </p>
             </div>
         </div>
     </div>

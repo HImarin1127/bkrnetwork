@@ -9,6 +9,7 @@ use App\Middleware\AuthMiddleware;
 use App\Models\User;
 use App\Models\Announcement;
 use App\Models\HolidayCalendar;
+use Exception;
 
 require_once __DIR__ . '/Controller.php';
 // 引入父類別 Controller.php，使用 require_once 確保只載入一次
@@ -294,8 +295,8 @@ class AdminController extends Controller {
 
             if ($announcementId) {
                 // 如果有上傳 PDF 檔案，進行處理
-                if (!empty($_FILES['attachment']['name']) && $this->userModel->canUploadPDF($currentUsername)) {
-                    $this->handlePDFUpload($announcementId, $_FILES['attachment']);
+                if (!empty($_FILES['pdf_attachment']['name']) && $this->userModel->canUploadPDF($currentUsername)) {
+                    $this->handlePDFUpload($announcementId, $_FILES['pdf_attachment']);
                 }
                 
                 $this->redirectWithSuccess(BASE_URL . '/admin/announcements', '公告已成功建立');

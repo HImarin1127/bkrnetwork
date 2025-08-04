@@ -1,47 +1,49 @@
 <div class="guide-container">
     <div class="page-header">
-        <h1>網頁版使用與二次驗證</h1>
-        <p class="page-subtitle">NAS 外部存取、二次驗證設定與相關資源</p>
+        <h1>網頁版使用與快速捷徑</h1>
     </div>
 
-    <div class="guide-content">
         <div class="content-card">
-            <h2>外部存取與二次驗證</h2>
+            <h2>公司外雲端公區連結</h2>
             <div class="section-content">
-                <p>為了確保帳戶安全，從公司外部網路存取 NAS 需要進行二次驗證。詳細設定請參考以下文件：</p>
-                <a href="https://drive.google.com/file/d/1y7BH12v9KewvwSpFqs0BkRkPAoh3Zg6Q/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                    <i class="fas fa-shield-alt"></i> NAS外部存取二次驗證 教學
-                </a>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <h2>外部存取入口</h2>
-            <div class="section-content">
-                <p>設定完成後，您可以透過以下專屬連結從外部網路存取公司 NAS：</p>
+                <p>設定完成後，您可以透過以下專屬連結從公司外：</p>
                 <ul>
                     <li>
-                        <strong>NAS外部存取-BKNAS1:</strong>
+                        <strong>公區BKNAS1:</strong>
                         <a href="http://QuickConnect.to/bknas61" target="_blank" rel="noopener noreferrer">http://QuickConnect.to/bknas61</a>
                     </li>
                     <li>
-                        <strong>NAS外部存取-BKNAS2:</strong>
+                        <strong>公區BKNAS2:</strong>
                         <a href="http://QuickConnect.to/bknas62" target="_blank" rel="noopener noreferrer">http://QuickConnect.to/bknas62</a>
                     </li>
                 </ul>
             </div>
         </div>
 
+    <div class="guide-content">
         <div class="content-card">
-            <h2>NAS 雲端捷徑</h2>
+            <h2>公司外使用與二次驗證</h2>
             <div class="section-content">
-                <p>為了方便您快速存取，可下載 NAS 的雲端捷徑：</p>
+                <p>為了確保帳號安全，從公司外使用公區需要進行二次驗證。詳細設定請參考以下文件：</p>
+                <a href="https://drive.google.com/file/d/1y7BH12v9KewvwSpFqs0BkRkPAoh3Zg6Q/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    公司外使用公區二次驗證 教學
+                </a>
+            </div>
+        </div>
+        <div class="content-card">
+            <h2>雲端公區捷徑</h2>
+            <div class="section-content">
+                <p>為了方便您快速使用，可以下載雲端捷徑：</p>
                  <a href="https://drive.bookrep.com.tw/nextcloud/index.php/s/EnXr7SJ2JBPJ2AG" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                     <i class="fas fa-cloud-download-alt"></i> NAS雲端捷徑下載
                 </a>
             </div>
         </div>
-    </div>
+
+
+        
+
+            </div>
 </div>
 
 <style>

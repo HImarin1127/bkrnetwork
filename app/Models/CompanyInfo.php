@@ -14,38 +14,37 @@ class CompanyInfo extends Model {
      * 
      * @return array 樓層配置資訊
      */
-    public function getFloorInfo() {
-        $sql = "SELECT * FROM floor_info ORDER BY floor_number DESC";
-        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-    }
+    // public function getFloorInfo() {
+    //     return $this->db->query('SELECT * FROM floor_info');
+    // }
 
     /**
      * 取得部門聯絡資訊
      * 
      * @return array 部門聯絡資訊
      */
-    public function getDepartmentContacts() {
-        $sql = "SELECT * FROM department_contacts ORDER BY floor_number DESC, department_name";
-        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-    }
+    // public function getDepartmentContacts() {
+    //     $sql = "SELECT * FROM department_contacts ORDER BY department_id DESC";
+    //     return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    // }
 
     /**
      * 取得員工座位資訊
      * 
      * @return array 員工座位資訊
      */
-    public function getEmployeeSeats() {
-        $sql = "SELECT * FROM employee_seats ORDER BY floor_number DESC, seat_number";
-        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-    }
+    // public function getEmployeeSeats() {
+    //     $sql = "SELECT * FROM employee_seats ORDER BY seat_id DESC";
+    //     return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    // }
 
     /**
      * 取得分機資訊
      * 
      * @return array 分機資訊
      */
-    public function getExtensionNumbers() {
-        $sql = "SELECT * FROM extension_numbers ORDER BY extension_number";
-        return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-    }
+    // public function getExtensionNumbers() {
+    //     $sql = "SELECT * FROM extension_numbers ORDER BY extension_id DESC";
+    //     return $this->db->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    // }
 } 

@@ -66,6 +66,10 @@ return [
     '/group-announcements' => ['GroupAnnouncementsController', 'sharedFiles'],
     '/group-announcements/download' => ['GroupAnnouncementsController', 'download'],
 
+    '/external-guides' => ['ExternalGuidesController', 'index'],
+    '/external-guides/view' => ['ExternalGuidesController', 'showWebContent'],
+    '/external-guides/download' => ['ExternalGuidesController', 'download'],
+
     // 郵務管理系統 - 企業郵件寄送管理
     '/mail' => ['MailController', 'request'],
     '/mail/request' => ['MailController', 'request'],                 // 寄件登記
@@ -75,6 +79,8 @@ return [
     '/mail/incoming-register' => ['MailController', 'incomingRegister'], // 收件登記
     '/mail/incoming-records' => ['MailController', 'incomingRecords'], // 收件記錄
     '/mail/postage' => ['MailController', 'postage'],                 // 郵資查詢
+    '/mail/postage-import' => ['MailController', 'postageImport'],
+    '/mail/postage-query' => ['MailController', 'postageQuery'],
     '/mail/edit' => ['MailController', 'edit'],                       // 編輯記錄
     '/mail/delete' => ['MailController', 'delete'],                   // 刪除記錄
     
@@ -91,6 +97,9 @@ return [
     '/forms/it-training' => ['FormsController', 'itTraining'],                  // 資訊教育訓練
     '/forms/qrcode' => ['FormsController', 'qrcode'],                           // QR Code 生成
     '/forms/education-training' => ['FormsController', 'educationTraining'],      // 教育訓練
+    '/forms/personnel-onboard-preview' => ['FormsController', 'previewOnboard'], // 人員到職預覽
+    '/forms/songyue-ticket' => ['FormsController', 'songyueTicket'],             // 崧月工單
+    '/forms/info-ticket' => ['FormsController', 'infoTicket'],                   // 資訊工單
     
     // 資源預約系統 - 會議室、設備預約
     '/booking/meeting-room' => ['BookingController', 'meetingRoom'],            // 會議室預約
@@ -118,6 +127,14 @@ return [
     // 管理員控制台
     '/admin' => ['AdminController', 'dashboard'],
     '/admin/dashboard' => ['AdminController', 'dashboard'],                     // 管理員儀表板
+    
+    // 操作指引管理系統
+    '/admin/guides-manager' => ['GuideManagerController', 'index'],
+    '/admin/guides-manager/create-category' => ['GuideManagerController', 'createCategory'],
+    '/admin/guides-manager/upload' => ['GuideManagerController', 'uploadFile'],
+    '/admin/guides-manager/create-web-content' => ['GuideManagerController', 'createWebContent'],
+    '/admin/guides-manager/delete-file' => ['GuideManagerController', 'deleteFile'],
+    '/admin/guides-manager/delete-category' => ['GuideManagerController', 'deleteCategory'],
     
     // 使用者管理
     '/admin/users' => ['AdminController', 'users'],                             // 使用者列表

@@ -25,7 +25,7 @@
 <?php endif; ?>
 
 <div class="announcement-form-container">
-    <form id="announcementForm" method="POST" enctype="multipart/form-data" class="announcement-form">
+    <form id="announcementForm" method="POST" action="<?php echo $baseUrl; ?>/admin/announcements/create" enctype="multipart/form-data" class="announcement-form">
         
         <!-- 基本資訊區塊 -->
         <div class="form-section">

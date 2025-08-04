@@ -1,0 +1,4 @@
+公區BKNAS2: http://QuickConnect.to/bknas62
+公司外使用與二次驗證
+為了確保帳號安全，從公司外使用公區需要進行二次驗證。詳細設定請參考以下文件：
+https://drive.google.com/file/d/1y7BH12v9KewvwSpFqs0BkRkPAoh3Zg6Q/view?usp=drive_link

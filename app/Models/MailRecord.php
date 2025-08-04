@@ -138,24 +138,22 @@ class MailRecord extends Model {
     public function getByUsername($username, $isAdmin = false) {
         $db = Database::getInstance();
         $conn = $db->getConnection();
-        
         if ($isAdmin) {
-            // 管理員可以查看所有記錄
-            $stmt = $conn->prepare("
-                SELECT * FROM {$this->table} 
-                ORDER BY created_at DESC
-            ");
+            $stmt = $conn->prepare("SELECT * FROM {$this->table} ORDER BY created_at DESC");
             $stmt->execute();
         } else {
-            // 一般使用者只能查看自己相關的記錄
+            // 只取 - 後的名字
+            $name = $username;
+            if (strpos($name, '-') !== false) {
+                $name = explode('-', $name, 2)[1];
+            }
             $stmt = $conn->prepare("
-                SELECT * FROM {$this->table} 
-                WHERE registrar_username = ?
+                SELECT * FROM {$this->table}
+                WHERE receiver_name = ? OR sender_name = ? OR registrar_username = ?
                 ORDER BY created_at DESC
             ");
-            $stmt->execute([$username]);
+            $stmt->execute([$name, $name, $name]);
         }
-        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -213,58 +211,85 @@ class MailRecord extends Model {
     /**
      * 匯出郵件記錄為 CSV 檔案
      * 
-     * 功能特色：
-     * - 支援中文字元正確顯示（UTF-8 BOM）
-     * - 自動處理 CSV 特殊字元轉義
-     * - 包含完整的郵件記錄欄位
-     * - 檔名包含匯出日期
+     * @param string|null $username 使用者名稱（一般用戶只匯出自己的資料）
+     * @param bool $isAdmin 是否為管理員
+     * @param string $keyword 搜尋關鍵字
+     * @param string $startDate 開始日期
+     * @param string $endDate 結束日期
+     * @param string $startTime 開始時間
+     * @param string $endTime 結束時間
      */
-    public function exportToCsv() {
+    public function exportToCsv($username = null, $isAdmin = false, $keyword = '', $startDate = '', $endDate = '', $startTime = '', $endTime = '', $encoding = 'UTF-8') {
         $db = Database::getInstance();
         $conn = $db->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM {$this->table} ORDER BY created_at DESC");
-        $stmt->execute();
-        
-        // 設定 CSV 檔案的 HTTP 標頭
-        header('Content-Type: text/csv; charset=UTF-8');
-        header('Content-Disposition: attachment; filename="mail_records_' . date('Y-m-d') . '.csv"');
-        
-        // 輸出 UTF-8 BOM，確保 Excel 正確顯示中文
-        echo "\xEF\xBB\xBF";
-        
-        // 輸出 CSV 標題行
-        echo "寄件編號,寄件方式,寄件者,寄件者分機,收件者,收件地址,收件者電話,申報部門,件數,郵資,追蹤號碼,狀態,備註,登記時間\n";
-        
-        // 逐行輸出資料
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1";
+        $params = [];
+        if ($isAdmin) {
+            // 匯出全部
+        } else {
+            $sql .= " AND registrar_username = ?";
+            $params[] = $username;
+        }
+                 // 只匯出寄件方式為「掛號」的記錄
+         $sql .= " AND mail_type = ?";
+         $params[] = '掛號';
+         
+         if ($keyword) {
+             $sql .= " AND (mail_code LIKE ? OR sender_name LIKE ? OR receiver_name LIKE ? OR tracking_number LIKE ? OR notes LIKE ?)";
+             for ($i=0; $i<5; $i++) $params[] = "%$keyword%";
+         }
+         if ($startDate) {
+             $sql .= " AND created_at >= ?";
+             $startDateTime = $startDate . ' ' . ($startTime ?: '00:00:00');
+             $params[] = $startDateTime;
+         }
+         if ($endDate) {
+             $sql .= " AND created_at <= ?";
+             $endDateTime = $endDate . ' ' . ($endTime ?: '23:59:59');
+             $params[] = $endDateTime;
+         }
+        $sql .= " ORDER BY created_at DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+
+        // 準備 CSV 資料
+        $csvData = [];
+        $csvData[] = ['姓名', '地址', '電話', '', '分帳']; // 標頭
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $line = [
-                $row['mail_code'] ?? '',
-                $row['mail_type'] ?? '',
-                $row['sender_name'] ?? '',
-                $row['sender_ext'] ?? '',
+            $csvData[] = [
                 $row['receiver_name'] ?? '',
                 $row['receiver_address'] ?? '',
                 $row['receiver_phone'] ?? '',
-                $row['declare_department'] ?? '',
-                $row['item_count'] ?? 1,
-                $row['postage'] ?? 0,
-                $row['tracking_number'] ?? '',
-                $row['status'] ?? '',
-                $row['notes'] ?? '',
-                $row['created_at'] ?? ''
+                '',
+                $row['declare_department'] ?? ''
             ];
-            
-            // 處理 CSV 特殊字元（逗號、換行、雙引號）
-            $escapedLine = array_map(function($field) {
-                if (strpos($field, ',') !== false || strpos($field, "\n") !== false || strpos($field, '"') !== false) {
-                    return '"' . str_replace('"', '""', $field) . '"';
-                }
-                return $field;
-            }, $line);
-            
-            echo implode(',', $escapedLine) . "\n";
         }
+
+        // 使用 CsvEncodingHelper 生成適當編碼的 CSV
+        $tempFile = tempnam(sys_get_temp_dir(), 'export_csv_');
+        $result = \App\Helpers\CsvEncodingHelper::writeCsvWithEncoding($csvData, $tempFile, $encoding);
+
+        if (!$result['success']) {
+            die('CSV 匯出失敗：' . $result['message']);
+        }
+
+        // 設定適當的 HTTP 標頭
+        $encodingSuffix = strtoupper($encoding) === 'UTF-8' ? '_UTF8' : '_' . strtoupper($encoding);
+        $filename = "mail_records_" . date('Y-m-d') . $encodingSuffix . ".csv";
         
+        // 根據編碼設定適當的 Content-Type
+        $contentType = strtoupper($encoding) === 'UTF-8' ? 'text/csv; charset=UTF-8' : 'text/csv; charset=' . $encoding;
+        
+        header('Content-Type: ' . $contentType);
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Length: ' . filesize($tempFile));
+
+        // 輸出檔案內容
+        readfile($tempFile);
+        
+        // 清理暫存檔案
+        unlink($tempFile);
         exit;
     }
     
@@ -284,69 +309,148 @@ class MailRecord extends Model {
      */
     public function batchImport($csvFile, $registrarUsername) {
         $errors = [];
-        $importedCount = 0; // 新增成功計數器
+        $importedCount = 0;
         $db = Database::getInstance();
         $conn = $db->getConnection();
 
-        if (($handle = fopen($csvFile, "r")) !== FALSE) {
-            try {
-                $conn->beginTransaction();
+        // 預期的 CSV 標頭（核心欄位）
+        $expectedHeader = [
+            '寄件方式', '寄件者姓名', '寄件者分機', '收件者姓名', '收件地址', '收件者行動電話', '費用申報部門'
+        ];
 
-                // 跳過標題行
-                fgetcsv($handle);
-                $lineNumber = 1;
+        // 查出 name 欄位
+        $userModel = new \App\Models\User();
+        $user = $userModel->find($registrarUsername);
+        $name = $registrarUsername;
+        if ($user && !empty($user['name'])) {
+            $name = $user['name'];
+            if (strpos($name, '-') !== false) {
+                $name = explode('-', $name, 2)[1];
+            }
+        }
 
-                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                    $lineNumber++;
+        // 使用智慧編碼處理工具讀取 CSV
+        $csvResult = \App\Helpers\CsvEncodingHelper::readCsvWithEncodingDetection($csvFile);
+        
+        if (!$csvResult['success']) {
+            $errors[] = '檔案編碼處理失敗：' . $csvResult['message'];
+            return ['imported' => 0, 'errors' => $errors];
+        }
+
+        $csvData = $csvResult['data'];
+        if (empty($csvData)) {
+            $errors[] = 'CSV 檔案為空或無法讀取。';
+            return ['imported' => 0, 'errors' => $errors];
+        }
+
+        try {
+            $conn->beginTransaction();
+
+            // 取得標頭（第一行）
+            $header = array_shift($csvData);
+            
+            // 記錄編碼資訊（供除錯使用）
+            $encodingInfo = "檔案編碼：{$csvResult['encoding']} - {$csvResult['message']}";
+
+            // 檢查核心標頭是否存在且順序正確
+            $actualHeaderSlice = array_slice($header, 0, count($expectedHeader));
+            if ($actualHeaderSlice !== $expectedHeader) {
+                $errors[] = 'CSV 檔案標頭不正確或順序錯誤。請確保檔案包含以下欄位並順序正確：' . implode(', ', $expectedHeader);
+                $errors[] = $encodingInfo; // 加入編碼資訊協助除錯
+                $conn->rollBack();
+                return ['imported' => 0, 'errors' => $errors];
+            }
+            
+            $lineNumber = 1;
+
+            // 處理每一行資料
+            foreach ($csvData as $row) {
+                $lineNumber++;
                     
-                    // 根據 CSV 欄位順序對應到資料庫欄位
-                    $record = [
-                        'mail_type'          => $data[0] ?? null,
-                        'sender_name'        => $data[1] ?? null,
-                        'sender_ext'         => $data[2] ?? null,
-                        'receiver_name'      => $data[3] ?? null,
-                        'receiver_address'   => $data[4] ?? null,
-                        'receiver_phone'     => $data[5] ?? null,
-                        'declare_department' => $data[6] ?? null,
-                        'item_count'         => isset($data[7]) && is_numeric($data[7]) ? (int)$data[7] : 1,
-                        'postage'            => isset($data[8]) && is_numeric($data[8]) ? (float)$data[8] : 0,
-                        'tracking_number'    => $data[9] ?? null,
-                        'status'             => $data[10] ?? '已送出',
-                        'notes'              => $data[11] ?? null,
-                    ];
-
-                    // 檢查必要欄位
-                    if (empty($record['sender_name']) || empty($record['receiver_name']) || empty($record['receiver_address'])) {
-                        $errors[] = "第 {$lineNumber} 行缺少必要欄位 (寄件人、收件人、收件地址)，已跳過。";
+                    // 新增：嚴格檢查欄位數量是否與標頭一致
+                    if (count($row) !== count($header)) {
+                        $errors[] = "第 {$lineNumber} 行欄位數量不符 (應有 " . count($header) . " 欄，實際為 " . count($row) . " 欄)，已跳過。請檢查該行是否有缺漏欄位。";
                         continue;
                     }
 
+                    // 使用實際的標頭來對應資料，以支援可選欄位
+                    $data = [];
+                    foreach ($header as $index => $colName) {
+                        $data[$colName] = $row[$index] ?? null;
+                    }
+
+                    $record = [
+                        'mail_type'          => trim($data['寄件方式']),
+                        'sender_name'        => trim($data['寄件者姓名']),
+                        'sender_ext'         => trim($data['寄件者分機']),
+                        'receiver_name'      => trim($data['收件者姓名']),
+                        'receiver_address'   => trim($data['收件地址']),
+                        'receiver_phone'     => trim($data['收件者行動電話']),
+                        'declare_department' => trim($data['費用申報部門']),
+                        // 處理可選欄位
+                        'item_count'         => isset($data['件數']) ? trim($data['件數']) : '1',
+                        'postage'            => isset($data['運費']) ? trim($data['運費']) : '0',
+                        'tracking_number'    => isset($data['掛號編號']) ? trim($data['掛號編號']) : null,
+                        'status'             => isset($data['狀態']) ? trim($data['狀態']) : '已送出',
+                        'notes'              => isset($data['備註']) ? trim($data['備註']) : null,
+                    ];
+
+                    // 全面檢查核心欄位是否為空
+                    $requiredFields = [
+                        'mail_type'          => '寄件方式',
+                        'sender_name'        => '寄件者姓名',
+                        'receiver_name'      => '收件者姓名',
+                        'receiver_address'   => '收件地址',
+                        'declare_department' => '費用申報部門',
+                    ];
+                    $missingFields = [];
+                    foreach ($requiredFields as $fieldKey => $fieldName) {
+                        if (empty($record[$fieldKey])) {
+                            $missingFields[] = $fieldName;
+                        }
+                    }
+
+                    if (!empty($missingFields)) {
+                        $errors[] = "第 {$lineNumber} 行缺少必要欄位 (" . implode('、', $missingFields) . ")，已跳過。";
+                        continue;
+                    }
+                    
+                    // 驗證數字欄位
+                    if (!is_numeric($record['item_count']) || (int)$record['item_count'] <= 0) {
+                        $errors[] = "第 {$lineNumber} 行「件數」必須是正整數，已跳過。";
+                        continue;
+                    }
+                    if (!is_numeric($record['postage'])) {
+                         $errors[] = "第 {$lineNumber} 行「運費」必須是數字，已跳過。";
+                        continue;
+                    }
+                    
+                    $record['item_count'] = (int)$record['item_count'];
+                    $record['postage'] = (float)$record['postage'];
+                    if (empty($record['status'])) $record['status'] = '已送出';
+
+
                     // 呼叫我們之前建立的 createMailRecord 方法
-                    // 它會自動處理 mail_code 和 registrar_username
-                    $this->createMailRecord($record, $registrarUsername);
-                    $importedCount++; // 成功處理一筆，計數器加一
-                }
-                
-                // 提交交易
-                $conn->commit();
-
-            } catch (Exception $e) {
-                // 如果在交易過程中發生任何錯誤，則回滾
-                $conn->rollBack();
-                $errors[] = "處理 CSV 檔案時發生嚴重錯誤：" . $e->getMessage();
-            } finally {
-                // 無論成功或失敗，都確保檔案被關閉
-                fclose($handle);
+                    $this->createMailRecord($record, $name);
+                    $importedCount++;
             }
+            
+            $conn->commit();
 
-        } else {
-            // 如果無法開啟檔案
-            $errors[] = '無法開啟上傳的 CSV 檔案。';
+        } catch (Exception $e) {
+            // 如果在交易過程中發生任何錯誤，則回滾
+            $conn->rollBack();
+            $errors[] = "處理 CSV 檔案時發生嚴重錯誤：" . $e->getMessage();
         }
         
         // 刪除伺服器上的暫存檔案
         if (file_exists($csvFile)) {
             unlink($csvFile);
+        }
+
+        // 如果成功匯入，將編碼資訊加入訊息中
+        if ($importedCount > 0 && isset($encodingInfo)) {
+            $errors[] = $encodingInfo;
         }
 
         // 回傳一個包含成功筆數和錯誤訊息的陣列
@@ -374,7 +478,20 @@ class MailRecord extends Model {
             return false;
         }
         
-        return $record['registrar_username'] === $username;
+        // 處理使用者名稱格式 - 移除前綴
+        $cleanUsername = $username;
+        if (strpos($cleanUsername, '-') !== false) {
+            $cleanUsername = explode('-', $cleanUsername, 2)[1];
+        }
+        
+        $recordUsername = $record['registrar_username'];
+        if (strpos($recordUsername, '-') !== false) {
+            $recordUsername = explode('-', $recordUsername, 2)[1];
+        }
+        
+        return $recordUsername === $cleanUsername || 
+               $record['registrar_username'] === $username ||
+               $record['sender_name'] === $cleanUsername;
     }
     
     /**
@@ -383,45 +500,45 @@ class MailRecord extends Model {
      * @param string $keyword 搜尋關鍵字
      * @param string|null $username 使用者名稱（用於權限控制）
      * @param bool $isAdmin 是否為管理員
+     * @param string $startDate 開始日期
+     * @param string $endDate 結束日期
+     * @param string $startTime 開始時間
+     * @param string $endTime 結束時間
      * @return array
      */
-    public function search($keyword, $username = null, $isAdmin = false) {
-        // 定義搜尋郵件記錄方法
+    public function search($keyword, $username = null, $isAdmin = false, $startDate = '', $endDate = '', $startTime = '', $endTime = '') {
         $db = Database::getInstance();
-        // 取得資料庫實例
         $conn = $db->getConnection();
-        // 取得資料庫連接
-        
-        $sql = "SELECT * FROM {$this->table} WHERE 
-                (mail_code LIKE :keyword OR
-                 sender_name LIKE :keyword OR
-                 receiver_name LIKE :keyword OR
-                 tracking_number LIKE :keyword OR
-                 notes LIKE :keyword)";
-        // 準備 SQL 查詢語句，使用 LIKE 進行模糊搜尋
-        
-        // 加入權限控制
-        if (!$isAdmin && $username) {
-            $sql .= " AND registrar_username = :username";
+        $sql = "SELECT * FROM {$this->table} WHERE 1=1";
+        $params = [];
+        if ($keyword) {
+            $sql .= " AND (mail_code LIKE ? OR sender_name LIKE ? OR receiver_name LIKE ? OR tracking_number LIKE ? OR notes LIKE ?)";
+            for ($i=0; $i<5; $i++) $params[] = "%$keyword%";
         }
-        // 如果不是管理員，則只搜尋該使用者的記錄
-        
+        if (!$isAdmin && $username) {
+            $name = $username;
+            if (strpos($name, '-') !== false) {
+                $name = explode('-', $name, 2)[1];
+            }
+            $sql .= " AND (receiver_name = ? OR sender_name = ? OR registrar_username = ?)";
+            $params[] = $name;
+            $params[] = $name;
+            $params[] = $name;
+        }
+        if ($startDate) {
+            $sql .= " AND created_at >= ?";
+            $startDateTime = $startDate . ' ' . ($startTime ?: '00:00:00');
+            $params[] = $startDateTime;
+        }
+        if ($endDate) {
+            $sql .= " AND created_at <= ?";
+            $endDateTime = $endDate . ' ' . ($endTime ?: '23:59:59');
+            $params[] = $endDateTime;
+        }
         $sql .= " ORDER BY created_at DESC";
-        // 加入排序條件
-        
         $stmt = $conn->prepare($sql);
-        // 準備 SQL 陳述式
-        $stmt->bindValue(':keyword', "%{$keyword}%", PDO::PARAM_STR);
-        // 綁定關鍵字參數
-        if (!$isAdmin && $username) {
-            $stmt->bindValue(':username', $username, PDO::PARAM_STR);
-        }
-        // 綁定使用者 ID 參數
-        
-        $stmt->execute();
-        // 執行查詢
+        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // 回傳所有結果
     }
     
     /**
@@ -486,7 +603,7 @@ class MailRecord extends Model {
         // 檢查資料表是否存在
         $this->createIncomingTable();
         
-        $sql = "SELECT imr.*, u.name as recipient_name 
+        $sql = "SELECT imr.*, u.name as recipient_name
                 FROM incoming_mail_records imr
                 LEFT JOIN users u ON imr.recipient_id = u.id";
         
@@ -632,4 +749,4 @@ class MailRecord extends Model {
             return null;
         }
     }
-} 
+}
