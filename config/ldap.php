@@ -17,7 +17,7 @@ return [
     'enabled' => true,
     // 啟用 LDAP 認證，設為 false 將回歸傳統認證方式
     
-    'server' => '192.168.2.16',
+    'server' => 'ip',
     // LDAP 伺服器 IP 位址或主機名稱，請替換為您的 LDAP 伺服器位址
     
     'port' => 389,
@@ -33,16 +33,16 @@ return [
     // LDAP 認證設定
     // ========================================
     
-    'base_dn' => 'dc=bookrep,dc=com,dc=tw',
+    'base_dn' => 'dc',
     // 基礎搜尋 DN (Distinguished Name)，請依據您的 LDAP 結構調整
     
-    'admin_username' => 'uid=ldapnormal,cn=users,dc=bookrep,dc=com,dc=tw',
+    'admin_username' => 'uid=,cn=,dc=,dc=,dc=',
     // 服務帳號 DN，用於連接 LDAP 進行使用者搜尋（可使用一般用戶帳號，只需讀取權限）
     
-    'admin_password' => 'Bk1597531417#',
+    'admin_password' => '',
     // 服務帳號密碼，請替換為您的 LDAP 服務帳號密碼
     
-    'user_search_base' => 'cn=users,dc=bookrep,dc=com,dc=tw',
+    'user_search_base' => 'cn=,dc=,dc=,dc=',
     // 使用者搜尋基礎 DN，通常為使用者所在的組織單位
     
     'user_filter' => '(&(objectClass=inetOrgPerson)(uid={username}))',
@@ -71,8 +71,7 @@ return [
     
     'admin_groups' => [
         // 管理員群組 DN 列表，屬於這些群組的使用者將擁有管理員權限
-        'cn=administrators,ou=groups,dc=bookrep,dc=com,dc=tw',
-        'cn=it_admins,ou=groups,dc=bookrep,dc=com,dc=tw',
+      
     ],
     
     'allowed_groups' => [
