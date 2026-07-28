@@ -46,11 +46,11 @@
                     <div class="access-details">
                         <div class="detail-row">
                             <span class="detail-label">存取位址</span>
-                            <code class="detail-value">\\192.168.1.100</code>
+                            <code class="detail-value">\\ip</code>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">Web 介面</span>
-                            <code class="detail-value">http://192.168.1.100:5000</code>
+                            <code class="detail-value">http://ip</code>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">速度</span>
@@ -67,15 +67,15 @@
                     <div class="access-details">
                         <div class="detail-row">
                             <span class="detail-label">BKNAS1</span>
-                            <code class="detail-value"><a href="http://QuickConnect.to/bknas61" target="_blank">QuickConnect.to/bknas61</a></code>
+                            <code class="detail-value"><a href="url" target="_blank">QuickConnect.to/bknas61</a></code>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">BKNAS2</span>
-                            <code class="detail-value"><a href="http://QuickConnect.to/bknas62" target="_blank">QuickConnect.to/bknas62</a></code>
+                            <code class="detail-value"><a href="url" target="_blank">QuickConnect.to/bknas62</a></code>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">雲端捷徑</span>
-                            <code class="detail-value"><a href="https://drive.bookrep.com.tw/nextcloud/index.php/s/EnXr7SJ2JBPJ2AG" target="_blank">Nextcloud 雲端空間</a></code>
+                            <code class="detail-value"><a href="url" target="_blank">Nextcloud 雲端空間</a></code>
                         </div>
                         <div class="detail-row">
                             <span class="detail-label">認證</span>
